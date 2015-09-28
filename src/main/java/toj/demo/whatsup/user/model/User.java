@@ -2,6 +2,7 @@ package toj.demo.whatsup.user.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -14,7 +15,6 @@ public class User implements Serializable{
     private String username;
 
     private String password;
-
 
     public User(String username, String password) {
         this.username = username;

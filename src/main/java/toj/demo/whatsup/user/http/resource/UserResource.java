@@ -2,7 +2,7 @@ package toj.demo.whatsup.user.http.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import toj.demo.whatsup.user.model.PotentialUser;
+import toj.demo.whatsup.user.model.Credentials;
 import toj.demo.whatsup.user.model.User;
 import toj.demo.whatsup.user.service.UserService;
 import toj.demo.whatsup.user.service.UserSessionService;
@@ -29,12 +29,12 @@ public final class UserResource {
     @Path("/signup")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response signup(PotentialUser potentialUser) {
-        final Optional<User> user = userService.get(potentialUser.getUsername());
+    public Response signup(Credentials credentials) {
+        final Optional<User> user = userService.get(credentials.getUsername());
         if (user.isPresent()) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        userService.signup(potentialUser.getUsername(), potentialUser.getPassword());
+        userService.signup(credentials.getUsername(), credentials.getPassword());
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -42,18 +42,19 @@ public final class UserResource {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(User user){
-        if(userService.has(user)){
-          String sessionId=UUID.randomUUID().toString();
-            String json="{\"results\":[{\"sessionId\":\""+sessionId+"\",\"userName\":\"" + user.getUsername() + "\"}]}";
-            if(!userSessionService.userExists(user)){
-                userSessionService.addUserSession(sessionId,userService.get(user.getUsername()).get());
-                return Response.status(Response.Status.OK).entity(json).build();
-            }else{
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-            }
-        }else{
+    public Response login(Credentials credentials){
+        if(!userService.has(credentials.getUsername())){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }else{
+            User user=userService.get(credentials.getUsername()).get();
+            String sessionId=UUID.randomUUID().toString();
+            String json="{\"results\":[{\"sessionId\":\""+sessionId+"\",\"userName\":\"" + user.getUsername() + "\"}]}";
+            if(userSessionService.userExists(user)){
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }else{
+                userSessionService.addUserSession(sessionId,user);
+                return Response.status(Response.Status.OK).entity(json).build();
+            }
         }
     }
 }
