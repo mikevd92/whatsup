@@ -54,4 +54,27 @@ public class Message implements Serializable{
     public String toString() {
         return "{\"message\":\"" + message + "\",\"userName\":" + "\"" + userName + "\",\"timestamp\":\"" + creationTimestamp + "\"}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Message)) return false;
+
+        Message message1 = (Message) o;
+
+        if (getMessage() != null ? !getMessage().equals(message1.getMessage()) : message1.getMessage() != null)
+            return false;
+        if (getUserName() != null ? !getUserName().equals(message1.getUserName()) : message1.getUserName() != null)
+            return false;
+        return !(getCreationTimestamp() != null ? !getCreationTimestamp().equals(message1.getCreationTimestamp()) : message1.getCreationTimestamp() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getMessage() != null ? getMessage().hashCode() : 0;
+        result = 31 * result + (getUserName() != null ? getUserName().hashCode() : 0);
+        result = 31 * result + (getCreationTimestamp() != null ? getCreationTimestamp().hashCode() : 0);
+        return result;
+    }
 }
