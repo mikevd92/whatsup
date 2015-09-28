@@ -46,16 +46,16 @@ public final class UserResource {
     public Response login(Credentials credentials){
         if(!userService.has(credentials.getUsername())){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }else{
-            User user=userService.get(credentials.getUsername()).get();
-            if(userSessionService.userExists(user)){
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-            }else{
-                String sessionId=userSessionService.createUserSession(user);
-                //String json="{\"results\":[{\"sessionId\":\""+sessionId+"\",\"userName\":\"" + user.getUsername() + "\"}]}";
-                SessionResponse sessionResponse=new SessionResponse(new Session(sessionId,user.getUsername()));
-                return Response.status(Response.Status.OK).entity(sessionResponse).build();
-            }
         }
+
+        User user=userService.get(credentials.getUsername()).get();
+        if(userSessionService.userExists(user)) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+        String sessionId=userSessionService.createUserSession(user);
+                //String json="{\"results\":[{\"sessionId\":\""+sessionId+"\",\"userName\":\"" + user.getUsername() + "\"}]}";
+        SessionResponse sessionResponse=new SessionResponse(new Session(sessionId,user.getUsername()));
+        return Response.status(Response.Status.OK).entity(sessionResponse).build();
     }
 }
