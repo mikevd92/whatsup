@@ -29,17 +29,17 @@ public class FollowerResource {
     @Path("/follow")
     @Produces(MediaType.APPLICATION_JSON)
     public Response follow(@QueryParam("sessionId") String sessionId, @QueryParam("userName") String userName) {
-        if (sessionId != null && userName != null) {
+        if (sessionId == null || userName == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        } else {
             Optional<User> toBeFollowed = userService.get(userName);
             Optional<User> follower = userSessionService.getUserBySession(sessionId);
-            if (toBeFollowed.isPresent() && follower.isPresent()) {
+            if (!toBeFollowed.isPresent() || !follower.isPresent()) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            } else {
                 toBeFollowed.get().addFollower(follower.get());
                 return Response.status(Response.Status.OK).build();
-            } else {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
@@ -47,17 +47,17 @@ public class FollowerResource {
     @Path("/unsubscribe")
     @Produces(MediaType.APPLICATION_JSON)
     public Response unfollow(@QueryParam("sessionId") String sessionId, @QueryParam("userName") String userName) {
-        if (sessionId != null && userName != null) {
+        if (sessionId == null || userName == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        } else {
             Optional<User> toBeUnFollowed = userService.get(userName);
             Optional<User> follower = userSessionService.getUserBySession(sessionId);
-            if (toBeUnFollowed.isPresent() && follower.isPresent()) {
+            if (!toBeUnFollowed.isPresent() || !follower.isPresent()) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            } else {
                 toBeUnFollowed.get().removeFollower(follower.get());
                 return Response.status(Response.Status.OK).build();
-            } else {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 }

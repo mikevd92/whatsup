@@ -7,16 +7,16 @@ import java.io.Serializable;
  * Created by mihai.popovici on 9/24/2015.
  */
 @XmlRootElement
-public class PotentialUser implements Serializable{
+public class Credentials implements Serializable{
     private String username;
 
     private String password;
 
-    public PotentialUser(){
+    public Credentials(){
 
     }
 
-    public PotentialUser(String password, String username) {
+    public Credentials(String password, String username) {
         this.password = password;
         this.username = username;
     }
