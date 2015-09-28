@@ -2,14 +2,14 @@ package toj.demo.whatsup.user.http.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import toj.demo.whatsup.user.model.Credentials;
-import toj.demo.whatsup.user.model.User;
+import toj.demo.whatsup.user.model.*;
 import toj.demo.whatsup.user.service.UserService;
 import toj.demo.whatsup.user.service.UserSessionService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,7 +35,8 @@ public final class UserResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         userService.signup(credentials.getUsername(), credentials.getPassword());
-        return Response.status(Response.Status.CREATED).build();
+        UserResponse userResponse=new UserResponse(credentials.getUsername(),new Date());
+        return Response.status(Response.Status.CREATED).entity(userResponse).build();
     }
 
     @POST
@@ -47,13 +48,13 @@ public final class UserResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }else{
             User user=userService.get(credentials.getUsername()).get();
-            String sessionId=UUID.randomUUID().toString();
-            String json="{\"results\":[{\"sessionId\":\""+sessionId+"\",\"userName\":\"" + user.getUsername() + "\"}]}";
             if(userSessionService.userExists(user)){
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }else{
-                userSessionService.addUserSession(sessionId,user);
-                return Response.status(Response.Status.OK).entity(json).build();
+                String sessionId=userSessionService.createUserSession(user);
+                //String json="{\"results\":[{\"sessionId\":\""+sessionId+"\",\"userName\":\"" + user.getUsername() + "\"}]}";
+                SessionResponse sessionResponse=new SessionResponse(new Session(sessionId,user.getUsername()));
+                return Response.status(Response.Status.OK).entity(sessionResponse).build();
             }
         }
     }

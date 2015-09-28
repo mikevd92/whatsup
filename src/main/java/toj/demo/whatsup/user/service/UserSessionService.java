@@ -8,13 +8,13 @@ import java.util.Optional;
  * Created by mihai.popovici on 9/25/2015.
  */
 public interface UserSessionService {
-    void addUserSession(String Session, User user);
+    String createUserSession(User user);
 
-    void removeUserSession(String Session);
+    void removeUserSession(String sessionId);
 
-    boolean userSessionExists(String Session);
+    boolean userSessionExists(String sessionId);
 
-    Optional<User> getUserBySession(String Session);
+    Optional<User> getUserBySession(String sessionId);
 
     boolean userExists(User user);
 }
