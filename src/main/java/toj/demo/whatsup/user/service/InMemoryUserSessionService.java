@@ -4,6 +4,7 @@ import toj.demo.whatsup.user.model.User;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created by mihai.popovici on 9/25/2015.
@@ -16,8 +17,10 @@ public class InMemoryUserSessionService implements UserSessionService{
     }
 
     @Override
-    public void addUserSession(String idSession, User user) {
-        userSessions.put(idSession, user);
+    public String createUserSession(User user) {
+        String sessionId=UUID.randomUUID().toString();
+        userSessions.put(sessionId, user);
+        return sessionId;
     }
 
     @Override

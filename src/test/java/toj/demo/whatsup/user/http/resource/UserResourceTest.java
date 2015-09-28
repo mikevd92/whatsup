@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
 import toj.demo.whatsup.user.http.resource.UserResource;
+import toj.demo.whatsup.user.model.SessionResponse;
+import toj.demo.whatsup.user.model.UserResponse;
 import toj.demo.whatsup.user.service.UserService;
 
 import javax.ws.rs.client.Entity;
@@ -41,22 +43,20 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
 
     @Test
     public void testReturnsUserDetailsWhenUserCreated() {
+        if(userService.has("Mihai")){
+            userService.remove("Mihai");
+        }
         final Response response=target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
-        assertEquals(response.readEntity(String.class), "{\"username\":\"Mihai\",\"password\":\"password\"}" );
+        assertEquals(response.readEntity(UserResponse.class).getUsername(),"Mihai");
     }
 
-    @Test
-    public void testReturnsUserDetailsAfterUserCreated() {
-        target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
-        final Response response=target("user").queryParam("name", "Mihai").request().get();
-        assertEquals(response.readEntity(String.class),"{\"username\":\"Mihai\",\"password\":\"password\"}");
-    }
     @Test
     public void testLoginsAfterUserCreated()
     {
         target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
         final Response response=target("user/login").request().post(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
-        assertTrue(response.readEntity(String.class).startsWith("{\"results\":[{\"sessionId\":\""));
+        assertEquals(response.readEntity(SessionResponse.class).getResults().get(0).getUserName(),"Mihai");
+        //assertTrue(response.readEntity(String.class).startsWith("{\"results\":[{\"sessionId\":\""));
     }
 
 
