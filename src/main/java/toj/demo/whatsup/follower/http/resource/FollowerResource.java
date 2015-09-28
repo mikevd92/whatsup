@@ -31,16 +31,16 @@ public class FollowerResource {
     public Response follow(@QueryParam("sessionId") String sessionId, @QueryParam("userName") String userName) {
         if (sessionId == null || userName == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        } else {
-            Optional<User> toBeFollowed = userService.get(userName);
-            Optional<User> follower = userSessionService.getUserBySession(sessionId);
-            if (!toBeFollowed.isPresent() || !follower.isPresent()) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-            } else {
-                toBeFollowed.get().addFollower(follower.get());
-                return Response.status(Response.Status.OK).build();
-            }
         }
+
+        Optional<User> toBeFollowed = userService.get(userName);
+        Optional<User> follower = userSessionService.getUserBySession(sessionId);
+        if (!toBeFollowed.isPresent() || !follower.isPresent()) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+        toBeFollowed.get().addFollower(follower.get());
+        return Response.status(Response.Status.OK).build();
     }
 
     @GET
@@ -49,15 +49,16 @@ public class FollowerResource {
     public Response unfollow(@QueryParam("sessionId") String sessionId, @QueryParam("userName") String userName) {
         if (sessionId == null || userName == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        } else {
-            Optional<User> toBeUnFollowed = userService.get(userName);
-            Optional<User> follower = userSessionService.getUserBySession(sessionId);
-            if (!toBeUnFollowed.isPresent() || !follower.isPresent()) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-            } else {
-                toBeUnFollowed.get().removeFollower(follower.get());
-                return Response.status(Response.Status.OK).build();
-            }
         }
+
+        Optional<User> toBeUnFollowed = userService.get(userName);
+        Optional<User> follower = userSessionService.getUserBySession(sessionId);
+        if (!toBeUnFollowed.isPresent() || !follower.isPresent()) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+        toBeUnFollowed.get().removeFollower(follower.get());
+        return Response.status(Response.Status.OK).build();
+
     }
 }

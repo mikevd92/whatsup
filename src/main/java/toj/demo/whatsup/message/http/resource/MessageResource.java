@@ -42,17 +42,17 @@ public class MessageResource {
     public Response submitMessage(@QueryParam("sessionId") String sessionId, @QueryParam("message") String msg) {
         if (sessionId == null || msg == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        } else {
-            Optional<User> user = userSessionService.getUserBySession(sessionId);
-            if (!user.isPresent()) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-            } else {
-                Message message = new Message(msg, user.get().getUsername(), new Date());
-                messageService.addNewMessage(message, user.get().getUsername());
-                MessageResponse response=new MessageResponse(Collections.singletonList(message));
-                return Response.status(Response.Status.OK).entity(response).build();
-            }
         }
+
+        Optional<User> user = userSessionService.getUserBySession(sessionId);
+        if (!user.isPresent()) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+        Message message = new Message(msg, user.get().getUsername(), new Date());
+        messageService.addNewMessage(message, user.get().getUsername());
+        MessageResponse response=new MessageResponse(Collections.singletonList(message));
+        return Response.status(Response.Status.OK).entity(response).build();
     }
 
     @GET
@@ -61,22 +61,21 @@ public class MessageResource {
     public Response getStatusCall(@QueryParam("sessionId") String sessionId) {
         if (sessionId == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        } else {
-            Optional<User> user = userSessionService.getUserBySession(sessionId);
-            if (!user.isPresent()) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-            } else {
-                Message message = messageService.getStatusMessage(user.get().getUsername());
-                if (message == null) {
-                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-                } else {
-                    MessageResponse response = new MessageResponse(Collections.singletonList(message));
-                    //String json = "{\"results\":[{\"message\":\"" + message.getMessage() + "\",\"creationTimestamp\":\"" + message.getCreationTimestamp() + "\"}]}";
-                    return Response.status(Response.Status.OK).entity(response).build();
-                }
-            }
         }
 
+        Optional<User> user = userSessionService.getUserBySession(sessionId);
+        if (!user.isPresent()) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+        Message message = messageService.getStatusMessage(user.get().getUsername());
+        if (message == null) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+        MessageResponse response = new MessageResponse(Collections.singletonList(message));
+        //String json = "{\"results\":[{\"message\":\"" + message.getMessage() + "\",\"creationTimestamp\":\"" + message.getCreationTimestamp() + "\"}]}";
+        return Response.status(Response.Status.OK).entity(response).build();
     }
 
     @GET
@@ -91,18 +90,20 @@ public class MessageResource {
             //e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+
         if (sessionId == null || timestamp == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        } else {
-            Optional<User> user = userSessionService.getUserBySession(sessionId);
-            if (!user.isPresent()) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-            } else {
-                List<Message> messageList = messageService.getUpdates(date, user.get().getUsername());
-                MessageResponse response = new MessageResponse(messageList);
-                return Response.status(Response.Status.OK).entity(response).build();
-            }
         }
+
+        Optional<User> user = userSessionService.getUserBySession(sessionId);
+
+        if (!user.isPresent()) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+        List<Message> messageList = messageService.getUpdates(date, user.get().getUsername());
+        MessageResponse response = new MessageResponse(messageList);
+        return Response.status(Response.Status.OK).entity(response).build();
     }
 
     @GET
@@ -111,27 +112,28 @@ public class MessageResource {
     public Response getLatestMessages(@QueryParam("sessionId") String sessionId) {
         if (sessionId == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        } else {
-            Optional<User> user = userSessionService.getUserBySession(sessionId);
-            if (!user.isPresent()) {
+        }
+
+        Optional<User> user = userSessionService.getUserBySession(sessionId);
+        if (!user.isPresent()) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-            } else {
-                List<Message> latestMessages = new LinkedList<Message>();
-                Set<User> followers = user.get().getFollowers();
-                Iterator<User> iterator = followers.iterator();
-                while (iterator.hasNext() && latestMessages.size() <= 10) {
-                    List<Message> userMessages = messageService.getMessages(iterator.next().getUsername());
-                    if (userMessages.size() > 0) {
-                        latestMessages.add(userMessages.get(userMessages.size() - 1));
-                    }
-                    if (userMessages.size() > 1) {
-                        latestMessages.add(userMessages.get(userMessages.size() - 2));
-                    }
-                }
-                MessageResponse response = new MessageResponse(latestMessages);
-                return Response.status(Response.Status.OK).entity(response).build();
+        }
+
+        List<Message> latestMessages = new LinkedList<Message>();
+        Set<User> followers = user.get().getFollowers();
+        Iterator<User> iterator = followers.iterator();
+        while (iterator.hasNext() && latestMessages.size() <= 10) {
+            List<Message> userMessages = messageService.getMessages(iterator.next().getUsername());
+            if (userMessages.size() > 0) {
+                latestMessages.add(userMessages.get(userMessages.size() - 1));
+            }
+            if (userMessages.size() > 1) {
+                latestMessages.add(userMessages.get(userMessages.size() - 2));
             }
         }
+
+        MessageResponse response = new MessageResponse(latestMessages);
+        return Response.status(Response.Status.OK).entity(response).build();
     }
 }
 
