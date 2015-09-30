@@ -1,5 +1,6 @@
 package toj.demo.whatsup.user.service;
 
+import toj.demo.whatsup.user.model.Credentials;
 import toj.demo.whatsup.user.model.User;
 
 import java.util.HashMap;
@@ -28,6 +29,12 @@ public class InMemoryUserService implements UserService {
     }
 
     @Override
+    public void signup(Credentials credentials) {
+        User user=new User(credentials.getUsername(),credentials.getPassword());
+        users.put(user.getUsername(),user);
+    }
+
+    @Override
     public boolean has(User user) {
         return users.containsValue(user);
     }
@@ -35,6 +42,24 @@ public class InMemoryUserService implements UserService {
     @Override
     public boolean has(String name) {
         return users.containsKey(name);
+    }
+
+    @Override
+    public boolean checkUser(String name, String password) {
+        if(!users.containsKey(name)) {
+            return false;
+        }else{
+            return users.get(name).getPassword().equals(password);
+        }
+    }
+
+    @Override
+    public boolean checkUser(Credentials credentials) {
+        if(!users.containsKey(credentials.getUsername())) {
+            return false;
+        }else{
+            return users.get(credentials.getUsername()).getPassword().equals(credentials.getPassword());
+        }
     }
 
     @Override

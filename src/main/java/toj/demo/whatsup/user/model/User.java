@@ -1,7 +1,9 @@
 package toj.demo.whatsup.user.model;
 
+import javax.security.auth.Subject;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -10,7 +12,7 @@ import java.util.Set;
  * Created by mihai.popovici on 9/24/2015.
  */
 @XmlRootElement
-public class User implements Serializable{
+public class User implements Serializable,Principal {
 
     private String username;
 
@@ -70,6 +72,16 @@ public class User implements Serializable{
         int result = getUsername() != null ? getUsername().hashCode() : 0;
         result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String getName() {
+        return username;
+    }
+
+    @Override
+    public boolean implies(Subject subject) {
+        return false;
     }
 
     @Override
