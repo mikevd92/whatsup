@@ -8,7 +8,10 @@ import toj.demo.whatsup.user.model.User;
 import toj.demo.whatsup.user.service.UserService;
 import toj.demo.whatsup.user.service.UserSessionService;
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+
 import static org.junit.Assert.assertEquals;
 /**
  * Created by mihai.popovici on 9/28/2015.
@@ -20,6 +23,9 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
 
     @Autowired
     private UserService userService;
+
+    @Context
+    private SecurityContext securityContext;
 
     @Test
     public void testFollow(){

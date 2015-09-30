@@ -47,7 +47,7 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
             userService.remove("Mihai");
         }
         final Response response=target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
-        assertEquals(response.readEntity(UserResponse.class).getUsername(),"Mihai");
+        assertEquals(response.getStatusInfo(),Response.Status.CREATED);
     }
 
     @Test

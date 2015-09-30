@@ -35,8 +35,7 @@ public final class UserResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         userService.signup(credentials.getUsername(), credentials.getPassword());
-        UserResponse userResponse=new UserResponse(credentials.getUsername(),new Date());
-        return Response.status(Response.Status.CREATED).entity(userResponse).build();
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @POST
@@ -44,7 +43,7 @@ public final class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(Credentials credentials){
-        if(!userService.has(credentials.getUsername())){
+        if(!userService.checkUser(credentials)){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
