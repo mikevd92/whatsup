@@ -20,10 +20,10 @@ public class Message implements Serializable{
 
     }
 
-    public Message(String message, String userName, Date creationTimestamp) {
+    public Message(String message, String userName) {
         this.message = message;
         this.userName = userName;
-        this.creationTimestamp = creationTimestamp;
+        this.creationTimestamp = new Date();
     }
 
     public Date getCreationTimestamp() {

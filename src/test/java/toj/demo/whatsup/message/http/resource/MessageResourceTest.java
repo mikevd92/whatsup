@@ -1,7 +1,9 @@
 package toj.demo.whatsup.message.http.resource;
 
+import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import toj.demo.whatsup.http.filter.AuthenticationFilter;
 import toj.demo.whatsup.message.model.Message;
 import toj.demo.whatsup.message.model.MessageResponse;
 import toj.demo.whatsup.message.service.MessageService;
@@ -12,7 +14,10 @@ import toj.demo.whatsup.user.service.UserService;
 import toj.demo.whatsup.user.service.UserSessionService;
 
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
@@ -30,6 +35,7 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
     @Autowired
     private UserService userService;
 
+
     @Test
     public void testSubmitMessage(){
         userService.signup("Mihai","password");
@@ -37,7 +43,6 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         String sessionId=userSessionService.createUserSession(user);
         Response messageResponse=target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         assertEquals(messageResponse.getStatusInfo(), Response.Status.OK);
-        assertEquals(messageResponse.readEntity(MessageResponse.class).getResults().get(0).getMessage(),"awesome");
     }
     @Test
     public void testGetStatusCall(){
@@ -55,8 +60,8 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         userService.signup("Mihai", "password");
         User user=userService.get("Mihai").get();
         String sessionId=userSessionService.createUserSession(user);
+        Date timestamp=new Date();
         Response submitResponse=target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
-        Date timestamp=submitResponse.readEntity(MessageResponse.class).getResults().get(0).getCreationTimestamp();
         Response updatesResponse=target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
         Message message=updatesResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getUserName(),"Mihai");
