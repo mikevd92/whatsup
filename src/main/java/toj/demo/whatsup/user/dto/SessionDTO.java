@@ -1,4 +1,4 @@
-package toj.demo.whatsup.user.model;
+package toj.demo.whatsup.user.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -7,17 +7,17 @@ import java.io.Serializable;
  * Created by mihai.popovici on 9/28/2015.
  */
 @XmlRootElement
-public class Session implements Serializable {
+public class SessionDTO implements Serializable {
 
     private String sessionId;
 
     private String userName;
 
-    public Session(){
+    public SessionDTO(){
 
     }
 
-    public Session(String sessionId, String userName) {
+    public SessionDTO(String sessionId, String userName) {
         this.sessionId = sessionId;
         this.userName = userName;
     }

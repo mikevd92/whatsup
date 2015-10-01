@@ -1,4 +1,6 @@
-package toj.demo.whatsup.user.model;
+package toj.demo.whatsup.user.http.resource;
+
+import toj.demo.whatsup.user.dto.SessionDTO;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -11,21 +13,21 @@ import java.util.List;
 @XmlRootElement
 public class SessionResponse implements Serializable{
 
-    private List<Session> results;
+    private List<SessionDTO> results;
 
     public SessionResponse(){
 
     }
 
-    public SessionResponse(Session session) {
+    public SessionResponse(SessionDTO session) {
         this.results = Collections.singletonList(session);
     }
 
-    public List<Session> getResults() {
+    public List<SessionDTO> getResults() {
         return results;
     }
 
-    public void setResults(List<Session> results) {
+    public void setResults(List<SessionDTO> results) {
         this.results = results;
     }
     @Override

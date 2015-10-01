@@ -1,5 +1,6 @@
-package toj.demo.whatsup.message.model;
+package toj.demo.whatsup.message.http.resource;
 
+import toj.demo.whatsup.message.dto.MessageDTO;
 import toj.demo.whatsup.message.model.Message;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -11,21 +12,21 @@ import java.util.List;
 @XmlRootElement
 public class MessageResponse {
 
-    private List<Message> results;
+    private List<MessageDTO> results;
 
     public MessageResponse(){
 
     }
 
-    public MessageResponse(List<Message> results) {
+    public MessageResponse(List<MessageDTO> results) {
         this.results = results;
     }
 
-    public List<Message> getResults() {
+    public List<MessageDTO> getResults() {
         return results;
     }
 
-    public void setResults(List<Message> results) {
+    public void setResults(List<MessageDTO> results) {
         this.results = results;
     }
     @Override

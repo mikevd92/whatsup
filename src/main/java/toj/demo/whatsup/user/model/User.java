@@ -11,7 +11,6 @@ import java.util.Set;
 /**
  * Created by mihai.popovici on 9/24/2015.
  */
-@XmlRootElement
 public class User implements Serializable,Principal {
 
     private String username;
