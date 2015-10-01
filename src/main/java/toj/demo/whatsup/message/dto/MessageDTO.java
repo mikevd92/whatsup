@@ -1,25 +1,25 @@
-package toj.demo.whatsup.message.model;
+package toj.demo.whatsup.message.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by mihai.popovici on 9/25/2015.
+ * Created by mihai.popovici on 10/1/2015.
  */
-public class Message implements Serializable{
-
+@XmlRootElement
+public class MessageDTO implements Serializable {
     private String message;
 
     private String userName;
 
     private Date creationTimestamp;
 
-    public Message(){
+    public MessageDTO(){
 
     }
 
-    public Message(String message, String userName) {
+    public MessageDTO(String message, String userName) {
         this.message = message;
         this.userName = userName;
         this.creationTimestamp = new Date();
@@ -57,9 +57,9 @@ public class Message implements Serializable{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Message)) return false;
+        if (!(o instanceof MessageDTO)) return false;
 
-        Message message1 = (Message) o;
+        MessageDTO message1 = (MessageDTO) o;
 
         if (getMessage() != null ? !getMessage().equals(message1.getMessage()) : message1.getMessage() != null)
             return false;
