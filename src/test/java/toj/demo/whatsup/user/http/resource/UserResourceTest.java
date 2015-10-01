@@ -1,22 +1,16 @@
 package toj.demo.whatsup.user.http.resource;
 
 import org.junit.Test;
-import org.kubek2k.springockito.annotations.ReplaceWithMock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
-import toj.demo.whatsup.user.http.resource.UserResource;
-import toj.demo.whatsup.user.model.SessionResponse;
-import toj.demo.whatsup.user.model.UserResponse;
 import toj.demo.whatsup.user.service.UserService;
 
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by mihai.popovici on 9/24/2015.

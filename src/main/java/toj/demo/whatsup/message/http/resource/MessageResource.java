@@ -1,14 +1,14 @@
 package toj.demo.whatsup.message.http.resource;
 
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import toj.demo.whatsup.http.filter.Authentication;
 import toj.demo.whatsup.http.filter.Session;
+import toj.demo.whatsup.message.dto.MessageDTO;
 import toj.demo.whatsup.message.model.Message;
-import toj.demo.whatsup.message.model.MessageResponse;
 import toj.demo.whatsup.message.service.MessageService;
 import toj.demo.whatsup.user.model.User;
-import toj.demo.whatsup.user.service.UserSessionService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -30,14 +30,16 @@ import java.util.*;
 @Session
 @Path("/message")
 @Authentication
-public class MessageResource {
+public final class  MessageResource {
 
 
     private final MessageService messageService;
+    private final Mapper mapper;
 
     @Autowired
-    public MessageResource(final MessageService messageService) {
+    public MessageResource(final MessageService messageService,final Mapper mapper) {
         this.messageService = messageService;
+        this.mapper=mapper;
     }
 
     @GET
@@ -59,7 +61,8 @@ public class MessageResource {
     public Response getStatusCall(@Context SecurityContext securityContext) {
         User user = (User)securityContext.getUserPrincipal();
         Message message = messageService.getStatusMessage(user.getUsername());
-        MessageResponse response = new MessageResponse(Collections.singletonList(message));
+        MessageDTO messageDTO=mapper.map(message,MessageDTO.class);
+        MessageResponse response = new MessageResponse(Collections.singletonList(messageDTO));
         //String json = "{\"results\":[{\"message\":\"" + message.getMessage() + "\",\"creationTimestamp\":\"" + message.getCreationTimestamp() + "\"}]}";
         return Response.status(Response.Status.OK).entity(response).build();
     }
@@ -84,7 +87,11 @@ public class MessageResource {
         User user = (User)securityContext.getUserPrincipal();
 
         List<Message> messageList = messageService.getUpdates(date, user.getUsername());
-        MessageResponse response = new MessageResponse(messageList);
+        List<MessageDTO> messageDTOList=new LinkedList<>();
+        for(Message message : messageList){
+            messageDTOList.add(mapper.map(message,MessageDTO.class));
+        }
+        MessageResponse response = new MessageResponse(messageDTOList);
         return Response.status(Response.Status.OK).entity(response).build();
     }
 
@@ -95,7 +102,11 @@ public class MessageResource {
         User user = (User)securityContext.getUserPrincipal();
         Set<User> followers = user.getFollowers();
         List<Message> latestMessages = messageService.getLatestMessages(followers);
-        MessageResponse response = new MessageResponse(latestMessages);
+        List<MessageDTO> messageDTOList=new LinkedList<>();
+        for(Message message : latestMessages){
+            messageDTOList.add(mapper.map(message,MessageDTO.class));
+        }
+        MessageResponse response = new MessageResponse(messageDTOList);
         return Response.status(Response.Status.OK).entity(response).build();
     }
 }

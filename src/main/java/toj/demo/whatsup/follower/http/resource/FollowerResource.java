@@ -25,13 +25,14 @@ import java.util.Optional;
 @Session
 @Authentication
 @Path("/follower")
-public class FollowerResource {
+public final class FollowerResource {
 
-    @Autowired
-    private UserSessionService userSessionService;
 
-    @Autowired
     private UserService userService;
+    @Autowired
+    public FollowerResource(final UserService userService){
+        this.userService=userService;
+    }
 
     @GET
     @Path("/follow")

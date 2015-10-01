@@ -1,23 +1,17 @@
 package toj.demo.whatsup.message.http.resource;
 
-import org.glassfish.jersey.server.ResourceConfig;
+import org.dozer.Mapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import toj.demo.whatsup.http.filter.AuthenticationFilter;
+import toj.demo.whatsup.message.dto.MessageDTO;
 import toj.demo.whatsup.message.model.Message;
-import toj.demo.whatsup.message.model.MessageResponse;
 import toj.demo.whatsup.message.service.MessageService;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
-import toj.demo.whatsup.user.model.SessionResponse;
 import toj.demo.whatsup.user.model.User;
 import toj.demo.whatsup.user.service.UserService;
 import toj.demo.whatsup.user.service.UserSessionService;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
@@ -34,6 +28,8 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private Mapper mapper;
 
 
     @Test
@@ -51,7 +47,7 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         String sessionId=userSessionService.createUserSession(user);
         target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         Response statusResponse=target("message/status").queryParam("sessionId",sessionId).request().get();
-        Message message=statusResponse.readEntity(MessageResponse.class).getResults().get(0);
+        MessageDTO message=statusResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getMessage(),"awesome");
         assertEquals(message.getUserName(),"Mihai");
     }
@@ -63,7 +59,7 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         Date timestamp=new Date();
         Response submitResponse=target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         Response updatesResponse=target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
-        Message message=updatesResponse.readEntity(MessageResponse.class).getResults().get(0);
+        MessageDTO message=updatesResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getUserName(),"Mihai");
         assertEquals(message.getMessage(),"awesome");
     }
@@ -79,16 +75,16 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message","awesome").request().get();
         target("message/submit").queryParam("sessionId",sessionId).queryParam("message","bla").request().get();
         Response latestMessagesResponse=target("message/latestmessages").queryParam("sessionId",tobeFollowedSessionId).request().get();
-        List<Message> latestMessages = new ArrayList<Message>();
+        List<MessageDTO> latestMessages = new ArrayList<MessageDTO>();
         Set<User> followers = toBeFollowed.getFollowers();
         Iterator<User> iterator = followers.iterator();
         while (iterator.hasNext() && latestMessages.size() <= 10) {
             List<Message> userMessages = messageService.getMessages(iterator.next().getUsername());
             if (userMessages.size() > 0) {
-                latestMessages.add(userMessages.get(userMessages.size() - 1));
+                latestMessages.add(mapper.map(userMessages.get(userMessages.size() - 1), MessageDTO.class));
             }
             if (userMessages.size() > 1) {
-                latestMessages.add(userMessages.get(userMessages.size() - 2));
+                latestMessages.add(mapper.map(userMessages.get(userMessages.size() - 2), MessageDTO.class));
             }
         }
         assertEquals(latestMessagesResponse.readEntity(MessageResponse.class).getResults(),latestMessages);
