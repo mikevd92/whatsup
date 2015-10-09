@@ -1,11 +1,8 @@
 package toj.demo.whatsup.user.http.resource;
 
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import toj.demo.whatsup.user.dto.CredentialsDTO;
-import toj.demo.whatsup.user.dto.SessionDTO;
-import toj.demo.whatsup.user.model.*;
+import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.service.UserService;
 import toj.demo.whatsup.user.service.UserSessionService;
 
@@ -21,19 +18,18 @@ public final class UserResource {
 
     private final UserService userService;
     private final UserSessionService userSessionService;
-    private final Mapper mapper;
+
     @Autowired
-    public UserResource(final UserService userService,final UserSessionService userSessionService,final Mapper mapper){
-        this.userService=userService;
-        this.userSessionService=userSessionService;
-        this.mapper=mapper;
+    public UserResource(final UserService userService, final UserSessionService userSessionService) {
+        this.userService = userService;
+        this.userSessionService = userSessionService;
     }
+
     @PUT
     @Path("/signup")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response signup(CredentialsDTO credentialsDTO) {
-        Credentials credentials=mapper.map(credentialsDTO,Credentials.class);
+    public Response signup(Credentials credentials) {
         final Optional<User> user = userService.get(credentials.getUsername());
         if (user.isPresent()) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -46,20 +42,20 @@ public final class UserResource {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(CredentialsDTO credentialsDTO){
-        Credentials credentials=mapper.map(credentialsDTO,Credentials.class);
-        if(!userService.checkUser(credentials)){
+    public Response login(Credentials credentials) {
+
+        if (!userService.checkUser(credentials)) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
-        User user=userService.get(credentials.getUsername()).get();
-        if(userSessionService.userExists(user)) {
+        User user = userService.get(credentials.getUsername()).get();
+        if (userSessionService.userExists(user)) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
-        String sessionId=userSessionService.createUserSession(user);
-                //String json="{\"results\":[{\"sessionId\":\""+sessionId+"\",\"userName\":\"" + user.getUsername() + "\"}]}";
-        SessionResponse sessionResponse=new SessionResponse(new SessionDTO(sessionId,user.getUsername()));
+        String sessionId = userSessionService.createUserSession(user);
+        //String json="{\"results\":[{\"sessionId\":\""+sessionId+"\",\"userName\":\"" + user.getUsername() + "\"}]}";
+        SessionResponse sessionResponse = new SessionResponse(new SessionDTO(sessionId, user.getUsername()));
         return Response.status(Response.Status.OK).entity(sessionResponse).build();
     }
 }

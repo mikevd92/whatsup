@@ -23,8 +23,8 @@ public class SessionFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
-        String sessionId=containerRequestContext.getUriInfo().getQueryParameters().getFirst("sessionId");
-        if(sessionId==null){
+        String sessionId = containerRequestContext.getUriInfo().getQueryParameters().getFirst("sessionId");
+        if (sessionId == null) {
             containerRequestContext.abortWith(Response.status(Response.Status.BAD_REQUEST).build());
         }
     }

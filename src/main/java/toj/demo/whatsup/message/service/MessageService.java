@@ -1,7 +1,7 @@
 package toj.demo.whatsup.message.service;
 
-import toj.demo.whatsup.message.model.Message;
-import toj.demo.whatsup.user.model.User;
+import toj.demo.whatsup.domain.Message;
+import toj.demo.whatsup.domain.User;
 
 import java.util.Date;
 import java.util.List;
@@ -11,13 +11,19 @@ import java.util.Set;
  * Created by mihai.popovici on 9/25/2015.
  */
 public interface MessageService {
-    //private LinkedHashMap<String,List<Message>> messages;
-    void addNewMessage(Message message, String userName);
 
-    Message getStatusMessage(String userName);
+    void addNewMessage(Message message, User user);
 
-    List<Message> getUpdates(Date timestamp, String userName);
-    List<Message> getMessages(String userName);
+    void removeMessage(Message message);
+
+    Message getStatusMessage(User user);
+
+    Message getMessageByUserAndContent(User user,String content);
+
+    List<Message> getUpdates(Date timestamp, User user);
+
+    List<Message> getMessages(User user);
+
     List<Message> getLatestMessages(Set<User> users);
 
 }
