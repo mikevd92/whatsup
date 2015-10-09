@@ -1,8 +1,5 @@
 package toj.demo.whatsup.message.http.resource;
 
-import toj.demo.whatsup.message.dto.MessageDTO;
-import toj.demo.whatsup.message.model.Message;
-
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 

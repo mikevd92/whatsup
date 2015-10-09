@@ -1,7 +1,5 @@
 package toj.demo.whatsup.user.http.resource;
 
-import toj.demo.whatsup.user.dto.SessionDTO;
-
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Collections;
@@ -11,11 +9,11 @@ import java.util.List;
  * Created by mihai.popovici on 9/28/2015.
  */
 @XmlRootElement
-public class SessionResponse implements Serializable{
+public class SessionResponse implements Serializable {
 
     private List<SessionDTO> results;
 
-    public SessionResponse(){
+    public SessionResponse() {
 
     }
 
@@ -30,6 +28,7 @@ public class SessionResponse implements Serializable{
     public void setResults(List<SessionDTO> results) {
         this.results = results;
     }
+
     @Override
     public String toString() {
         return "{\"results\":\"" + results + "\"}";

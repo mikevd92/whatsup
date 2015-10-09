@@ -2,9 +2,8 @@ package toj.demo.whatsup.follower.http.resource;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import toj.demo.whatsup.message.service.MessageService;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
-import toj.demo.whatsup.user.model.User;
+import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.service.UserService;
 import toj.demo.whatsup.user.service.UserSessionService;
 
@@ -36,7 +35,10 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
         User toBeFollowed=userService.get("Adi").get();
         userSessionService.createUserSession(toBeFollowed);
         Response response=target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
+
         assertEquals(response.getStatusInfo(), Response.Status.OK);
+        userService.remove("Mihai");
+        userService.remove("Adi");
     }
 
     @Test
@@ -50,6 +52,8 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
         target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
         Response response=target("follower/unsubscribe").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
         assertEquals(response.getStatusInfo(),Response.Status.OK);
+        userService.remove("Mihai");
+        userService.remove("Adi");
     }
 
 }

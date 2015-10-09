@@ -1,7 +1,7 @@
 package toj.demo.whatsup.user.service;
 
-import toj.demo.whatsup.user.model.Credentials;
-import toj.demo.whatsup.user.model.User;
+import toj.demo.whatsup.user.http.resource.Credentials;
+import toj.demo.whatsup.domain.User;
 
 import java.util.Optional;
 
@@ -10,12 +10,19 @@ import java.util.Optional;
  */
 public interface UserService {
     Optional<User> get(String name);
-    void signup(String name,String password);
+
+    void signup(String name, String password);
+
     void signup(Credentials credentials);
+
     boolean has(User user);
+
     boolean has(String name);
-    boolean checkUser(String name,String password);
+
+    boolean checkUser(String name, String password);
+
     boolean checkUser(Credentials credentials);
+
     void remove(String name);
 
 }

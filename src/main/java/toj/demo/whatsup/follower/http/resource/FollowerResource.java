@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import toj.demo.whatsup.http.filter.Authentication;
 import toj.demo.whatsup.http.filter.Session;
-import toj.demo.whatsup.user.model.User;
+import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.service.UserService;
-import toj.demo.whatsup.user.service.UserSessionService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -29,21 +28,23 @@ public final class FollowerResource {
 
 
     private UserService userService;
+
     @Autowired
-    public FollowerResource(final UserService userService){
-        this.userService=userService;
+    public FollowerResource(final UserService userService) {
+        this.userService = userService;
     }
 
     @GET
     @Path("/follow")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response follow(@QueryParam("userName") String userName,@Context SecurityContext securityContext) {
+    public Response follow(@QueryParam("userName") String userName, @Context SecurityContext securityContext) {
         if (userName == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
         Optional<User> toBeFollowed = userService.get(userName);
-        User follower = (User)securityContext.getUserPrincipal();;
+        User follower = (User) securityContext.getUserPrincipal();
+        ;
         if (!toBeFollowed.isPresent()) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -55,14 +56,14 @@ public final class FollowerResource {
     @GET
     @Path("/unsubscribe")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response unfollow(@QueryParam("userName") String userName,@Context SecurityContext securityContext) {
+    public Response unfollow(@QueryParam("userName") String userName, @Context SecurityContext securityContext) {
         if (userName == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
         Optional<User> toBeUnFollowed = userService.get(userName);
-        User follower = (User)securityContext.getUserPrincipal();
-        if (!toBeUnFollowed.isPresent() ) {
+        User follower = (User) securityContext.getUserPrincipal();
+        if (!toBeUnFollowed.isPresent()) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 

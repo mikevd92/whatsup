@@ -31,8 +31,12 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
 
     @Test
     public void testReturnsCreatedOnCorrectRequest() {
+        if(userService.has("Mihai")){
+            userService.remove("Mihai");
+        }
         final Response response = target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
         assertEquals(Response.Status.CREATED, response.getStatusInfo());
+        userService.remove("Mihai");
     }
 
     @Test
@@ -42,6 +46,7 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
         }
         final Response response=target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
         assertEquals(response.getStatusInfo(),Response.Status.CREATED);
+        userService.remove("Mihai");
     }
 
     @Test

@@ -1,6 +1,6 @@
 package toj.demo.whatsup.user.service;
 
-import toj.demo.whatsup.user.model.User;
+import toj.demo.whatsup.domain.User;
 
 import java.util.Optional;
 
