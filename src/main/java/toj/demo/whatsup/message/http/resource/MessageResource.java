@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import toj.demo.whatsup.http.filter.Authentication;
 import toj.demo.whatsup.http.filter.Session;
-import toj.demo.whatsup.message.dto.MessageDTO;
-import toj.demo.whatsup.message.model.Message;
+import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.message.service.MessageService;
-import toj.demo.whatsup.user.model.User;
+import toj.demo.whatsup.domain.User;
+import toj.demo.whatsup.user.http.resource.UserDTO;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -28,30 +28,30 @@ import java.util.*;
  */
 @Component
 @Session
-@Path("/message")
 @Authentication
-public final class  MessageResource {
+@Path("/message")
+public final class MessageResource {
 
 
     private final MessageService messageService;
     private final Mapper mapper;
 
     @Autowired
-    public MessageResource(final MessageService messageService,final Mapper mapper) {
+    public MessageResource(final MessageService messageService, final Mapper mapper) {
         this.messageService = messageService;
-        this.mapper=mapper;
+        this.mapper = mapper;
     }
 
     @GET
     @Path("/submit")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response submitMessage(@QueryParam("message") String msg,@Context SecurityContext securityContext) {
+    public Response submitMessage(@QueryParam("message") String msg, @Context SecurityContext securityContext) {
         if (msg == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        User user = (User)securityContext.getUserPrincipal();
-        Message message = new Message(msg, user.getUsername());
-        messageService.addNewMessage(message, user.getUsername());
+        User user = (User) securityContext.getUserPrincipal();
+        Message message = new Message(msg, user);
+        messageService.addNewMessage(message, user);
         return Response.status(Response.Status.OK).build();
     }
 
@@ -59,18 +59,19 @@ public final class  MessageResource {
     @Path("/status")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStatusCall(@Context SecurityContext securityContext) {
-        User user = (User)securityContext.getUserPrincipal();
-        Message message = messageService.getStatusMessage(user.getUsername());
-        MessageDTO messageDTO=mapper.map(message,MessageDTO.class);
+        User user = (User) securityContext.getUserPrincipal();
+        Message message = messageService.getStatusMessage(user);
+        MessageDTO messageDTO = mapper.map(message, MessageDTO.class);
+        UserDTO userDTO=mapper.map(user,UserDTO.class);
+        messageDTO.setUserDTO(userDTO);
         MessageResponse response = new MessageResponse(Collections.singletonList(messageDTO));
-        //String json = "{\"results\":[{\"message\":\"" + message.getMessage() + "\",\"creationTimestamp\":\"" + message.getCreationTimestamp() + "\"}]}";
         return Response.status(Response.Status.OK).entity(response).build();
     }
 
     @GET
     @Path("/updates")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUpdates(@QueryParam("timestamp") String timestamp,@Context SecurityContext securityContext) {
+    public Response getUpdates(@QueryParam("timestamp") String timestamp, @Context SecurityContext securityContext) {
         if (timestamp == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -79,17 +80,19 @@ public final class  MessageResource {
         try {
             date = format.parse(timestamp);
         } catch (ParseException e) {
-            //e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
 
-        User user = (User)securityContext.getUserPrincipal();
+        User user = (User) securityContext.getUserPrincipal();
 
-        List<Message> messageList = messageService.getUpdates(date, user.getUsername());
-        List<MessageDTO> messageDTOList=new LinkedList<>();
-        for(Message message : messageList){
-            messageDTOList.add(mapper.map(message,MessageDTO.class));
+        List<Message> messageList = messageService.getUpdates(date, user);
+        List<MessageDTO> messageDTOList = new LinkedList<>();
+        UserDTO userDTO=mapper.map(user,UserDTO.class);
+        for (Message message : messageList) {
+            MessageDTO messageDTO=mapper.map(message, MessageDTO.class);
+            messageDTO.setUserDTO(userDTO);
+            messageDTOList.add(messageDTO);
         }
         MessageResponse response = new MessageResponse(messageDTOList);
         return Response.status(Response.Status.OK).entity(response).build();
@@ -99,12 +102,15 @@ public final class  MessageResource {
     @Path("/latestmessages")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getLatestMessages(@Context SecurityContext securityContext) {
-        User user = (User)securityContext.getUserPrincipal();
+        User user = (User) securityContext.getUserPrincipal();
         Set<User> followers = user.getFollowers();
         List<Message> latestMessages = messageService.getLatestMessages(followers);
-        List<MessageDTO> messageDTOList=new LinkedList<>();
-        for(Message message : latestMessages){
-            messageDTOList.add(mapper.map(message,MessageDTO.class));
+        List<MessageDTO> messageDTOList = new LinkedList<>();
+        for (Message message : latestMessages) {
+            MessageDTO messageDTO=mapper.map(message, MessageDTO.class);
+            UserDTO userDTO=mapper.map(message.getUser(),UserDTO.class);
+            messageDTO.setUserDTO(userDTO);
+            messageDTOList.add(messageDTO);
         }
         MessageResponse response = new MessageResponse(messageDTOList);
         return Response.status(Response.Status.OK).entity(response).build();

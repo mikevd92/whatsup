@@ -3,11 +3,11 @@ package toj.demo.whatsup.message.http.resource;
 import org.dozer.Mapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import toj.demo.whatsup.message.dto.MessageDTO;
-import toj.demo.whatsup.message.model.Message;
+import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.message.service.MessageService;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
-import toj.demo.whatsup.user.model.User;
+import toj.demo.whatsup.domain.User;
+import toj.demo.whatsup.user.http.resource.UserDTO;
 import toj.demo.whatsup.user.service.UserService;
 import toj.demo.whatsup.user.service.UserSessionService;
 
@@ -31,7 +31,6 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
     @Autowired
     private Mapper mapper;
 
-
     @Test
     public void testSubmitMessage(){
         userService.signup("Mihai","password");
@@ -39,6 +38,8 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         String sessionId=userSessionService.createUserSession(user);
         Response messageResponse=target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         assertEquals(messageResponse.getStatusInfo(), Response.Status.OK);
+        messageService.removeMessage(messageService.getMessageByUserAndContent(user, "awesome"));
+        userService.remove("Mihai");
     }
     @Test
     public void testGetStatusCall(){
@@ -48,8 +49,10 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         Response statusResponse=target("message/status").queryParam("sessionId",sessionId).request().get();
         MessageDTO message=statusResponse.readEntity(MessageResponse.class).getResults().get(0);
-        assertEquals(message.getMessage(),"awesome");
-        assertEquals(message.getUserName(),"Mihai");
+        assertEquals(message.getMessage(), "awesome");
+        assertEquals(message.getUserDTO().getUsername(), "Mihai");
+        messageService.removeMessage(messageService.getMessageByUserAndContent(user, "awesome"));
+        userService.remove("Mihai");
     }
     @Test
     public void testUpdates(){
@@ -60,8 +63,10 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         Response submitResponse=target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         Response updatesResponse=target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
         MessageDTO message=updatesResponse.readEntity(MessageResponse.class).getResults().get(0);
-        assertEquals(message.getUserName(),"Mihai");
-        assertEquals(message.getMessage(),"awesome");
+        assertEquals(message.getUserDTO().getUsername(),"Mihai");
+        assertEquals(message.getMessage(), "awesome");
+        messageService.removeMessage(messageService.getMessageByUserAndContent(user, "awesome"));
+        userService.remove("Mihai");
     }
     @Test
     public void testLatestMessages(){
@@ -79,14 +84,27 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         Set<User> followers = toBeFollowed.getFollowers();
         Iterator<User> iterator = followers.iterator();
         while (iterator.hasNext() && latestMessages.size() <= 10) {
-            List<Message> userMessages = messageService.getMessages(iterator.next().getUsername());
+            List<Message> userMessages = messageService.getMessages(iterator.next());
             if (userMessages.size() > 0) {
-                latestMessages.add(mapper.map(userMessages.get(userMessages.size() - 1), MessageDTO.class));
+                Message message=userMessages.get(userMessages.size() - 1);
+                MessageDTO messageDTO=mapper.map(message, MessageDTO.class);
+                UserDTO userDTO=mapper.map(message.getUser(), UserDTO.class);
+                messageDTO.setUserDTO(userDTO);
+                latestMessages.add(messageDTO);
             }
             if (userMessages.size() > 1) {
-                latestMessages.add(mapper.map(userMessages.get(userMessages.size() - 2), MessageDTO.class));
+                Message message=userMessages.get(userMessages.size() - 2);
+                MessageDTO messageDTO=mapper.map(message, MessageDTO.class);
+                UserDTO userDTO=mapper.map(message.getUser(), UserDTO.class);
+                messageDTO.setUserDTO(userDTO);
+                latestMessages.add(messageDTO);
             }
         }
-        assertEquals(latestMessagesResponse.readEntity(MessageResponse.class).getResults(),latestMessages);
+
+        assertEquals(latestMessagesResponse.readEntity(MessageResponse.class).getResults(), latestMessages);
+        messageService.removeMessage(messageService.getMessageByUserAndContent(follower, "awesome"));
+        messageService.removeMessage(messageService.getMessageByUserAndContent(follower, "bla"));
+        userService.remove("Mihai");
+        userService.remove("Adi");
     }
 }

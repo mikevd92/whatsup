@@ -1,6 +1,6 @@
 package toj.demo.whatsup.user.service;
 
-import toj.demo.whatsup.user.model.User;
+import toj.demo.whatsup.domain.User;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Created by mihai.popovici on 9/25/2015.
  */
-public class InMemoryUserSessionService implements UserSessionService{
+public class InMemoryUserSessionService implements UserSessionService {
     private HashMap<String, User> userSessions;
 
     public InMemoryUserSessionService() {
@@ -18,7 +18,7 @@ public class InMemoryUserSessionService implements UserSessionService{
 
     @Override
     public String createUserSession(User user) {
-        String sessionId=UUID.randomUUID().toString();
+        String sessionId = UUID.randomUUID().toString();
         userSessions.put(sessionId, user);
         return sessionId;
     }

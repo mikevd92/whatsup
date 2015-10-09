@@ -1,7 +1,7 @@
 package toj.demo.whatsup.user.service;
 
-import toj.demo.whatsup.user.model.Credentials;
-import toj.demo.whatsup.user.model.User;
+import toj.demo.whatsup.domain.User;
+import toj.demo.whatsup.user.http.resource.Credentials;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -11,9 +11,10 @@ import java.util.Optional;
  */
 public class InMemoryUserService implements UserService {
 
-    private HashMap<String,User> users;
-    public InMemoryUserService(){
-        users=new HashMap<String,User>();
+    private HashMap<String, User> users;
+
+    public InMemoryUserService() {
+        users = new HashMap<String, User>();
     }
 
 
@@ -23,15 +24,15 @@ public class InMemoryUserService implements UserService {
     }
 
     @Override
-    public void signup(String name,String password) {
-        User user=new User(name,password);
-        users.put(user.getUsername(),user);
+    public void signup(String name, String password) {
+        User user = new User(name, password);
+        users.put(user.getUsername(), user);
     }
 
     @Override
     public void signup(Credentials credentials) {
-        User user=new User(credentials.getUsername(),credentials.getPassword());
-        users.put(user.getUsername(),user);
+        User user = new User(credentials.getUsername(), credentials.getPassword());
+        users.put(user.getUsername(), user);
     }
 
     @Override
@@ -46,18 +47,18 @@ public class InMemoryUserService implements UserService {
 
     @Override
     public boolean checkUser(String name, String password) {
-        if(!users.containsKey(name)) {
+        if (!users.containsKey(name)) {
             return false;
-        }else{
+        } else {
             return users.get(name).getPassword().equals(password);
         }
     }
 
     @Override
     public boolean checkUser(Credentials credentials) {
-        if(!users.containsKey(credentials.getUsername())) {
+        if (!users.containsKey(credentials.getUsername())) {
             return false;
-        }else{
+        } else {
             return users.get(credentials.getUsername()).getPassword().equals(credentials.getPassword());
         }
     }
