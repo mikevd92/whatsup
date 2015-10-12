@@ -36,7 +36,7 @@ import javax.ws.rs.core.Application;
         loader = SpringockitoContextLoader.class,
         locations = {
                 "classpath:jersey-spring-applicationContext.xml",
-                "classpath:/toj/demo/whatsup/http/resource/resources.xml"
+                "classpath:/toj/demo/whatsup/http/resource/resources-test.xml"
         }
 )
 @TestExecutionListeners({
