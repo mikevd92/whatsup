@@ -30,7 +30,7 @@
         <property name="persistenceUnitName" value="testPU" />
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
-        <property name="packagesToScan" value="toj.demo.whatsup"/>
+        <property name="packagesToScan" value="toj.demo.whatsup.domain"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
