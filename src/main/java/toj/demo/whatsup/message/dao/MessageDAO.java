@@ -14,7 +14,7 @@ import java.util.Set;
 
 public interface MessageDAO extends ObjectDAO<Message,Long> {
     public Message getMessageByUser(User user);
-    public Message getMessageByUserAndContent(User user,String content);
+    public void removeAll();
     public List<Message> getMessagesByUser(User user);
     public List<Message> getUpdates(Date date,User user);
     public List<Message> getMessagesByUsers(Set<User> users);

@@ -10,10 +10,6 @@ import java.util.Optional;
 public interface UserSessionService {
     String createUserSession(User user);
 
-    void removeUserSession(String sessionId);
-
-    boolean userSessionExists(String sessionId);
-
     Optional<User> getUserBySession(String sessionId);
 
     boolean userExists(User user);

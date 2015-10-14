@@ -22,25 +22,6 @@ public class UserDTO implements Serializable {
         followers = new LinkedHashSet<UserDTO>();
     }
 
-
-    public UserDTO(String username, String password) {
-        this.username = username;
-        this.password = password;
-        followers = new LinkedHashSet<UserDTO>();
-    }
-
-    public void addFollower(UserDTO user) {
-        followers.add(user);
-    }
-
-    public void removeFollower(UserDTO user) {
-        followers.remove(user);
-    }
-
-    public Set<UserDTO> getFollowers() {
-        return followers;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -75,11 +56,6 @@ public class UserDTO implements Serializable {
         int result = getUsername() != null ? getUsername().hashCode() : 0;
         result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
     }
 
 }

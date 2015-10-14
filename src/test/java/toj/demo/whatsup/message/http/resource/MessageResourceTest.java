@@ -1,8 +1,12 @@
 package toj.demo.whatsup.message.http.resource;
 
 import org.dozer.Mapper;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.kubek2k.springockito.annotations.ReplaceWithMock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.message.service.MessageService;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
@@ -18,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by mihai.popovici on 9/28/2015.
  */
+@ContextConfiguration
 public class MessageResourceTest extends SpringManagedResourceTest<MessageResource> {
 
     @Autowired
@@ -28,55 +33,56 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private Mapper mapper;
 
+    private User user;
+    private String sessionId;
+    private User toBeFollowed;
+    private String tobeFollowedSessionId;
+
+    @Before
+    public void initialize(){
+        userService.signup("Mihai", "password");
+        user=userService.get("Mihai").get();
+        sessionId=userSessionService.createUserSession(user);
+        userService.signup("Adi", "password");
+        toBeFollowed=userService.get("Adi").get();
+        tobeFollowedSessionId=userSessionService.createUserSession(toBeFollowed);
+        toBeFollowed.addFollower(user);
+    }
+    @After
+    public void after(){
+        messageService.removeAll();
+        userService.removeAll();
+    }
+
     @Test
     public void testSubmitMessage(){
-        userService.signup("Mihai","password");
-        User user=userService.get("Mihai").get();
-        String sessionId=userSessionService.createUserSession(user);
         Response messageResponse=target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         assertEquals(messageResponse.getStatusInfo(), Response.Status.OK);
-        messageService.removeMessage(messageService.getMessageByUserAndContent(user, "awesome"));
-        userService.remove("Mihai");
     }
     @Test
     public void testGetStatusCall(){
-        userService.signup("Mihai", "password");
-        User user=userService.get("Mihai").get();
-        String sessionId=userSessionService.createUserSession(user);
         target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
-        Response statusResponse=target("message/status").queryParam("sessionId",sessionId).request().get();
-        MessageDTO message=statusResponse.readEntity(MessageResponse.class).getResults().get(0);
+        Response statusResponse=target("message/status").queryParam("sessionId", sessionId).request().get();
+        MessageDTO message = statusResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getMessage(), "awesome");
         assertEquals(message.getUserDTO().getUsername(), "Mihai");
-        messageService.removeMessage(messageService.getMessageByUserAndContent(user, "awesome"));
-        userService.remove("Mihai");
+
     }
     @Test
     public void testUpdates(){
-        userService.signup("Mihai", "password");
-        User user=userService.get("Mihai").get();
-        String sessionId=userSessionService.createUserSession(user);
         Date timestamp=new Date();
         Response submitResponse=target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         Response updatesResponse=target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
         MessageDTO message=updatesResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getUserDTO().getUsername(),"Mihai");
         assertEquals(message.getMessage(), "awesome");
-        messageService.removeMessage(messageService.getMessageByUserAndContent(user, "awesome"));
-        userService.remove("Mihai");
     }
     @Test
     public void testLatestMessages(){
-        userService.signup("Mihai","password");
-        User follower=userService.get("Mihai").get();
-        String sessionId=userSessionService.createUserSession(follower);
-        userService.signup("Adi", "password");
-        User toBeFollowed=userService.get("Adi").get();
-        String tobeFollowedSessionId=userSessionService.createUserSession(toBeFollowed);
-        toBeFollowed.addFollower(follower);
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message","awesome").request().get();
         target("message/submit").queryParam("sessionId",sessionId).queryParam("message","bla").request().get();
         Response latestMessagesResponse=target("message/latestmessages").queryParam("sessionId",tobeFollowedSessionId).request().get();
@@ -100,11 +106,6 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
                 latestMessages.add(messageDTO);
             }
         }
-
         assertEquals(latestMessagesResponse.readEntity(MessageResponse.class).getResults(), latestMessages);
-        messageService.removeMessage(messageService.getMessageByUserAndContent(follower, "awesome"));
-        messageService.removeMessage(messageService.getMessageByUserAndContent(follower, "bla"));
-        userService.remove("Mihai");
-        userService.remove("Adi");
     }
 }

@@ -51,7 +51,7 @@ public final class MessageResource {
         }
         User user = (User) securityContext.getUserPrincipal();
         Message message = new Message(msg, user);
-        messageService.addNewMessage(message, user);
+        messageService.addNewMessage(message);
         return Response.status(Response.Status.OK).build();
     }
 

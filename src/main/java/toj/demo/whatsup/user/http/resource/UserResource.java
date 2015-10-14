@@ -29,12 +29,12 @@ public final class UserResource {
     @Path("/signup")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response signup(Credentials credentials) {
-        final Optional<User> user = userService.get(credentials.getUsername());
+    public Response signup(CredentialsDTO credentialsDTO) {
+        final Optional<User> user = userService.get(credentialsDTO.getUsername());
         if (user.isPresent()) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        userService.signup(credentials);
+        userService.signup(credentialsDTO);
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -42,13 +42,13 @@ public final class UserResource {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(Credentials credentials) {
+    public Response login(CredentialsDTO credentialsDTO) {
 
-        if (!userService.checkUser(credentials)) {
+        if (!userService.checkUser(credentialsDTO)) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
-        User user = userService.get(credentials.getUsername()).get();
+        User user = userService.get(credentialsDTO.getUsername()).get();
         if (userSessionService.userExists(user)) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
