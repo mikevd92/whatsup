@@ -23,9 +23,6 @@ public class MessageResponse {
         return results;
     }
 
-    public void setResults(List<MessageDTO> results) {
-        this.results = results;
-    }
     @Override
     public String toString() {
         return "{\"results\":\"" + results + "\"}";

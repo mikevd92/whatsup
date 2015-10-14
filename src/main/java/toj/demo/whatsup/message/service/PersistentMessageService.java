@@ -23,14 +23,8 @@ public class PersistentMessageService implements MessageService {
     }
 
     @Override
-    public void addNewMessage(Message message, User user) {
-        message.setUser(user);
+    public void addNewMessage(Message message) {
         messageDAO.save(message);
-    }
-
-    @Override
-    public void removeMessage(Message message) {
-        messageDAO.delete(message);
     }
 
     @Override
@@ -38,9 +32,10 @@ public class PersistentMessageService implements MessageService {
         return messageDAO.getMessageByUser(user);
     }
 
+
     @Override
-    public Message getMessageByUserAndContent(User user, String content) {
-        return messageDAO.getMessageByUserAndContent(user,content);
+    public void removeAll() {
+        messageDAO.removeAll();
     }
 
     @Override

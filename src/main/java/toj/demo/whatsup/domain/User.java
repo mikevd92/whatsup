@@ -54,16 +54,8 @@ public class User implements Principal {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @Override
@@ -94,11 +86,6 @@ public class User implements Principal {
     @Override
     public boolean implies(Subject subject) {
         return false;
-    }
-
-    @Override
-    public String toString() {
-        return "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
     }
 
 }

@@ -24,18 +24,8 @@ public class MessageDTO implements Serializable {
 
     }
 
-    public MessageDTO(String message, UserDTO user) {
-        this.message = message;
-        this.user = user;
-        this.creationTimestamp = new Date();
-    }
-
     public Date getCreationTimestamp() {
         return creationTimestamp;
-    }
-
-    public void setCreationTimestamp(Date creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
     }
 
     public UserDTO getUserDTO() {

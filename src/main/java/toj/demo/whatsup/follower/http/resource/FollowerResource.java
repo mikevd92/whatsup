@@ -44,7 +44,6 @@ public final class FollowerResource {
 
         Optional<User> toBeFollowed = userService.get(userName);
         User follower = (User) securityContext.getUserPrincipal();
-        ;
         if (!toBeFollowed.isPresent()) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

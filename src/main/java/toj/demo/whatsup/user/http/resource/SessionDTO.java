@@ -26,21 +26,8 @@ public class SessionDTO implements Serializable {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getSessionId() {
         return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    @Override
-    public String toString() {
-        return "{\"sessionId\":\""+sessionId+"\",\"username\":\""+userName+"\"}";
     }
 
 }

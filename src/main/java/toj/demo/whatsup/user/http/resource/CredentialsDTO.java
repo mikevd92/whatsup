@@ -7,19 +7,10 @@ import java.io.Serializable;
  * Created by mihai.popovici on 10/1/2015.
  */
 @XmlRootElement
-public class Credentials implements Serializable {
+public class CredentialsDTO implements Serializable {
     private String username;
 
     private String password;
-
-    public Credentials() {
-
-    }
-
-    public Credentials(String password, String username) {
-        this.password = password;
-        this.username = username;
-    }
 
     public String getPassword() {
         return password;

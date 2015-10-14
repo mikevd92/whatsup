@@ -13,8 +13,6 @@
   http://www.springframework.org/schema/tx
   http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-
-
        <context:component-scan base-package="toj.demo.whatsup" />
 
        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"

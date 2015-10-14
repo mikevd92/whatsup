@@ -48,8 +48,8 @@ public class MessageDAOImpl implements MessageDAO {
     }
 
     @Override
-    public Message getMessageByUserAndContent(User user, String content) {
-        return entityManager.createQuery("select m from Messages m where m.user = :user and m.message = :msg ORDER BY m.creationTimestamp desc",Message.class).setParameter("user",user).setParameter("msg",content).getResultList().get(0);
+    public void removeAll() {
+        entityManager.createQuery("DELETE FROM Messages m").executeUpdate();
     }
 
     @Override

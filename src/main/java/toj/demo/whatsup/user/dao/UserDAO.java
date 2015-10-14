@@ -10,6 +10,7 @@ public interface UserDAO extends ObjectDAO<User, Long> {
     public boolean checkUser(String name, String password);
 
     public User findUserByName(String name);
+    public void removeAll();
 
     public boolean contains(String name);
 
