@@ -24,16 +24,6 @@ public class InMemoryUserSessionService implements UserSessionService {
     }
 
     @Override
-    public void removeUserSession(String idSession) {
-        userSessions.remove(idSession);
-    }
-
-    @Override
-    public boolean userSessionExists(String idSession) {
-        return userSessions.containsKey(idSession);
-    }
-
-    @Override
     public Optional<User> getUserBySession(String idSession) {
         return Optional.ofNullable(userSessions.get(idSession));
     }

@@ -35,26 +35,13 @@ public class Message implements Serializable {
         return creationTimestamp;
     }
 
-    public void setCreationTimestamp(Date creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
-    }
-
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getMessage() {
         return message;
     }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
 
     @Override
     public boolean equals(Object o) {

@@ -1,6 +1,9 @@
 package toj.demo.whatsup.user.http.resource;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.kubek2k.springockito.annotations.ReplaceWithMock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
@@ -19,10 +22,13 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration
 public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
 
-
     @Autowired
     private UserService userService;
 
+    @After
+    public void after(){
+        userService.removeAll();
+    }
     @Test
     public void testAcceptsOnlyJson() {
         final Response response = target("user/signup").request().put(Entity.text(""));
@@ -31,31 +37,23 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
 
     @Test
     public void testReturnsCreatedOnCorrectRequest() {
-        if(userService.has("Mihai")){
-            userService.remove("Mihai");
-        }
+
         final Response response = target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
         assertEquals(Response.Status.CREATED, response.getStatusInfo());
-        userService.remove("Mihai");
+
     }
 
     @Test
     public void testReturnsUserDetailsWhenUserCreated() {
-        if(userService.has("Mihai")){
-            userService.remove("Mihai");
-        }
         final Response response=target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
         assertEquals(response.getStatusInfo(),Response.Status.CREATED);
-        userService.remove("Mihai");
     }
 
     @Test
-    public void testLoginsAfterUserCreated()
-    {
+    public void testLoginsAfterUserCreated() {
         target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
         final Response response=target("user/login").request().post(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
         assertEquals(response.readEntity(SessionResponse.class).getResults().get(0).getUserName(),"Mihai");
-        //assertTrue(response.readEntity(String.class).startsWith("{\"results\":[{\"sessionId\":\""));
     }
 
 

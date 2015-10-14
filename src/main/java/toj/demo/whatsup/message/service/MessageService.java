@@ -12,13 +12,11 @@ import java.util.Set;
  */
 public interface MessageService {
 
-    void addNewMessage(Message message, User user);
-
-    void removeMessage(Message message);
+    void addNewMessage(Message message);
 
     Message getStatusMessage(User user);
 
-    Message getMessageByUserAndContent(User user,String content);
+    void removeAll();
 
     List<Message> getUpdates(Date timestamp, User user);
 

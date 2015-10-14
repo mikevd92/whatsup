@@ -1,6 +1,6 @@
 package toj.demo.whatsup.user.service;
 
-import toj.demo.whatsup.user.http.resource.Credentials;
+import toj.demo.whatsup.user.http.resource.CredentialsDTO;
 import toj.demo.whatsup.domain.User;
 
 import java.util.Optional;
@@ -13,16 +13,10 @@ public interface UserService {
 
     void signup(String name, String password);
 
-    void signup(Credentials credentials);
+    void signup(CredentialsDTO credentialsDTO);
 
-    boolean has(User user);
+    boolean checkUser(CredentialsDTO credentialsDTO);
 
-    boolean has(String name);
-
-    boolean checkUser(String name, String password);
-
-    boolean checkUser(Credentials credentials);
-
-    void remove(String name);
+    void removeAll();
 
 }

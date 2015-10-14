@@ -25,9 +25,6 @@ public class SessionResponse implements Serializable {
         return results;
     }
 
-    public void setResults(List<SessionDTO> results) {
-        this.results = results;
-    }
 
     @Override
     public String toString() {

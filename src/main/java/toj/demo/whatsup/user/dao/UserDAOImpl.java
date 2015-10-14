@@ -52,6 +52,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public void removeAll() {
+        entityManager.createQuery("DELETE FROM Users u").executeUpdate();
+    }
+
+    @Override
     public boolean contains(String name) {
         try {
             User user = entityManager.createQuery("select u from Users u where u.username = :username", User.class).setParameter("username", name).getSingleResult();
