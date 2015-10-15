@@ -21,12 +21,8 @@ public abstract class JpaDAO<T,ID extends Serializable> implements DAO<T,ID> {
     protected EntityManager entityManager;
     @SuppressWarnings("unchecked")
     public JpaDAO()  {
-        try {
-            ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
-            this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
-        } catch (Exception ex) {
-
-        }
+        ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
     }
     public void delete(T deleted){
         entityManager.remove(entityManager.contains(deleted) ? deleted : entityManager.merge(deleted));
