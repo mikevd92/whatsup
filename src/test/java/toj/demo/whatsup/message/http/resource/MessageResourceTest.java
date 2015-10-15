@@ -77,6 +77,11 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
 
     }
     @Test
+    public void testGetStatusCallReturnsEmptyList(){
+        Response statusResponse=target("message/status").queryParam("sessionId", sessionId).request().get();
+        assertEquals(Collections.EMPTY_LIST,statusResponse.readEntity(MessageResponse.class).getResults());
+    }
+    @Test
     public void testUpdatesSucceeds(){
         Date timestamp=new Date();
         Response submitResponse=target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
@@ -84,6 +89,12 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         MessageDTO message=updatesResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getUserDTO().getUsername(),"Mihai");
         assertEquals(message.getMessage(), "awesome");
+    }
+    @Test
+    public void testGetUpdatesReturnsEmptyList(){
+        Date timestamp=new Date();
+        Response updatesResponse=target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
+        assertEquals(Collections.EMPTY_LIST,updatesResponse.readEntity(MessageResponse.class).getResults());
     }
     @Test
     public void testLatestMessagesSucceeds(){
@@ -111,5 +122,10 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
             }
         }
         assertEquals(latestMessagesResponse.readEntity(MessageResponse.class).getResults(), latestMessages);
+    }
+    @Test
+    public void testGetLatestMessagesReturnsEmptyList(){
+        Response latestMessagesResponse=target("message/latestmessages").queryParam("sessionId",tobeFollowedSessionId).request().get();
+        assertEquals(Collections.EMPTY_LIST,latestMessagesResponse.readEntity(MessageResponse.class).getResults());
     }
 }

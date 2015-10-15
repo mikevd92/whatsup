@@ -5,6 +5,7 @@ import toj.demo.whatsup.domain.User;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -14,7 +15,7 @@ public interface MessageService {
 
     void addNewMessage(Message message);
 
-    Message getStatusMessage(User user);
+    Optional<Message> getStatusMessage(User user);
 
     void removeAll();
 

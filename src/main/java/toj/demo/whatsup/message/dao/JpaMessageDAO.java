@@ -18,8 +18,12 @@ import java.util.*;
 public class JpaMessageDAO extends JpaDAO<Message,Long> implements MessageDAO {
 
     @Override
-    public Message getMessageByUser(User user) {
-        return entityManager.createQuery("select m from Messages m where m.user = :user ORDER BY m.creationTimestamp desc",Message.class).setParameter("user",user).getResultList().get(0);
+    public Optional<Message> getMessageByUser(User user) {
+        List<Message> messages=entityManager.createQuery("select m from Messages m where m.user = :user ORDER BY m.creationTimestamp desc",Message.class).setParameter("user",user).getResultList();
+            if(messages.size()>0)
+                return Optional.ofNullable(messages.get(0));
+            else
+                return Optional.ofNullable(null);
     }
 
     @Override

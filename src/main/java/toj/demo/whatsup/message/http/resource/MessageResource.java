@@ -33,7 +33,6 @@ import java.util.*;
 @Path("/message")
 public final class MessageResource {
 
-
     private final MessageService messageService;
     private final Mapper mapper;
 
@@ -59,12 +58,18 @@ public final class MessageResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStatusCall(@Context SecurityContext securityContext) {
         User user = (User) securityContext.getUserPrincipal();
-        Message message = messageService.getStatusMessage(user);
-        MessageDTO messageDTO = mapper.map(message, MessageDTO.class);
-        UserDTO userDTO=mapper.map(user,UserDTO.class);
-        messageDTO.setUserDTO(userDTO);
-        MessageResponse response = new MessageResponse(Collections.singletonList(messageDTO));
-        return Response.status(Response.Status.OK).entity(response).build();
+        Optional<Message> optionalMessage=messageService.getStatusMessage(user);
+        if(optionalMessage.isPresent()) {
+            Message message = optionalMessage.get();
+            MessageDTO messageDTO = mapper.map(message, MessageDTO.class);
+            UserDTO userDTO = mapper.map(user, UserDTO.class);
+            messageDTO.setUserDTO(userDTO);
+            MessageResponse response = new MessageResponse(Collections.singletonList(messageDTO));
+            return Response.status(Response.Status.OK).entity(response).build();
+        }else{
+            MessageResponse response = new MessageResponse(Collections.EMPTY_LIST);
+            return Response.status(Response.Status.OK).entity(response).build();
+        }
     }
 
     @GET

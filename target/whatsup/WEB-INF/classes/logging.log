@@ -1,81 +1,30 @@
-2015-10-15 10:35:48 INFO  ContextLoader:307 - Root WebApplicationContext: initialization started
-2015-10-15 10:35:48 INFO  XmlWebApplicationContext:573 - Refreshing Root WebApplicationContext: startup date [Thu Oct 15 10:35:48 EEST 2015]; root of context hierarchy
-2015-10-15 10:35:48 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/http/resource/resources.xml]
-2015-10-15 10:35:48 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/dao/spring-persistence.xml]
-2015-10-15 10:35:48 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/someFeature/http/resource/resources.xml]
-2015-10-15 10:35:48 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/someFeature/aComponent/a-component.xml]
-2015-10-15 10:35:48 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/user/http/resource/resources.xml]
-2015-10-15 10:35:48 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/user/service/services.xml]
-2015-10-15 10:35:48 ERROR ContextLoader:353 - Context initialization failed
-org.springframework.beans.factory.parsing.BeanDefinitionParsingException: Configuration problem: Failed to import bean definitions from URL location [classpath:/toj/demo/whatsup/user/http/resource/resources.xml]
-Offending resource: class path resource [toj/demo/whatsup/http/resource/resources.xml]; nested exception is org.springframework.beans.factory.parsing.BeanDefinitionParsingException: Configuration problem: Failed to import bean definitions from URL location [classpath:/toj/demo/whatsup/user/service/services.xml]
-Offending resource: class path resource [toj/demo/whatsup/user/http/resource/resources.xml]; nested exception is org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [toj/demo/whatsup/user/service/services.xml]; nested exception is java.io.FileNotFoundException: class path resource [toj/demo/whatsup/user/service/services.xml] cannot be opened because it does not exist
-	at org.springframework.beans.factory.parsing.FailFastProblemReporter.error(FailFastProblemReporter.java:70)
-	at org.springframework.beans.factory.parsing.ReaderContext.error(ReaderContext.java:85)
-	at org.springframework.beans.factory.parsing.ReaderContext.error(ReaderContext.java:76)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.importBeanDefinitionResource(DefaultBeanDefinitionDocumentReader.java:229)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.parseDefaultElement(DefaultBeanDefinitionDocumentReader.java:180)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.parseBeanDefinitions(DefaultBeanDefinitionDocumentReader.java:165)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.doRegisterBeanDefinitions(DefaultBeanDefinitionDocumentReader.java:138)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.registerBeanDefinitions(DefaultBeanDefinitionDocumentReader.java:94)
-	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.registerBeanDefinitions(XmlBeanDefinitionReader.java:508)
-	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.doLoadBeanDefinitions(XmlBeanDefinitionReader.java:392)
-	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:336)
-	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:304)
-	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:181)
-	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:217)
-	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:188)
-	at org.springframework.web.context.support.XmlWebApplicationContext.loadBeanDefinitions(XmlWebApplicationContext.java:125)
-	at org.springframework.web.context.support.XmlWebApplicationContext.loadBeanDefinitions(XmlWebApplicationContext.java:94)
-	at org.springframework.context.support.AbstractRefreshableApplicationContext.refreshBeanFactory(AbstractRefreshableApplicationContext.java:129)
-	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:604)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:509)
-	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:446)
-	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:328)
-	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
-	at org.eclipse.jetty.server.handler.ContextHandler.callContextInitialized(ContextHandler.java:782)
-	at org.eclipse.jetty.servlet.ServletContextHandler.callContextInitialized(ServletContextHandler.java:424)
-	at org.eclipse.jetty.server.handler.ContextHandler.startContext(ContextHandler.java:774)
-	at org.eclipse.jetty.servlet.ServletContextHandler.startContext(ServletContextHandler.java:249)
-	at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1242)
-	at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:717)
-	at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:494)
-	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
-	at org.eclipse.jetty.deploy.ContextDeployer.deploy(ContextDeployer.java:359)
-	at org.eclipse.jetty.deploy.ContextDeployer.access$000(ContextDeployer.java:82)
-	at org.eclipse.jetty.deploy.ContextDeployer$ScannerListener.fileAdded(ContextDeployer.java:107)
-	at org.eclipse.jetty.util.Scanner.reportAddition(Scanner.java:615)
-	at org.eclipse.jetty.util.Scanner.reportDifferences(Scanner.java:540)
-	at org.eclipse.jetty.util.Scanner.scan(Scanner.java:403)
-	at org.eclipse.jetty.util.Scanner$1.run(Scanner.java:353)
-	at java.util.TimerThread.mainLoop(Timer.java:555)
-	at java.util.TimerThread.run(Timer.java:505)
-Caused by: org.springframework.beans.factory.parsing.BeanDefinitionParsingException: Configuration problem: Failed to import bean definitions from URL location [classpath:/toj/demo/whatsup/user/service/services.xml]
-Offending resource: class path resource [toj/demo/whatsup/user/http/resource/resources.xml]; nested exception is org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [toj/demo/whatsup/user/service/services.xml]; nested exception is java.io.FileNotFoundException: class path resource [toj/demo/whatsup/user/service/services.xml] cannot be opened because it does not exist
-	at org.springframework.beans.factory.parsing.FailFastProblemReporter.error(FailFastProblemReporter.java:70)
-	at org.springframework.beans.factory.parsing.ReaderContext.error(ReaderContext.java:85)
-	at org.springframework.beans.factory.parsing.ReaderContext.error(ReaderContext.java:76)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.importBeanDefinitionResource(DefaultBeanDefinitionDocumentReader.java:229)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.parseDefaultElement(DefaultBeanDefinitionDocumentReader.java:180)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.parseBeanDefinitions(DefaultBeanDefinitionDocumentReader.java:165)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.doRegisterBeanDefinitions(DefaultBeanDefinitionDocumentReader.java:138)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.registerBeanDefinitions(DefaultBeanDefinitionDocumentReader.java:94)
-	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.registerBeanDefinitions(XmlBeanDefinitionReader.java:508)
-	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.doLoadBeanDefinitions(XmlBeanDefinitionReader.java:392)
-	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:336)
-	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:304)
-	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:181)
-	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:217)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.importBeanDefinitionResource(DefaultBeanDefinitionDocumentReader.java:223)
-	... 36 more
-Caused by: org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [toj/demo/whatsup/user/service/services.xml]; nested exception is java.io.FileNotFoundException: class path resource [toj/demo/whatsup/user/service/services.xml] cannot be opened because it does not exist
-	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:344)
-	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:304)
-	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:181)
-	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:217)
-	at org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader.importBeanDefinitionResource(DefaultBeanDefinitionDocumentReader.java:223)
-	... 47 more
-Caused by: java.io.FileNotFoundException: class path resource [toj/demo/whatsup/user/service/services.xml] cannot be opened because it does not exist
-	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:172)
-	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:330)
-	... 51 more
+2015-10-15 18:17:57 INFO  ContextLoader:307 - Root WebApplicationContext: initialization started
+2015-10-15 18:17:57 INFO  XmlWebApplicationContext:573 - Refreshing Root WebApplicationContext: startup date [Thu Oct 15 18:17:57 EEST 2015]; root of context hierarchy
+2015-10-15 18:17:57 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/http/resource/resources.xml]
+2015-10-15 18:17:58 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/dao/spring-persistence.xml]
+2015-10-15 18:17:58 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/someFeature/http/resource/resources.xml]
+2015-10-15 18:17:58 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/someFeature/aComponent/a-component.xml]
+2015-10-15 18:17:58 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/user/http/resource/resources.xml]
+2015-10-15 18:17:58 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/user/services/services.xml]
+2015-10-15 18:17:58 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/message/http/resource/resources.xml]
+2015-10-15 18:17:58 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/message/services/services.xml]
+2015-10-15 18:17:58 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/follower/http/resource/resources.xml]
+2015-10-15 18:17:58 INFO  AutowiredAnnotationBeanPostProcessor:153 - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2015-10-15 18:17:58 INFO  LocalContainerEntityManagerFactoryBean:339 - Building JPA container EntityManagerFactory for persistence unit 'testPU'
+2015-10-15 18:17:58 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [
+	name: testPU
+	...]
+2015-10-15 18:17:58 INFO  Version:37 - HHH000412: Hibernate Core {5.0.2.Final}
+2015-10-15 18:17:58 INFO  Environment:213 - HHH000206: hibernate.properties not found
+2015-10-15 18:17:58 INFO  Environment:317 - HHH000021: Bytecode provider name : javassist
+2015-10-15 18:17:58 INFO  Version:66 - HCANN000001: Hibernate Commons Annotations {5.0.0.Final}
+2015-10-15 18:17:58 INFO  Dialect:154 - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+2015-10-15 18:17:59 INFO  SchemaUpdate:101 - HHH000228: Running hbm2ddl schema update
+2015-10-15 18:17:59 INFO  GlobalSettings:113 - Trying to find Dozer configuration file: dozer.properties
+2015-10-15 18:17:59 WARN  GlobalSettings:118 - Dozer configuration file not found: dozer.properties.  Using defaults for all Dozer global properties.
+2015-10-15 18:17:59 INFO  DozerInitializer:75 - Initializing Dozer. Version: 5.5.0, Thread Name: Scanner-2
+2015-10-15 18:17:59 INFO  JMXPlatformImpl:66 - Dozer JMX MBean [org.dozer.jmx:type=DozerStatisticsController] auto registered with the Platform MBean Server
+2015-10-15 18:17:59 INFO  JMXPlatformImpl:66 - Dozer JMX MBean [org.dozer.jmx:type=DozerAdminController] auto registered with the Platform MBean Server
+2015-10-15 18:17:59 INFO  DozerBeanMapper:175 - Initializing a new instance of dozer bean mapper.
+2015-10-15 18:17:59 INFO  ContextLoader:347 - Root WebApplicationContext: initialization completed in 1958 ms
+2015-10-15 18:18:17 INFO  QueryTranslatorFactoryInitiator:47 - HHH000397: Using ASTQueryTranslatorFactory

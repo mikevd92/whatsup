@@ -48,10 +48,15 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
     }
 
     @Test
-    public void testLoginsAfterUserCreated() {
+    public void testLoginsAfterUserCreatedSucceeds() {
         target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
         final Response response=target("user/login").request().post(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
         assertEquals(response.readEntity(SessionResponse.class).getResults().get(0).getUserName(),"Mihai");
+    }
+    @Test
+    public void testLoginInvalidUserNameFails(){
+        final Response response=target("user/login").request().post(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
+        assertEquals(response.getStatusInfo(),Response.Status.INTERNAL_SERVER_ERROR);
     }
 
 

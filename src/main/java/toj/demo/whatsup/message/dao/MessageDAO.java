@@ -6,6 +6,7 @@ import toj.demo.whatsup.domain.User;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Set;
  */
 
 public interface MessageDAO extends DAO<Message,Long> {
-    public Message getMessageByUser(User user);
+    public Optional<Message> getMessageByUser(User user);
     public void removeAll();
     public List<Message> getMessagesByUser(User user);
     public List<Message> getUpdates(Date date,User user);

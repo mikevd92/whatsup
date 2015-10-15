@@ -8,6 +8,7 @@ import toj.demo.whatsup.message.dao.MessageDAO;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -28,7 +29,7 @@ public class PersistentMessageService implements MessageService {
     }
 
     @Override
-    public Message getStatusMessage(User user) {
+    public Optional<Message> getStatusMessage(User user) {
         return messageDAO.getMessageByUser(user);
     }
 
