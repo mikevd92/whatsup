@@ -4,16 +4,15 @@ import org.dozer.Mapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.kubek2k.springockito.annotations.ReplaceWithMock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.domain.Message;
-import toj.demo.whatsup.message.service.MessageService;
+import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.http.resource.UserDTO;
-import toj.demo.whatsup.user.service.UserService;
-import toj.demo.whatsup.user.service.UserSessionService;
+import toj.demo.whatsup.user.services.UserService;
+import toj.demo.whatsup.user.services.UserSessionService;
 
 import javax.ws.rs.core.Response;
 import java.util.*;
@@ -59,9 +58,14 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
     }
 
     @Test
-    public void testSubmitMessage(){
+    public void testSubmitCorrectMessageSucceeds(){
         Response messageResponse=target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         assertEquals(messageResponse.getStatusInfo(), Response.Status.OK);
+    }
+    @Test
+    public void testSubmitEmptyMessageReturnsBadRequest(){
+        Response messageResponse=target("message/submit").queryParam("sessionId",sessionId).request().get();
+        assertEquals(messageResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
     @Test
     public void testGetStatusCall(){

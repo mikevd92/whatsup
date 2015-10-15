@@ -16,8 +16,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.web.ServletTestExecutionListener;
-import toj.demo.whatsup.http.filter.AuthenticationFilter;
-import toj.demo.whatsup.http.filter.SessionFilter;
+import toj.demo.whatsup.http.filters.AuthenticationFilter;
+import toj.demo.whatsup.http.filters.SessionFilter;
+import toj.demo.whatsup.mappers.NullPointerMapper;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
@@ -74,7 +75,8 @@ public abstract class SpringManagedResourceTest<R> {
                         resource.getRawType()
                 ).property("contextConfig", context)
                         .register(AuthenticationFilter.class)
-                        .register(SessionFilter.class);
+                        .register(SessionFilter.class)
+                        .register(NullPointerMapper.class);
             }
         };
 
