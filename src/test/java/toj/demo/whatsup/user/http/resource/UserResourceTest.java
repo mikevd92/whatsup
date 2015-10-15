@@ -1,13 +1,11 @@
 package toj.demo.whatsup.user.http.resource;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.kubek2k.springockito.annotations.ReplaceWithMock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
-import toj.demo.whatsup.user.service.UserService;
+import toj.demo.whatsup.user.services.UserService;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;

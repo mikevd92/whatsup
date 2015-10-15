@@ -3,8 +3,8 @@ package toj.demo.whatsup.user.http.resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import toj.demo.whatsup.domain.User;
-import toj.demo.whatsup.user.service.UserService;
-import toj.demo.whatsup.user.service.UserSessionService;
+import toj.demo.whatsup.user.services.UserService;
+import toj.demo.whatsup.user.services.UserSessionService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
