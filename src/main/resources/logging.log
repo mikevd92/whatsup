@@ -1,32 +1,32 @@
-2015-10-15 13:51:23 INFO  AbstractContextLoader:213 - Could not detect default resource locations for test class [toj.demo.whatsup.user.http.resource.UserResourceTest]: class path resource [toj/demo/whatsup/user/http/resource/UserResourceTest-context.xml] does not exist
-2015-10-15 13:51:23 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [jersey-spring-applicationContext.xml]
-2015-10-15 13:51:23 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/http/resource/resources-test.xml]
-2015-10-15 13:51:23 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/dao/spring-persistence-test.xml]
-2015-10-15 13:51:23 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/someFeature/http/resource/resources.xml]
-2015-10-15 13:51:23 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/someFeature/aComponent/a-component.xml]
-2015-10-15 13:51:23 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/user/http/resource/resources.xml]
-2015-10-15 13:51:23 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/user/services/services.xml]
-2015-10-15 13:51:23 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/message/http/resource/resources.xml]
-2015-10-15 13:51:23 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/message/services/services.xml]
-2015-10-15 13:51:23 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/follower/http/resource/resources.xml]
-2015-10-15 13:51:23 INFO  GenericApplicationContext:573 - Refreshing org.springframework.context.support.GenericApplicationContext@2f686d1f: startup date [Thu Oct 15 13:51:23 EEST 2015]; root of context hierarchy
-2015-10-15 13:51:24 INFO  AutowiredAnnotationBeanPostProcessor:153 - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
-2015-10-15 13:51:24 INFO  LocalContainerEntityManagerFactoryBean:339 - Building JPA container EntityManagerFactory for persistence unit 'testPU'
-2015-10-15 13:51:24 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [
+2015-10-15 13:54:16 INFO  AbstractContextLoader:213 - Could not detect default resource locations for test class [toj.demo.whatsup.follower.http.resource.FollowerResourceTest]: class path resource [toj/demo/whatsup/follower/http/resource/FollowerResourceTest-context.xml] does not exist
+2015-10-15 13:54:16 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [jersey-spring-applicationContext.xml]
+2015-10-15 13:54:16 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/http/resource/resources-test.xml]
+2015-10-15 13:54:16 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/dao/spring-persistence-test.xml]
+2015-10-15 13:54:16 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/someFeature/http/resource/resources.xml]
+2015-10-15 13:54:16 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/someFeature/aComponent/a-component.xml]
+2015-10-15 13:54:16 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/user/http/resource/resources.xml]
+2015-10-15 13:54:16 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/user/services/services.xml]
+2015-10-15 13:54:16 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/message/http/resource/resources.xml]
+2015-10-15 13:54:16 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/message/services/services.xml]
+2015-10-15 13:54:16 INFO  XmlBeanDefinitionReader:317 - Loading XML bean definitions from class path resource [toj/demo/whatsup/follower/http/resource/resources.xml]
+2015-10-15 13:54:16 INFO  GenericApplicationContext:573 - Refreshing org.springframework.context.support.GenericApplicationContext@6fd02e5: startup date [Thu Oct 15 13:54:16 EEST 2015]; root of context hierarchy
+2015-10-15 13:54:16 INFO  AutowiredAnnotationBeanPostProcessor:153 - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2015-10-15 13:54:16 INFO  LocalContainerEntityManagerFactoryBean:339 - Building JPA container EntityManagerFactory for persistence unit 'testPU'
+2015-10-15 13:54:16 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [
 	name: testPU
 	...]
-2015-10-15 13:51:24 INFO  Version:37 - HHH000412: Hibernate Core {5.0.2.Final}
-2015-10-15 13:51:24 INFO  Environment:213 - HHH000206: hibernate.properties not found
-2015-10-15 13:51:24 INFO  Environment:317 - HHH000021: Bytecode provider name : javassist
-2015-10-15 13:51:24 INFO  Version:66 - HCANN000001: Hibernate Commons Annotations {5.0.0.Final}
-2015-10-15 13:51:24 INFO  Dialect:154 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-2015-10-15 13:51:25 INFO  SchemaUpdate:101 - HHH000228: Running hbm2ddl schema update
-2015-10-15 13:51:25 INFO  GlobalSettings:113 - Trying to find Dozer configuration file: dozer.properties
-2015-10-15 13:51:25 WARN  GlobalSettings:118 - Dozer configuration file not found: dozer.properties.  Using defaults for all Dozer global properties.
-2015-10-15 13:51:25 INFO  DozerInitializer:75 - Initializing Dozer. Version: 5.5.0, Thread Name: main
-2015-10-15 13:51:25 INFO  JMXPlatformImpl:66 - Dozer JMX MBean [org.dozer.jmx:type=DozerStatisticsController] auto registered with the Platform MBean Server
-2015-10-15 13:51:25 INFO  JMXPlatformImpl:66 - Dozer JMX MBean [org.dozer.jmx:type=DozerAdminController] auto registered with the Platform MBean Server
-2015-10-15 13:51:25 INFO  DozerBeanMapper:175 - Initializing a new instance of dozer bean mapper.
-2015-10-15 13:51:26 INFO  QueryTranslatorFactoryInitiator:47 - HHH000397: Using ASTQueryTranslatorFactory
-2015-10-15 13:51:26 INFO  GenericApplicationContext:951 - Closing org.springframework.context.support.GenericApplicationContext@2f686d1f: startup date [Thu Oct 15 13:51:23 EEST 2015]; root of context hierarchy
-2015-10-15 13:51:26 INFO  LocalContainerEntityManagerFactoryBean:462 - Closing JPA EntityManagerFactory for persistence unit 'testPU'
+2015-10-15 13:54:16 INFO  Version:37 - HHH000412: Hibernate Core {5.0.2.Final}
+2015-10-15 13:54:16 INFO  Environment:213 - HHH000206: hibernate.properties not found
+2015-10-15 13:54:16 INFO  Environment:317 - HHH000021: Bytecode provider name : javassist
+2015-10-15 13:54:17 INFO  Version:66 - HCANN000001: Hibernate Commons Annotations {5.0.0.Final}
+2015-10-15 13:54:17 INFO  Dialect:154 - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2015-10-15 13:54:17 INFO  SchemaUpdate:101 - HHH000228: Running hbm2ddl schema update
+2015-10-15 13:54:17 INFO  GlobalSettings:113 - Trying to find Dozer configuration file: dozer.properties
+2015-10-15 13:54:17 WARN  GlobalSettings:118 - Dozer configuration file not found: dozer.properties.  Using defaults for all Dozer global properties.
+2015-10-15 13:54:17 INFO  DozerInitializer:75 - Initializing Dozer. Version: 5.5.0, Thread Name: main
+2015-10-15 13:54:18 INFO  JMXPlatformImpl:66 - Dozer JMX MBean [org.dozer.jmx:type=DozerStatisticsController] auto registered with the Platform MBean Server
+2015-10-15 13:54:18 INFO  JMXPlatformImpl:66 - Dozer JMX MBean [org.dozer.jmx:type=DozerAdminController] auto registered with the Platform MBean Server
+2015-10-15 13:54:18 INFO  DozerBeanMapper:175 - Initializing a new instance of dozer bean mapper.
+2015-10-15 13:54:18 INFO  QueryTranslatorFactoryInitiator:47 - HHH000397: Using ASTQueryTranslatorFactory
+2015-10-15 13:54:19 INFO  GenericApplicationContext:951 - Closing org.springframework.context.support.GenericApplicationContext@6fd02e5: startup date [Thu Oct 15 13:54:16 EEST 2015]; root of context hierarchy
+2015-10-15 13:54:19 INFO  LocalContainerEntityManagerFactoryBean:462 - Closing JPA EntityManagerFactory for persistence unit 'testPU'

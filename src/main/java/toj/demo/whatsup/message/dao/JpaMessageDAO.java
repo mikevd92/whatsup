@@ -17,9 +17,6 @@ import java.util.*;
 @Repository
 public class JpaMessageDAO extends JpaDAO<Message,Long> implements MessageDAO {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Override
     public Message getMessageByUser(User user) {
         return entityManager.createQuery("select m from Messages m where m.user = :user ORDER BY m.creationTimestamp desc",Message.class).setParameter("user",user).getResultList().get(0);
