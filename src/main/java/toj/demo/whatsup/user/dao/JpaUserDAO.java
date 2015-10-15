@@ -17,10 +17,6 @@ import java.util.Optional;
 @Repository
 public class JpaUserDAO extends JpaDAO<User,Long> implements UserDAO {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-
     @Override
     public boolean checkUser(String name, String password) {
         try {
