@@ -49,23 +49,23 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
     }
 
     @Test
-    public void testFollow(){
+    public void testFollowSucceeds(){
         Response response=target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
         assertEquals(response.getStatusInfo(), Response.Status.OK);
     }
     @Test
-    public void testFollowNoUser(){
+    public void testFollowEmptyUserReturnsBadRequest(){
         Response response=target("follower/follow").queryParam("sessionId",sessionId).request().get();
         assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
     @Test
-    public void testUnfollow(){
+    public void testUnfollowSucceeds(){
         target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
         Response response=target("follower/unsubscribe").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
         assertEquals(response.getStatusInfo(),Response.Status.OK);
     }
     @Test
-    public void testUnfollowNoUser(){
+    public void testUnfollowEmptyUserReturnsBadRequest(){
         target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
         Response response=target("follower/unsubscribe").queryParam("sessionId",sessionId).request().get();
         assertEquals(response.getStatusInfo(),Response.Status.BAD_REQUEST);
