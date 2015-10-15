@@ -1,8 +1,9 @@
 package toj.demo.whatsup.domain;
 
+import jersey.repackaged.com.google.common.collect.ImmutableSet;
+
 import javax.persistence.*;
 import javax.security.auth.Subject;
-import java.io.Serializable;
 import java.security.Principal;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -47,11 +48,7 @@ public class User implements Principal {
     }
 
     public Set<User> getFollowers() {
-        return followers;
-    }
-
-    public String getPassword() {
-        return password;
+        return ImmutableSet.copyOf(followers);
     }
 
     public String getUsername() {
@@ -67,14 +64,14 @@ public class User implements Principal {
 
         if (getUsername() != null ? !getUsername().equals(user.getUsername()) : user.getUsername() != null)
             return false;
-        return !(getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null);
+        return !(password != null ? !password.equals(user.password) : user.password != null);
 
     }
 
     @Override
     public int hashCode() {
         int result = getUsername() != null ? getUsername().hashCode() : 0;
-        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
 

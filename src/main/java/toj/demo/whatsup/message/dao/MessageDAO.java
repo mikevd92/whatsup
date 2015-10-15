@@ -1,6 +1,6 @@
 package toj.demo.whatsup.message.dao;
 
-import toj.demo.whatsup.dao.ObjectDAO;
+import toj.demo.whatsup.dao.DAO;
 import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.domain.User;
 
@@ -12,7 +12,7 @@ import java.util.Set;
  * Created by mihai.popovici on 10/7/2015.
  */
 
-public interface MessageDAO extends ObjectDAO<Message,Long> {
+public interface MessageDAO extends DAO<Message,Long> {
     public Message getMessageByUser(User user);
     public void removeAll();
     public List<Message> getMessagesByUser(User user);

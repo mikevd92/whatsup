@@ -1,12 +1,13 @@
 package toj.demo.whatsup.message.http.resource;
 
+import com.google.common.base.Preconditions;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import toj.demo.whatsup.http.filter.Authentication;
-import toj.demo.whatsup.http.filter.Session;
+import toj.demo.whatsup.http.filters.Authentication;
+import toj.demo.whatsup.http.filters.Session;
 import toj.demo.whatsup.domain.Message;
-import toj.demo.whatsup.message.service.MessageService;
+import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.http.resource.UserDTO;
 
@@ -46,9 +47,7 @@ public final class MessageResource {
     @Path("/submit")
     @Produces(MediaType.APPLICATION_JSON)
     public Response submitMessage(@QueryParam("message") String msg, @Context SecurityContext securityContext) {
-        if (msg == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
+        Preconditions.checkNotNull(msg);
         User user = (User) securityContext.getUserPrincipal();
         Message message = new Message(msg, user);
         messageService.addNewMessage(message);
@@ -72,9 +71,7 @@ public final class MessageResource {
     @Path("/updates")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUpdates(@QueryParam("timestamp") String timestamp, @Context SecurityContext securityContext) {
-        if (timestamp == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
+        Preconditions.checkNotNull(timestamp);
         DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
         Date date;
         try {

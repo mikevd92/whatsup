@@ -3,13 +3,12 @@ package toj.demo.whatsup.follower.http.resource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.kubek2k.springockito.annotations.ReplaceWithMock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
 import toj.demo.whatsup.domain.User;
-import toj.demo.whatsup.user.service.UserService;
-import toj.demo.whatsup.user.service.UserSessionService;
+import toj.demo.whatsup.user.services.UserService;
+import toj.demo.whatsup.user.services.UserSessionService;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -54,11 +53,21 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
         Response response=target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
         assertEquals(response.getStatusInfo(), Response.Status.OK);
     }
-
+    @Test
+    public void testFollowNoUser(){
+        Response response=target("follower/follow").queryParam("sessionId",sessionId).request().get();
+        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
+    }
     @Test
     public void testUnfollow(){
         target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
         Response response=target("follower/unsubscribe").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
         assertEquals(response.getStatusInfo(),Response.Status.OK);
+    }
+    @Test
+    public void testUnfollowNoUser(){
+        target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
+        Response response=target("follower/unsubscribe").queryParam("sessionId",sessionId).request().get();
+        assertEquals(response.getStatusInfo(),Response.Status.BAD_REQUEST);
     }
 }
