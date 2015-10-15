@@ -68,7 +68,7 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         assertEquals(messageResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
     @Test
-    public void testGetStatusCall(){
+    public void testGetStatusCallSucceeds(){
         target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         Response statusResponse=target("message/status").queryParam("sessionId", sessionId).request().get();
         MessageDTO message = statusResponse.readEntity(MessageResponse.class).getResults().get(0);
@@ -77,7 +77,7 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
 
     }
     @Test
-    public void testUpdates(){
+    public void testUpdatesSucceeds(){
         Date timestamp=new Date();
         Response submitResponse=target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         Response updatesResponse=target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
@@ -86,7 +86,7 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         assertEquals(message.getMessage(), "awesome");
     }
     @Test
-    public void testLatestMessages(){
+    public void testLatestMessagesSucceeds(){
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message","awesome").request().get();
         target("message/submit").queryParam("sessionId",sessionId).queryParam("message","bla").request().get();
         Response latestMessagesResponse=target("message/latestmessages").queryParam("sessionId",tobeFollowedSessionId).request().get();
