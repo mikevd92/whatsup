@@ -68,6 +68,11 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         assertEquals(messageResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
     @Test
+    public void testSubmitMessageNoSessionReturnsBadRequest(){
+        Response messageResponse=target("message/submit").request().get();
+        assertEquals(messageResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
+    }
+    @Test
     public void testGetStatusCallSucceeds(){
         target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         Response statusResponse=target("message/status").queryParam("sessionId", sessionId).request().get();
@@ -80,6 +85,11 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
     public void testGetStatusCallReturnsEmptyList(){
         Response statusResponse=target("message/status").queryParam("sessionId", sessionId).request().get();
         assertEquals(Collections.EMPTY_LIST,statusResponse.readEntity(MessageResponse.class).getResults());
+    }
+    @Test
+    public void testGetStatusCallNoSessionReturnsBadRequest(){
+        Response statusResponse=target("message/status").request().get();
+        assertEquals(statusResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
     @Test
     public void testUpdatesSucceeds(){
@@ -95,6 +105,12 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         Date timestamp=new Date();
         Response updatesResponse=target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
         assertEquals(Collections.EMPTY_LIST,updatesResponse.readEntity(MessageResponse.class).getResults());
+    }
+    @Test
+    public void testGetUpdatesNoSessionReturnsBadRequest(){
+        Date timestamp=new Date();
+        Response updatesResponse=target("message/updates").queryParam("timestamp", timestamp.toString()).request().get();
+        assertEquals(updatesResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
     @Test
     public void testLatestMessagesSucceeds(){
@@ -127,5 +143,10 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
     public void testGetLatestMessagesReturnsEmptyList(){
         Response latestMessagesResponse=target("message/latestmessages").queryParam("sessionId",tobeFollowedSessionId).request().get();
         assertEquals(Collections.EMPTY_LIST,latestMessagesResponse.readEntity(MessageResponse.class).getResults());
+    }
+    @Test
+    public void testGetLatestMessagesNoSessionReturnsBadRequest(){
+        Response latestMessagesResponse=target("message/latestmessages").request().get();
+        assertEquals(latestMessagesResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
 }

@@ -49,6 +49,28 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
     }
 
     @Test
+    public void testFollowNoSessionReturnsBadRequest(){
+        Response response=target("follower/follow").queryParam("userName",toBeFollowed.getUsername()).request().get();
+        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
+    }
+    @Test
+    public void testUnFollowNoSessionReturnsBadRequest(){
+        target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
+        Response response=target("follower/unsubscribe").queryParam("userName",toBeFollowed.getUsername()).request().get();
+        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
+    }
+    @Test
+    public void testFollowBadUserNameReturnsInternalServerError(){
+        Response response=target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName","John").request().get();
+        assertEquals(response.getStatusInfo(), Response.Status.INTERNAL_SERVER_ERROR);
+    }
+    @Test
+    public void testUnFollowBadUserNameReturnsInternalServerError(){
+        Response response=target("follower/unsubscribe").queryParam("sessionId",sessionId).queryParam("userName","John").request().get();
+        assertEquals(response.getStatusInfo(),Response.Status.INTERNAL_SERVER_ERROR);
+    }
+
+    @Test
     public void testFollowSucceeds(){
         Response response=target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
         assertEquals(response.getStatusInfo(), Response.Status.OK);
