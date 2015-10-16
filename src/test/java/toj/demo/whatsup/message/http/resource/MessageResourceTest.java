@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.message.services.MessageService;
+import toj.demo.whatsup.test.jersey.BaseResourceTest;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.http.resource.UserDTO;
 import toj.demo.whatsup.user.services.UserService;
 import toj.demo.whatsup.user.services.UserSessionService;
 
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import java.util.*;
 
@@ -22,7 +24,7 @@ import static org.junit.Assert.assertEquals;
  * Created by mihai.popovici on 9/28/2015.
  */
 @ContextConfiguration
-public class MessageResourceTest extends SpringManagedResourceTest<MessageResource> {
+public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Autowired
     private  MessageService messageService;
@@ -68,11 +70,6 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         assertEquals(messageResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
     @Test
-    public void testSubmitMessageNoSessionReturnsBadRequest(){
-        Response messageResponse=target("message/submit").request().get();
-        assertEquals(messageResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
-    }
-    @Test
     public void testGetStatusCallSucceeds(){
         target("message/submit").queryParam("sessionId",sessionId).queryParam("message","awesome").request().get();
         Response statusResponse=target("message/status").queryParam("sessionId", sessionId).request().get();
@@ -85,11 +82,6 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
     public void testGetStatusCallReturnsEmptyList(){
         Response statusResponse=target("message/status").queryParam("sessionId", sessionId).request().get();
         assertEquals(Collections.EMPTY_LIST,statusResponse.readEntity(MessageResponse.class).getResults());
-    }
-    @Test
-    public void testGetStatusCallNoSessionReturnsBadRequest(){
-        Response statusResponse=target("message/status").request().get();
-        assertEquals(statusResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
     @Test
     public void testUpdatesSucceeds(){
@@ -105,12 +97,6 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         Date timestamp=new Date();
         Response updatesResponse=target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
         assertEquals(Collections.EMPTY_LIST,updatesResponse.readEntity(MessageResponse.class).getResults());
-    }
-    @Test
-    public void testGetUpdatesNoSessionReturnsBadRequest(){
-        Date timestamp=new Date();
-        Response updatesResponse=target("message/updates").queryParam("timestamp", timestamp.toString()).request().get();
-        assertEquals(updatesResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
     @Test
     public void testLatestMessagesSucceeds(){
@@ -145,8 +131,15 @@ public class MessageResourceTest extends SpringManagedResourceTest<MessageResour
         assertEquals(Collections.EMPTY_LIST,latestMessagesResponse.readEntity(MessageResponse.class).getResults());
     }
     @Test
-    public void testGetLatestMessagesNoSessionReturnsBadRequest(){
-        Response latestMessagesResponse=target("message/latestmessages").request().get();
-        assertEquals(latestMessagesResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
+    public void NoSessionReturnsBadRequest(){
+        Date timestamp=new Date();
+        List<WebTarget> targets=Arrays.asList(
+                target("message/latestmessages"),
+                target("message/updates").queryParam("timestamp", timestamp.toString()),
+                target("message/status"),
+                target("message/submit")
+
+        );
+        testNoSession(targets);
     }
 }

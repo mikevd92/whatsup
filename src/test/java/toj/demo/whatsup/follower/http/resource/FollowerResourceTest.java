@@ -5,21 +5,26 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import toj.demo.whatsup.test.jersey.BaseResourceTest;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.services.UserService;
 import toj.demo.whatsup.user.services.UserSessionService;
 
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 /**
  * Created by mihai.popovici on 9/28/2015.
  */
 @ContextConfiguration
-public class FollowerResourceTest extends SpringManagedResourceTest<FollowerResource> {
+public class FollowerResourceTest extends BaseResourceTest<FollowerResource> {
 
     @Autowired
     private UserSessionService userSessionService;
@@ -54,10 +59,12 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
         assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
     @Test
-    public void testUnFollowNoSessionReturnsBadRequest(){
-        target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
-        Response response=target("follower/unsubscribe").queryParam("userName",toBeFollowed.getUsername()).request().get();
-        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
+    public void NoSessionReturnsBadRequest(){
+        List<WebTarget> targets=Arrays.asList(
+                target("follower/follow").queryParam("userName", toBeFollowed.getUsername()),
+                target("follower/unsubscribe").queryParam("userName", toBeFollowed.getUsername())
+        );
+        testNoSession(targets);
     }
     @Test
     public void testFollowBadUserNameReturnsInternalServerError(){
