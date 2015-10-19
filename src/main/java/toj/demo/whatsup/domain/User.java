@@ -14,6 +14,7 @@ import java.util.Set;
 @Entity(name = "Users")
 public class User implements Principal {
 
+
     @Id
     @GeneratedValue
     @Column(name="Id")
@@ -45,6 +46,9 @@ public class User implements Principal {
 
     public void removeFollower(User user) {
         followers.remove(user);
+    }
+    public long getId() {
+        return Id;
     }
 
     public Set<User> getFollowers() {

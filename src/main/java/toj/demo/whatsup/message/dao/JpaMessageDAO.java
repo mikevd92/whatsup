@@ -41,15 +41,6 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
     }
 
     @Override
-    public void removeAll() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaDelete<Message> delete = cb.createCriteriaDelete(this.entityClass);
-        delete.from(entityClass);
-        entityManager.createQuery(delete).executeUpdate();
-
-    }
-
-    @Override
     public List<Message> getMessagesByUser(User user) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Message> cq = cb.createQuery(this.entityClass);
