@@ -1,64 +1,79 @@
 package toj.demo.whatsup.user.dao;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import toj.demo.whatsup.dao.JpaDAO;
 import toj.demo.whatsup.domain.User;
+import toj.demo.whatsup.domain.User_;
 
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import java.util.List;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.Optional;
 
 /**
  * Created by mihai.popovici on 10/8/2015.
  */
 @Repository
-public class JpaUserDAO extends JpaDAO<User,Long> implements UserDAO {
+public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
 
     @Override
     public boolean checkUser(String name, String password) {
         try {
-            return entityManager.createQuery("select u from Users u where u.username = :username and u.password =:password", User.class)
-                    .setParameter("username", name)
-                    .setParameter("password", password)
-                    .getSingleResult() != null;
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery(this.entityClass);
+            Root<User> userRoot = cq.from(this.entityClass);
+            cq.where(
+                    cb.and(
+                            cb.equal(userRoot.get(User_.username), name),
+                            cb.equal(userRoot.get(User_.password), password)
+                    )
+            );
+            cq.select(userRoot);
+            TypedQuery<User> query = entityManager.createQuery(cq);
+            return query.getSingleResult() != null;
         } catch (NoResultException ex) {
             return false;
         }
     }
 
     @Override
-    public User findUserByName(String name) {
+    public Optional<User> findUserByName(String name) {
         try {
-            return entityManager.createQuery("select u from Users u where u.username = :username", User.class).setParameter("username", name).getSingleResult();
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<User> cq = cb.createQuery(this.entityClass);
+            Root<User> userRoot = cq.from(this.entityClass);
+            cq.where(
+                    cb.equal(userRoot.get(User_.username), name)
+            );
+            cq.select(userRoot);
+            TypedQuery<User> query = entityManager.createQuery(cq);
+            return Optional.ofNullable(query.getSingleResult());
         } catch (NoResultException ex) {
-            return null;
+            return Optional.ofNullable(null);
         }
     }
 
     @Override
     public void removeAll() {
-        entityManager.createQuery("DELETE FROM Users u").executeUpdate();
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaDelete<User> delete = cb.createCriteriaDelete(entityClass);
+        delete.from(entityClass);
+        entityManager.createQuery(delete).executeUpdate();
+
     }
 
     @Override
     public boolean contains(String name) {
         try {
-            User user = entityManager.createQuery("select u from Users u where u.username = :username", User.class).setParameter("username", name).getSingleResult();
+            User user = findUserByName(name).get();
             return entityManager.contains(user);
         } catch (NoResultException ex) {
             return false;
         }
     }
 
-    @Override
-    public boolean contains(User user) {
-        try {
-            return entityManager.contains(user);
-        } catch (NoResultException ex) {
-            return false;
-        }
-    }
 }

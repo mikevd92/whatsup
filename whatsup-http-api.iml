@@ -42,7 +42,7 @@
           <factory-entry name="entityManagerFactory" value="dataSource" />
           <factory-entry name="testPU" value="dataSource" />
         </datasource-mapping>
-        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/java/META-INF/persistence.xml" />
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/toj/demo/whatsup/domain/toj/demo/persistence.xml" />
       </configuration>
     </facet>
   </component>
@@ -150,6 +150,7 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.12" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-jpamodelgen:5.0.2.Final" level="project" />
   </component>
 </module>
 

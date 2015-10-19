@@ -22,7 +22,7 @@ public class PersistentUserService implements UserService {
 
     @Override
     public Optional<User> get(String name) {
-        return Optional.ofNullable(userDAO.findUserByName(name));
+        return userDAO.findUserByName(name);
     }
 
     @Override
