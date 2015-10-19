@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+
 /**
  * Created by mihai.popovici on 9/28/2015.
  */
@@ -40,63 +41,70 @@ public class FollowerResourceTest extends BaseResourceTest<FollowerResource> {
     private User toBeFollowed;
 
     @Before
-    public void initialize(){
-        userService.signup("Mihai","password");
-        follower=userService.get("Mihai").get();
-        sessionId=userSessionService.createUserSession(follower);
-        userService.signup("Adi","password");
-        toBeFollowed=userService.get("Adi").get();
+    public void initialize() {
+        userService.signup("Mihai", "password");
+        follower = userService.get("Mihai").get();
+        sessionId = userSessionService.createUserSession(follower);
+        userService.signup("Adi", "password");
+        toBeFollowed = userService.get("Adi").get();
         userSessionService.createUserSession(toBeFollowed);
     }
+
     @After
-    public void after(){
+    public void after() {
         userService.removeAll();
     }
 
     @Test
-    public void testFollowNoSessionReturnsBadRequest(){
-        Response response=target("follower/follow").queryParam("userName",toBeFollowed.getUsername()).request().get();
+    public void testFollowNoSessionReturnsBadRequest() {
+        Response response = target("follower/follow").queryParam("userName", toBeFollowed.getUsername()).request().get();
         assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
+
     @Test
-    public void NoSessionReturnsBadRequest(){
-        List<WebTarget> targets=Arrays.asList(
+    public void NoSessionReturnsBadRequest() {
+        List<WebTarget> targets = Arrays.asList(
                 target("follower/follow").queryParam("userName", toBeFollowed.getUsername()),
                 target("follower/unsubscribe").queryParam("userName", toBeFollowed.getUsername())
         );
         testNoSession(targets);
     }
+
     @Test
-    public void testFollowBadUserNameReturnsInternalServerError(){
-        Response response=target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName","John").request().get();
+    public void testFollowBadUserNameReturnsInternalServerError() {
+        Response response = target("follower/follow").queryParam("sessionId", sessionId).queryParam("userName", "John").request().get();
         assertEquals(response.getStatusInfo(), Response.Status.INTERNAL_SERVER_ERROR);
-    }
-    @Test
-    public void testUnFollowBadUserNameReturnsInternalServerError(){
-        Response response=target("follower/unsubscribe").queryParam("sessionId",sessionId).queryParam("userName","John").request().get();
-        assertEquals(response.getStatusInfo(),Response.Status.INTERNAL_SERVER_ERROR);
     }
 
     @Test
-    public void testFollowSucceeds(){
-        Response response=target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
+    public void testUnFollowBadUserNameReturnsInternalServerError() {
+        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).queryParam("userName", "John").request().get();
+        assertEquals(response.getStatusInfo(), Response.Status.INTERNAL_SERVER_ERROR);
+    }
+
+    @Test
+    public void testFollowSucceeds() {
+        Response response = target("follower/follow").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().get();
         assertEquals(response.getStatusInfo(), Response.Status.OK);
     }
+
     @Test
-    public void testFollowEmptyUserReturnsBadRequest(){
-        Response response=target("follower/follow").queryParam("sessionId",sessionId).request().get();
+    public void testFollowEmptyUserReturnsBadRequest() {
+        Response response = target("follower/follow").queryParam("sessionId", sessionId).request().get();
         assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
+
     @Test
-    public void testUnfollowSucceeds(){
-        target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
-        Response response=target("follower/unsubscribe").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
-        assertEquals(response.getStatusInfo(),Response.Status.OK);
+    public void testUnfollowSucceeds() {
+        target("follower/follow").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().get();
+        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().get();
+        assertEquals(response.getStatusInfo(), Response.Status.OK);
     }
+
     @Test
-    public void testUnfollowEmptyUserReturnsBadRequest(){
-        target("follower/follow").queryParam("sessionId",sessionId).queryParam("userName",toBeFollowed.getUsername()).request().get();
-        Response response=target("follower/unsubscribe").queryParam("sessionId",sessionId).request().get();
-        assertEquals(response.getStatusInfo(),Response.Status.BAD_REQUEST);
+    public void testUnfollowEmptyUserReturnsBadRequest() {
+        target("follower/follow").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().get();
+        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).request().get();
+        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
 }
