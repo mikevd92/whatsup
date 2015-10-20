@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-/**
- * Created by mihai.popovici on 10/8/2015.
- */
 @Transactional
 public class PersistentMessageService implements MessageService {
     private MessageDAO messageDAO;

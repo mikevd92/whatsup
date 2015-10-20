@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.test.jersey.BaseResourceTest;
-import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
 import toj.demo.whatsup.user.services.UserService;
 
 import javax.ws.rs.client.Entity;
@@ -14,9 +13,6 @@ import javax.ws.rs.core.Response;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by mihai.popovici on 9/24/2015.
- */
 
 @ContextConfiguration
 public class UserResourceTest extends BaseResourceTest<UserResource> {

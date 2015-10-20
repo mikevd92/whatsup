@@ -8,9 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-/**
- * Created by mihai.popovici on 9/25/2015.
- */
 public interface MessageService {
 
     void addNewMessage(Message message);

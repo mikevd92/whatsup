@@ -11,9 +11,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Optional;
 
-/**
- * Created by mihai.popovici on 10/8/2015.
- */
 @Repository
 public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
 
@@ -53,15 +50,4 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
             return Optional.ofNullable(null);
         }
     }
-
-    @Override
-    public boolean contains(String name) {
-        try {
-            User user = findUserByName(name).get();
-            return entityManager.contains(user);
-        } catch (NoResultException ex) {
-            return false;
-        }
-    }
-
 }

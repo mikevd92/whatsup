@@ -5,14 +5,11 @@ import toj.demo.whatsup.domain.User;
 
 import java.util.Optional;
 
-/**
- * Created by mihai.popovici on 10/8/2015.
- */
+
 public interface UserDAO extends DAO<User,Long> {
     public boolean checkUser(String name, String password);
 
     public Optional<User> findUserByName(String name);
     public void removeAll();
 
-    public boolean contains(String name);
 }

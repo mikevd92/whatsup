@@ -8,9 +8,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by mihai.popovici on 10/16/2015.
- */
 @ContextConfiguration
 public abstract class BaseResourceTest<R> extends SpringManagedResourceTest<R> {
 

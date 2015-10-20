@@ -8,9 +8,6 @@ import toj.demo.whatsup.user.http.resource.CredentialsDTO;
 
 import java.util.Optional;
 
-/**
- * Created by mihai.popovici on 10/8/2015.
- */
 @Transactional
 public class PersistentUserService implements UserService {
 
