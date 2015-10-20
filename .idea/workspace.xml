@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e05a611f-5aba-4af5-8e0c-41e7c682158a" name="Default" comment="minor changes to test classes&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/JpaDAO.java" afterPath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/JpaDAO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/DAO.java" afterPath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/DAO.java" />
     </list>
     <ignored path="whatsup-http-api.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,14 +38,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JpaDAO.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="JpaDAO.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/JpaDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.17707151" vertical-offset="173" max-vertical-offset="1054">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="173" max-vertical-offset="1054">
+              <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#654#684#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DAO.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/DAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.28944382" vertical-offset="0" max-vertical-offset="881">
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -124,18 +135,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserResourceTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/toj/demo/whatsup/user/http/resource/UserResourceTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="156" max-vertical-offset="1037">
-              <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -173,7 +172,6 @@
         <option value="$PROJECT_DIR$/src/main/resources/toj/demo/whatsup/dao/spring-persistence.xml" />
         <option value="$PROJECT_DIR$/src/test/java/toj/demo/whatsup/follower/http/resource/FollowerResourceTest.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/DAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/domain/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/dao/JpaMessageDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/dao/MessageDAO.java" />
@@ -194,6 +192,7 @@
         <option value="$PROJECT_DIR$/src/test/java/toj/demo/whatsup/test/jersey/BaseResourceTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/toj/demo/whatsup/user/http/resource/UserResourceTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/JpaDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/DAO.java" />
       </list>
     </option>
   </component>
@@ -1778,7 +1777,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="312199000" />
+    <option name="totallyTimeSpent" value="312301000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1926" height="1040" extended-state="0" />
@@ -1982,13 +1981,6 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="618">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
-          <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -2336,11 +2328,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/JpaDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.17707151" vertical-offset="173" max-vertical-offset="1054">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="173" max-vertical-offset="1054">
+          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#654#684#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28944382" vertical-offset="0" max-vertical-offset="881">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
