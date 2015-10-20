@@ -8,7 +8,6 @@ import toj.demo.whatsup.domain.User;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.*;
@@ -61,7 +60,8 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Message> cq = cb.createQuery(this.entityClass);
         Root<Message> messageRoot = cq.from(this.entityClass);
-        cq.where(cb.and(
+        cq.where(
+                cb.and(
                         cb.equal(messageRoot.get(Message_.user), user),
                         cb.greaterThanOrEqualTo(messageRoot.get(Message_.creationTimestamp), date)
                 )
@@ -92,6 +92,7 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Message> cq = cb.createQuery(this.entityClass);
         Root<Message> messageRoot = cq.from(this.entityClass);
+
         cq.where(
                 cb.equal(messageRoot.get(Message_.user), user)
         );
