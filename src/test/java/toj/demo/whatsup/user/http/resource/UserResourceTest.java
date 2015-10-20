@@ -11,8 +11,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 
 @ContextConfiguration
 public class UserResourceTest extends BaseResourceTest<UserResource> {
