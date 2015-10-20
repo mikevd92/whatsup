@@ -57,16 +57,6 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public void removeAll() {
-
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaDelete<User> delete = cb.createCriteriaDelete(entityClass);
-        delete.from(entityClass);
-        entityManager.createQuery(delete).executeUpdate();
-
-    }
-
-    @Override
     public boolean contains(String name) {
         try {
             User user = findUserByName(name).get();
