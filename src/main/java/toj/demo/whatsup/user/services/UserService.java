@@ -5,9 +5,6 @@ import toj.demo.whatsup.domain.User;
 
 import java.util.Optional;
 
-/**
- * Created by mihai.popovici on 9/24/2015.
- */
 public interface UserService {
     Optional<User> get(String name);
 

@@ -3,9 +3,6 @@ package toj.demo.whatsup.user.http.resource;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
-/**
- * Created by mihai.popovici on 9/28/2015.
- */
 @XmlRootElement
 public class SessionDTO implements Serializable {
 
@@ -24,10 +21,6 @@ public class SessionDTO implements Serializable {
 
     public String getUserName() {
         return userName;
-    }
-
-    public String getSessionId() {
-        return sessionId;
     }
 
 }

@@ -9,7 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.test.jersey.BaseResourceTest;
-import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.http.resource.UserDTO;
 import toj.demo.whatsup.user.services.UserService;
@@ -21,9 +20,6 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by mihai.popovici on 9/28/2015.
- */
 @ContextConfiguration
 public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
@@ -39,7 +35,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     @Autowired
     private Mapper mapper;
 
-    private User user;
+
     private String sessionId;
     private User toBeFollowed;
     private String tobeFollowedSessionId;
@@ -47,7 +43,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     @Before
     public void initialize() {
         userService.signup("Mihai", "password");
-        user = userService.get("Mihai").get();
+        User user = userService.get("Mihai").get();
         sessionId = userSessionService.createUserSession(user);
         userService.signup("Adi", "password");
         toBeFollowed = userService.get("Adi").get();
@@ -92,7 +88,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     @Test
     public void testUpdatesSucceeds() {
         Date timestamp = new Date();
-        Response submitResponse = target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().get();
+        target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().get();
         Response updatesResponse = target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
         MessageDTO message = updatesResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getUserDTO().getUsername(), "Mihai");
@@ -111,7 +107,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().get();
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "bla").request().get();
         Response latestMessagesResponse = target("message/latestmessages").queryParam("sessionId", tobeFollowedSessionId).request().get();
-        List<MessageDTO> latestMessages = new ArrayList<MessageDTO>();
+        List<MessageDTO> latestMessages = new ArrayList<>();
         Set<User> followers = toBeFollowed.getFollowers();
         Iterator<User> iterator = followers.iterator();
         while (iterator.hasNext() && latestMessages.size() <= 10) {

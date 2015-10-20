@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * Created by mihai.popovici on 9/25/2015.
- */
 public class InMemoryUserSessionService implements UserSessionService {
     private HashMap<String, User> userSessions;
 

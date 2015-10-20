@@ -3,9 +3,6 @@ package toj.demo.whatsup.user.http.resource;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
-/**
- * Created by mihai.popovici on 10/1/2015.
- */
 @XmlRootElement
 public class CredentialsDTO implements Serializable {
     private String username;

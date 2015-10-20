@@ -6,9 +6,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by mihai.popovici on 10/1/2015.
- */
 @XmlRootElement
 public class MessageDTO implements Serializable {
 

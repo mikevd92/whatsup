@@ -12,9 +12,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.*;
 
-/**
- * Created by mihai.popovici on 10/8/2015.
- */
 @Repository
 public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
 

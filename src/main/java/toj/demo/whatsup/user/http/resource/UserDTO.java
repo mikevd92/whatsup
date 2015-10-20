@@ -1,16 +1,12 @@
 package toj.demo.whatsup.user.http.resource;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/**
- * Created by mihai.popovici on 10/9/2015.
- */
+@XmlRootElement
 public class UserDTO implements Serializable {
-
-
-    private long Id;
 
     private String username;
 

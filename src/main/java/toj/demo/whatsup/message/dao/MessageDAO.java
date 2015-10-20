@@ -9,10 +9,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-/**
- * Created by mihai.popovici on 10/7/2015.
- */
-
 public interface MessageDAO extends DAO<Message,Long> {
     public Optional<Message> getMessageByUser(User user);
     public void removeAll();
