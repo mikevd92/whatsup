@@ -1,7 +1,5 @@
 package toj.demo.whatsup.dao;
 
-import toj.demo.whatsup.domain.User;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -14,9 +12,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by mihai.popovici on 10/15/2015.
- */
 public abstract class JpaDAO<T,ID extends Serializable> implements DAO<T,ID> {
     protected Class<T> entityClass;
 
@@ -40,8 +35,7 @@ public abstract class JpaDAO<T,ID extends Serializable> implements DAO<T,ID> {
         Root<T> root = cq.from(this.entityClass);
         cq.select(root);
         TypedQuery<T> q = entityManager.createQuery(cq);
-        List<T> list = q.getResultList();
-        return list;
+        return q.getResultList();
     }
 
     public void removeAll() {
