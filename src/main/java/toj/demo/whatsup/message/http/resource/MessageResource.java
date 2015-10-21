@@ -24,9 +24,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by mihai.popovici on 9/25/2015.
- */
 @Component
 @Session
 @Authentication

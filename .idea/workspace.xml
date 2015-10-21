@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e05a611f-5aba-4af5-8e0c-41e7c682158a" name="Default" comment="minor changes to test classes&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/toj/demo/whatsup/follower/http/resource/FollowerResourceTest.java" afterPath="$PROJECT_DIR$/src/test/java/toj/demo/whatsup/follower/http/resource/FollowerResourceTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/toj/demo/whatsup/message/http/resource/MessageResourceTest.java" afterPath="$PROJECT_DIR$/src/test/java/toj/demo/whatsup/message/http/resource/MessageResourceTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/http/resource/UserResource.java" afterPath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/http/resource/UserResource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/follower/http/resource/FollowerResource.java" afterPath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/follower/http/resource/FollowerResource.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageResource.java" afterPath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageResource.java" />
     </list>
     <ignored path="whatsup-http-api.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,17 +23,38 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="DatabaseLocalColorSettings">
+    <colors>
+      <entry key="0e141f66-b34a-4af7-b638-0e5c52267b18:data source" value="ffffff" />
+      <entry key="FOLLOWERS/PUBLIC/WHATSUP/0e141f66-b34a-4af7-b638-0e5c52267b18:table" value="Green" />
+      <entry key="Followers/dbo/whatups/5d184216-126c-4b7d-be27-d1d9ee3f6684:table" value="Green" />
+      <entry key="MESSAGES/PUBLIC/WHATSUP/0e141f66-b34a-4af7-b638-0e5c52267b18:table" value="Rose" />
+      <entry key="Messages/dbo/whatups/5d184216-126c-4b7d-be27-d1d9ee3f6684:table" value="Rose" />
+      <entry key="USERS/PUBLIC/WHATSUP/0e141f66-b34a-4af7-b638-0e5c52267b18:table" value="Yellow" />
+      <entry key="Users/dbo/whatups/5d184216-126c-4b7d-be27-d1d9ee3f6684:table" value="Green" />
+    </colors>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="whatsup-http-api" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="UserResource.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="JpaMessageDAO.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/dao/JpaMessageDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1666">
+              <caret line="68" column="31" selection-start-line="68" selection-start-column="31" selection-end-line="68" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserResource.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/http/resource/UserResource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="969">
-              <caret line="43" column="33" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.09476031" vertical-offset="0" max-vertical-offset="969">
+              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -44,8 +63,18 @@
       <file leaf-file-name="MessageResource.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageResource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="865" max-vertical-offset="1785">
-              <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1734">
+              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessageDTO.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageDTO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1037">
+              <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -61,6 +90,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="FollowerResource.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/follower/http/resource/FollowerResource.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
+              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="spring-persistence-test.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/resources/toj/demo/whatsup/dao/spring-persistence-test.xml">
           <provider selected="true" editor-type-id="text-editor">
@@ -71,11 +110,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserResourceTest.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="UserResourceTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/toj/demo/whatsup/user/http/resource/UserResourceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.17307693" vertical-offset="153" max-vertical-offset="1037">
-              <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1037">
+              <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -131,7 +170,6 @@
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/domain/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/dao/MessageDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageResource.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/services/MessageService.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/services/PersistentMessageService.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/dao/UserDAO.java" />
@@ -147,13 +185,14 @@
         <option value="$PROJECT_DIR$/src/test/java/toj/demo/whatsup/user/http/resource/UserResourceTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/JpaDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/dao/DAO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/follower/http/resource/FollowerResource.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/http/resource/UserResource.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/dao/JpaMessageDAO.java" />
         <option value="dbtable:/3e27f4/5d184216-126c-4b7d-be27-d1d9ee3f6684/whatups.dbo.Messages" />
         <option value="db-console:/3e27f4/0e141f66-b34a-4af7-b638-0e5c52267b18/" />
         <option value="$PROJECT_DIR$/src/test/java/toj/demo/whatsup/message/http/resource/MessageResourceTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/toj/demo/whatsup/follower/http/resource/FollowerResourceTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/follower/http/resource/FollowerResource.java" />
+        <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageResource.java" />
       </list>
     </option>
   </component>
@@ -1221,11 +1260,12 @@
     <property name="FullScreen" value="false" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="options.lastSelected" value="reference.projectsettings.compiler.annotationProcessors" />
+    <property name="options.lastSelected" value="database.main" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
+    <property name="Console.TableResult.DefaultCopyAction" value="Comma-separated Values (CSV)" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -1802,12 +1842,12 @@
       <workItem from="1445318968199" duration="15240000" />
       <workItem from="1445347577355" duration="214000" />
       <workItem from="1445348747622" duration="259000" />
-      <workItem from="1445410914024" duration="10005000" />
+      <workItem from="1445410914024" duration="12720000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="322308000" />
+    <option name="totallyTimeSpent" value="325023000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1817,7 +1857,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29583332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21458334" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976446" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939914" sideWeight="0.31587386" order="3" side_tool="true" content_ui="tabs" />
@@ -1876,13 +1916,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15044248" vertical-offset="0" max-vertical-offset="904">
-          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/dao/MessageDAO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
@@ -1890,14 +1923,6 @@
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1037">
-          <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2076,14 +2101,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/follower/http/resource/FollowerResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="935">
-          <caret line="43" column="66" selection-start-line="43" selection-start-column="66" selection-end-line="43" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/domain/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="372" max-vertical-offset="1292">
@@ -2136,22 +2153,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/dao/JpaMessageDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1666">
-          <caret line="68" column="31" selection-start-line="68" selection-start-column="31" selection-end-line="68" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/dao/JpaUserDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="850">
-          <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/http/resource/SessionResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.35108694" vertical-offset="0" max-vertical-offset="920">
@@ -2160,26 +2161,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/http/resource/UserResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="969">
-          <caret line="43" column="33" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
           <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="865" max-vertical-offset="1785">
-          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2207,14 +2192,6 @@
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/toj/demo/whatsup/dao/spring-persistence.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
-          <caret line="3" column="68" selection-start-line="3" selection-start-column="68" selection-end-line="3" selection-end-column="68" />
           <folding />
         </state>
       </provider>
@@ -2253,7 +2230,7 @@
         <state vertical-scroll-proportion="0.73642534" vertical-offset="1678" max-vertical-offset="2652">
           <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2285,6 +2262,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/toj/demo/whatsup/user/http/resource/UserResourceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1037">
+          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/dao/JpaUserDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3411371" vertical-offset="0" max-vertical-offset="897">
+          <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/toj/demo/whatsup/dao/spring-persistence.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
+          <caret line="3" column="68" selection-start-line="3" selection-start-column="68" selection-end-line="3" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/dao/JpaMessageDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1666">
+          <caret line="68" column="31" selection-start-line="68" selection-start-column="31" selection-end-line="68" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="uml://DATABASE/0e141f66-b34a-4af7-b638-0e5c52267b18.schema:WHATSUP.PUBLIC">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
@@ -2297,7 +2308,7 @@
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="186.0" y="133.0" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="180.5" y="133.0" />
           <SelectedNodes />
           <Categories>
             <Category>Key columns</Category>
@@ -2306,13 +2317,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/toj/demo/whatsup/user/http/resource/UserResourceTest.java">
+    <entry file="dbDummy://dbtable:/3e27f4/0e141f66-b34a-4af7-b638-0e5c52267b18/WHATSUP.PUBLIC.FOLLOWERS">
+      <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/follower/http/resource/FollowerResource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17307693" vertical-offset="153" max-vertical-offset="1037">
-          <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageResource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1734">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/message/http/resource/MessageDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1037">
+          <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/http/resource/UserResource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09476031" vertical-offset="0" max-vertical-offset="969">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
