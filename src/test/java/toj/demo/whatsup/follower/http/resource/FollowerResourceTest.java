@@ -62,7 +62,7 @@ public class FollowerResourceTest extends BaseResourceTest<FollowerResource> {
     }
 
     @Test
-    public void NoSessionReturnsBadRequest() {
+    public void testNoSessionReturnsBadRequest() {
         List<WebTarget> targets = Arrays.asList(
                 target("follower/follow").queryParam("userName", toBeFollowed.getUsername()),
                 target("follower/unsubscribe").queryParam("userName", toBeFollowed.getUsername())

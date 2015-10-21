@@ -54,7 +54,6 @@ public final class UserResource {
         }
 
         String sessionId = userSessionService.createUserSession(user);
-        //String json="{\"results\":[{\"sessionId\":\""+sessionId+"\",\"userName\":\"" + user.getUsername() + "\"}]}";
         SessionResponse sessionResponse = new SessionResponse(new SessionDTO(sessionId, user.getUsername()));
         return Response.status(Response.Status.OK).entity(sessionResponse).build();
     }

@@ -137,7 +137,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     }
 
     @Test
-    public void NoSessionReturnsBadRequest() {
+    public void testNoSessionReturnsBadRequest() {
         Date timestamp = new Date();
         List<WebTarget> targets = Arrays.asList(
                 target("message/latestmessages"),
