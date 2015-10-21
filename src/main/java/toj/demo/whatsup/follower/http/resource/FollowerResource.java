@@ -18,9 +18,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.util.Optional;
 
-/**
- * Created by mihai.popovici on 9/25/2015.
- */
 @Component
 @Session
 @Authentication
