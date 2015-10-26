@@ -2,64 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e05a611f-5aba-4af5-8e0c-41e7c682158a" name="Default" comment="Added .gitignore, to ignore target folder">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\.idea\libraries\Maven__com_microsoft_sqlserver_sqljdbc4_4_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\classes\toj\demo\whatsup\message\model\MessageResponse.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\classes\toj\demo\whatsup\user\model\Session.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\classes\toj\demo\whatsup\user\model\SessionResponse.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\classes\toj\demo\whatsup\user\model\UserResponse.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\whatsup\WEB-INF\classes\toj\demo\whatsup\message\model\MessageResponse.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\whatsup\WEB-INF\classes\toj\demo\whatsup\message\service\InMemoryMessageService.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\whatsup\WEB-INF\classes\toj\demo\whatsup\message\service\PersistentService.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\whatsup\WEB-INF\classes\toj\demo\whatsup\persistence\spring-persistence.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\whatsup\WEB-INF\classes\toj\demo\whatsup\user\http\resource\Credentials.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\whatsup\WEB-INF\classes\toj\demo\whatsup\user\model\Session.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\whatsup\WEB-INF\classes\toj\demo\whatsup\user\model\SessionResponse.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\whatsup\WEB-INF\classes\toj\demo\whatsup\user\model\UserResponse.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\whatsup\WEB-INF\classes\toj\demo\whatsup\user\service\InMemoryUserService.class" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\whatsup\WEB-INF\lib\guava-14.0.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="D:\Backup Softvision\Projects\Whatsup-Mihai\whatsup-rest-api\target\whatsup\WEB-INF\lib\sqljdbc4-4.2.jar" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/toj/demo/whatsup/test/jersey/BaseResourceTest.class" afterPath="$PROJECT_DIR$/target/test-classes/toj/demo/whatsup/test/jersey/BaseResourceTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/http/resource/CredentialsDTO.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/http/resource/CredentialsDTO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/dao/DAO.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/dao/DAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/follower/http/resource/FollowerResource.class" afterPath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/follower/http/resource/FollowerResource.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/follower/http/resource/FollowerResource.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/follower/http/resource/FollowerResource.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/toj/demo/whatsup/follower/http/resource/FollowerResourceTest.class" afterPath="$PROJECT_DIR$/target/test-classes/toj/demo/whatsup/follower/http/resource/FollowerResourceTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/services/InMemoryUserSessionService.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/services/InMemoryUserSessionService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/dao/JpaDAO.class" afterPath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/dao/JpaDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/dao/JpaDAO.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/dao/JpaDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/message/dao/JpaMessageDAO.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/message/dao/JpaMessageDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/dao/JpaUserDAO.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/dao/JpaUserDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/message/http/resource/MessageDTO.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/message/http/resource/MessageDTO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/message/http/resource/MessageResource.class" afterPath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/message/http/resource/MessageResource.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/message/http/resource/MessageResource.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/message/http/resource/MessageResource.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/toj/demo/whatsup/message/http/resource/MessageResourceTest.class" afterPath="$PROJECT_DIR$/target/test-classes/toj/demo/whatsup/message/http/resource/MessageResourceTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/message/services/PersistentMessageService.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/message/services/PersistentMessageService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/services/PersistentUserService.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/services/PersistentUserService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/user/http/resource/SessionDTO.class" afterPath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/user/http/resource/SessionDTO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/http/resource/SessionDTO.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/http/resource/SessionDTO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/domain/User.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/domain/User.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/dao/UserDAO.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/dao/UserDAO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/http/resource/UserDTO.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/http/resource/UserDTO.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/user/http/resource/UserResource.class" afterPath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/user/http/resource/UserResource.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/http/resource/UserResource.class" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/user/http/resource/UserResource.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/toj/demo/whatsup/user/http/resource/UserResourceTest.class" afterPath="$PROJECT_DIR$/target/test-classes/toj/demo/whatsup/user/http/resource/UserResourceTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/target/whatsup/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/domain/Message_.java" afterPath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/domain/Message_.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/http/resource/SessionDTO.java" afterPath="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/http/resource/SessionDTO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/logging.log" afterPath="$PROJECT_DIR$/target/classes/logging.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/logging.log" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/logging.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/resources/toj/demo/whatsup/dao/spring-persistence-test.xml" afterPath="$PROJECT_DIR$/src/test/resources/toj/demo/whatsup/dao/spring-persistence-test.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/toj/demo/whatsup/dao/spring-persistence-test.xml" afterPath="$PROJECT_DIR$/target/test-classes/toj/demo/whatsup/dao/spring-persistence-test.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/toj/demo/whatsup/dao/spring-persistence.xml" afterPath="$PROJECT_DIR$/src/main/resources/toj/demo/whatsup/dao/spring-persistence.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/dao/spring-persistence.xml" afterPath="$PROJECT_DIR$/target/classes/toj/demo/whatsup/dao/spring-persistence.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/dao/spring-persistence.xml" afterPath="$PROJECT_DIR$/target/whatsup/WEB-INF/classes/toj/demo/whatsup/dao/spring-persistence.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/whatsup-http-api.iml" afterPath="$PROJECT_DIR$/whatsup-http-api.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/whatsup_http_api_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/whatsup_http_api_war_exploded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="whatsup-http-api.iws" />
@@ -206,7 +148,7 @@
       <file leaf-file-name="FollowerResource.class" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/target/classes/toj/demo/whatsup/follower/http/resource/FollowerResource.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-0.40865386">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="e#0#2289#0" expanded="true" />
@@ -276,6 +218,7 @@
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/http/resource/UserResource.java" />
         <option value="$PROJECT_DIR$/src/main/java/toj/demo/whatsup/user/http/resource/SessionDTO.java" />
         <option value="$PROJECT_DIR$/src/test/java/toj/demo/whatsup/user/http/resource/UserResourceTest.java" />
+        <option value="$PROJECT_DIR$/target/classes/toj/demo/whatsup/follower/http/resource/FollowerResource.class" />
       </list>
     </option>
   </component>
@@ -1645,10 +1588,10 @@
     </configuration>
     <list size="7">
       <item index="0" class="java.lang.String" itemvalue="JUnit.UserResourceTest" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.MessageResourceTest" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.UserResourceTest and 4 more" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.MyResourceTest.testMyResource" />
-      <item index="4" class="java.lang.String" itemvalue="Jetty Server.whatsup-http-api" />
+      <item index="1" class="java.lang.String" itemvalue="Jetty Server.whatsup-http-api" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.MessageResourceTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.UserResourceTest and 4 more" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.MyResourceTest.testMyResource" />
       <item index="5" class="java.lang.String" itemvalue="JUnit.MyResourceTest" />
       <item index="6" class="java.lang.String" itemvalue="JUnit.UserResourceTest.testLoginsAfterUserCreatedSucceeds" />
     </list>
@@ -1722,15 +1665,15 @@
       <workItem from="1445868204811" duration="1783000" />
       <workItem from="1445870365306" duration="30000" />
       <workItem from="1445871658049" duration="177000" />
-      <workItem from="1445872291943" duration="5635000" />
+      <workItem from="1445872291943" duration="6471000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="360372000" />
+    <option name="totallyTimeSpent" value="361208000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1741,13 +1684,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31027028" sideWeight="0.38965884" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26594594" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26594594" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3664865" sideWeight="0.68412614" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976446" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21375267" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21375267" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21428572" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2205,7 +2148,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/target/classes/toj/demo/whatsup/follower/http/resource/FollowerResource.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="-0.40865386">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#2289#0" expanded="true" />
