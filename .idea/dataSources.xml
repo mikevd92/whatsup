@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="2553803502">
+  <component name="DataSourceManagerImpl" format="xml" hash="3699853395">
     <data-source source="LOCAL" name="SQL Server - whatups@localhost" uuid="5d184216-126c-4b7d-be27-d1d9ee3f6684">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
       <jdbc-url>jdbc:sqlserver://localhost:1433;databaseName=whatups</jdbc-url>
-      <user-name>sa</user-name>
-      <user-password>dfe7dfc3dfd9dfdfdfdcdfcedf9adf9adf9adf9bdf9adf98</user-password>
-      <schema-pattern>whatups.*</schema-pattern>
-      <default-schemas>whatups.*</default-schemas>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="H2 - whatsup@localhost" uuid="0e141f66-b34a-4af7-b638-0e5c52267b18">
@@ -17,12 +13,7 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:tcp://localhost/~/whatsup</jdbc-url>
-      <user-name>sa</user-name>
-      <user-password>dfe7dfc3dfd9dfdfdfdcdfcedf9adf9adf9adf9bdf9adf98</user-password>
-      <schema-pattern>WHATSUP.PUBLIC</schema-pattern>
-      <default-schemas>WHATSUP.*</default-schemas>
       <libraries />
     </data-source>
   </component>
 </project>
-

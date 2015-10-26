@@ -6,6 +6,10 @@ import java.io.Serializable;
 @XmlRootElement
 public class SessionDTO implements Serializable {
 
+    public String getSessionId() {
+        return sessionId;
+    }
+
     private String sessionId;
 
     private String userName;
@@ -22,5 +26,6 @@ public class SessionDTO implements Serializable {
     public String getUserName() {
         return userName;
     }
+
 
 }

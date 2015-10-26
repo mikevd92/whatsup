@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="SQL Server - whatups@localhost" uuid="5d184216-126c-4b7d-be27-d1d9ee3f6684">
+      <user-name>sa</user-name>
+      <user-password>dfe7dfc3dfd9dfdfdfdcdfcedf9adf9adf9adf9bdf9adf98</user-password>
+      <schema-pattern>whatups.*</schema-pattern>
+      <default-schemas>whatups.*</default-schemas>
+    </data-source>
+    <data-source name="H2 - whatsup@localhost" uuid="0e141f66-b34a-4af7-b638-0e5c52267b18">
+      <user-name>sa</user-name>
+      <user-password>dfe7dfc3dfd9dfdfdfdcdfcedf9adf9adf9adf9bdf9adf98</user-password>
+      <schema-pattern>WHATSUP.PUBLIC</schema-pattern>
+      <default-schemas>WHATSUP.*</default-schemas>
+    </data-source>
+  </component>
+</project>
