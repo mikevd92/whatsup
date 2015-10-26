@@ -1,9 +1,9 @@
 package toj.demo.whatsup.domain;
 
-import java.util.Date;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
+import java.util.Date;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(Message.class)
