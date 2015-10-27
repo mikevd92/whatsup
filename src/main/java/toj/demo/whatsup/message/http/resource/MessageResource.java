@@ -4,17 +4,14 @@ import com.google.common.base.Preconditions;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import toj.demo.whatsup.domain.Message;
+import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.http.filters.Authentication;
 import toj.demo.whatsup.http.filters.Session;
-import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.message.services.MessageService;
-import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.http.resource.UserDTO;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -39,7 +36,7 @@ public final class MessageResource {
         this.mapper = mapper;
     }
 
-    @GET
+    @POST
     @Path("/submit")
     @Produces(MediaType.APPLICATION_JSON)
     public Response submitMessage(@QueryParam("message") String msg, @Context SecurityContext securityContext) {

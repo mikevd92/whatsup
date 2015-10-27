@@ -3,15 +3,12 @@ package toj.demo.whatsup.follower.http.resource;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.http.filters.Authentication;
 import toj.demo.whatsup.http.filters.Session;
-import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.services.UserService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,7 +29,7 @@ public final class FollowerResource {
         this.userService = userService;
     }
 
-    @GET
+    @PUT
     @Path("/follow")
     @Produces(MediaType.APPLICATION_JSON)
     public Response follow(@QueryParam("userName") String userName, @Context SecurityContext securityContext) {
@@ -42,12 +39,11 @@ public final class FollowerResource {
         if (!toBeFollowed.isPresent()) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-
-        toBeFollowed.get().addFollower(follower);
+        userService.update(toBeFollowed.get());
         return Response.status(Response.Status.OK).build();
     }
 
-    @GET
+    @PUT
     @Path("/unsubscribe")
     @Produces(MediaType.APPLICATION_JSON)
     public Response unfollow(@QueryParam("userName") String userName, @Context SecurityContext securityContext) {
@@ -59,6 +55,7 @@ public final class FollowerResource {
         }
 
         toBeUnFollowed.get().removeFollower(follower);
+        userService.update(toBeUnFollowed.get());
         return Response.status(Response.Status.OK).build();
 
     }
