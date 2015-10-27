@@ -15,5 +15,6 @@ public interface UserService {
     boolean checkUser(CredentialsDTO credentialsDTO);
 
     void removeAll();
+    void update(User user);
 
 }

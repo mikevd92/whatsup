@@ -14,6 +14,7 @@ import toj.demo.whatsup.user.http.resource.UserDTO;
 import toj.demo.whatsup.user.services.UserService;
 import toj.demo.whatsup.user.services.UserSessionService;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import java.util.*;
@@ -59,19 +60,19 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Test
     public void testSubmitCorrectMessageSucceeds() {
-        Response messageResponse = target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().get();
+        Response messageResponse = target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         assertEquals(messageResponse.getStatusInfo(), Response.Status.OK);
     }
 
     @Test
     public void testSubmitEmptyMessageReturnsBadRequest() {
-        Response messageResponse = target("message/submit").queryParam("sessionId", sessionId).request().get();
+        Response messageResponse = target("message/submit").queryParam("sessionId", sessionId).request().post(Entity.text(""));
         assertEquals(messageResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
 
     @Test
     public void testGetStatusCallSucceeds() {
-        target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().get();
+        target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         Response statusResponse = target("message/status").queryParam("sessionId", sessionId).request().get();
         MessageDTO message = statusResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getMessage(), "awesome");
@@ -88,7 +89,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     @Test
     public void testUpdatesSucceeds() {
         Date timestamp = new Date();
-        target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().get();
+        target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         Response updatesResponse = target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
         MessageDTO message = updatesResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getUserDTO().getUsername(), "Mihai");
@@ -104,8 +105,8 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Test
     public void testLatestMessagesSucceeds() {
-        target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().get();
-        target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "bla").request().get();
+        target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
+        target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "bla").request().post(Entity.text(""));
         Response latestMessagesResponse = target("message/latestmessages").queryParam("sessionId", tobeFollowedSessionId).request().get();
         List<MessageDTO> latestMessages = new ArrayList<>();
         Set<User> followers = toBeFollowed.getFollowers();
@@ -139,12 +140,14 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     @Test
     public void testNoSessionReturnsBadRequest() {
         Date timestamp = new Date();
+        Response response=target("message/submit").request().post(Entity.text(""));
+        assertEquals(response.getStatusInfo(),Response.Status.BAD_REQUEST);
         List<WebTarget> targets = Arrays.asList(
                 target("message/latestmessages"),
                 target("message/updates").queryParam("timestamp", timestamp.toString()),
-                target("message/status"),
-                target("message/submit")
+                target("message/status")
         );
-        testNoSession(targets);
+        testNoSessionGET(targets);
     }
+
 }

@@ -43,4 +43,9 @@ public class PersistentUserService implements UserService {
     public void removeAll() {
         userDAO.removeAll();
     }
+
+    @Override
+    public void update(User user) {
+        userDAO.update(user);
+    }
 }
