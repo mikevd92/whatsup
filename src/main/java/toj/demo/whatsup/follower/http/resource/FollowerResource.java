@@ -40,11 +40,11 @@ public final class FollowerResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         if(!toBeFollowed.get().equals(follower)) {
-            toBeFollowed.get().addFollower(follower);
+            userService.addFollower(toBeFollowed.get(),follower);
         }else{
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        userService.update(toBeFollowed.get());
+
         return Response.status(Response.Status.OK).build();
     }
 
@@ -58,9 +58,7 @@ public final class FollowerResource {
         if (!toBeUnFollowed.isPresent()) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-
-        toBeUnFollowed.get().removeFollower(follower);
-        userService.update(toBeUnFollowed.get());
+        userService.removeFollower(toBeUnFollowed.get(),follower);
         return Response.status(Response.Status.OK).build();
 
     }

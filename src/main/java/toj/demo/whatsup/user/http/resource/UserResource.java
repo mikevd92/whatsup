@@ -1,7 +1,9 @@
 package toj.demo.whatsup.user.http.resource;
 
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.services.UserService;
 import toj.demo.whatsup.user.services.UserSessionService;
@@ -18,11 +20,13 @@ public final class UserResource {
 
     private final UserService userService;
     private final UserSessionService userSessionService;
+    private final Mapper mapper;
 
     @Autowired
-    public UserResource(final UserService userService, final UserSessionService userSessionService) {
+    public UserResource(final UserService userService, final UserSessionService userSessionService,final Mapper mapper) {
         this.userService = userService;
         this.userSessionService = userSessionService;
+        this.mapper=mapper;
     }
 
     @PUT
@@ -34,7 +38,8 @@ public final class UserResource {
         if (user.isPresent()) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        userService.signup(credentialsDTO);
+        Credentials credentials=mapper.map(credentialsDTO,Credentials.class);
+        userService.signup(credentials);
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -43,8 +48,8 @@ public final class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(CredentialsDTO credentialsDTO) {
-
-        if (!userService.checkUser(credentialsDTO)) {
+        Credentials credentials=mapper.map(credentialsDTO,Credentials.class);
+        if (!userService.checkUser(credentials)) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 

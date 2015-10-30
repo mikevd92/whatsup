@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.test.jersey.BaseResourceTest;
@@ -43,10 +44,13 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Before
     public void initialize() {
-        userService.signup("Mihai", "password");
+        Credentials credentialsMihai=new Credentials("Mihai","password");
+        userService.signup(credentialsMihai);
         User user = userService.get("Mihai").get();
         sessionId = userSessionService.createUserSession(user);
-        userService.signup("Adi", "password");
+        Credentials credentialsAdi=new Credentials("Adi","password");
+        userService.signup(credentialsMihai);
+        userService.signup(credentialsAdi);
         toBeFollowed = userService.get("Adi").get();
         tobeFollowedSessionId = userSessionService.createUserSession(toBeFollowed);
         toBeFollowed.addFollower(user);
