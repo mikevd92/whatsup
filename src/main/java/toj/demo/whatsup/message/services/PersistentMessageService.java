@@ -20,34 +20,31 @@ public class PersistentMessageService implements MessageService {
         this.messageDAO = messageDAO;
     }
 
-    @Override
     public void addNewMessage(Message message) {
-        messageDAO.save(message);
+        this.messageDAO.save(message);
     }
 
-    @Override
     public Optional<Message> getStatusMessage(User user) {
-        return messageDAO.getMessageByUser(user);
+        return this.messageDAO.getMessageByUser(user);
     }
 
-
-    @Override
     public void removeAll() {
-        messageDAO.removeAll();
+        this.messageDAO.removeAll();
     }
 
-    @Override
     public List<Message> getUpdates(Date timestamp, User user) {
-        return messageDAO.getUpdates(timestamp, user);
+        return this.messageDAO.getUpdates(timestamp, user);
     }
 
-    @Override
     public List<Message> getMessages(User user) {
-        return messageDAO.getMessagesByUser(user);
+        return this.messageDAO.getMessagesByUser(user);
     }
 
-    @Override
     public List<Message> getLatestMessages(Set<User> users) {
-        return messageDAO.getMessagesByUsers(users);
+        return this.messageDAO.getMessagesByUsers(users);
+    }
+
+    public void removeByDeletionTimestamp(){
+        messageDAO.removeByDeletionTimestamp();
     }
 }

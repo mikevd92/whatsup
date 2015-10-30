@@ -11,7 +11,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
@@ -100,5 +99,7 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
         TypedQuery<Message> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
-
+    public void removeByDeletionTimestamp(){
+        entityManager.createQuery("delete from Messages where deletionTimestamp<:currentTime").setParameter("currentTime", new Date()).executeUpdate();
+    }
 }

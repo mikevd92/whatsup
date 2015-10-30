@@ -1,3 +1,4 @@
+
 package toj.demo.whatsup.message.http.resource;
 
 import com.google.common.base.Preconditions;
@@ -13,10 +14,8 @@ import toj.demo.whatsup.user.http.resource.UserDTO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -26,41 +25,58 @@ import java.util.*;
 @Authentication
 @Path("/message")
 public final class MessageResource {
-
     private final MessageService messageService;
     private final Mapper mapper;
 
     @Autowired
-    public MessageResource(final MessageService messageService, final Mapper mapper) {
+    public MessageResource(MessageService messageService, Mapper mapper) {
         this.messageService = messageService;
         this.mapper = mapper;
     }
 
     @POST
     @Path("/submit")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response submitMessage(@QueryParam("message") String msg, @Context SecurityContext securityContext) {
+    @Produces({"application/json"})
+    public Response submitMessage(@QueryParam("message") String msg,@QueryParam("deleteOn") String deletionTimestamp,
+                                  @Context SecurityContext securityContext) {
         Preconditions.checkNotNull(msg);
-        User user = (User) securityContext.getUserPrincipal();
-        Message message = new Message(msg, user);
-        messageService.addNewMessage(message);
-        return Response.status(Response.Status.OK).build();
+        User user = (User)securityContext.getUserPrincipal();
+        Date date;
+        if(deletionTimestamp!=null) {
+            SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+            try {
+                date = format.parse(deletionTimestamp);
+            } catch (ParseException var12) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+            Date now=new Date();
+            if(date.before(now)){
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+            Message message = new Message(msg, user,now,date);
+            this.messageService.addNewMessage(message);
+            return Response.status(Response.Status.OK).build();
+        }else{
+            Message message = new Message(msg, user);
+            this.messageService.addNewMessage(message);
+            return Response.status(Response.Status.OK).build();
+        }
     }
 
     @GET
     @Path("/status")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({"application/json"})
     public Response getStatusCall(@Context SecurityContext securityContext) {
-        User user = (User) securityContext.getUserPrincipal();
-        Optional<Message> optionalMessage=messageService.getStatusMessage(user);
+        User user = (User)securityContext.getUserPrincipal();
+        Optional optionalMessage = this.messageService.getStatusMessage(user);
         if(optionalMessage.isPresent()) {
-            Message message = optionalMessage.get();
-            MessageDTO messageDTO = mapper.map(message, MessageDTO.class);
-            UserDTO userDTO = mapper.map(user, UserDTO.class);
+            Message response2 = (Message)optionalMessage.get();
+            MessageDTO messageDTO = (MessageDTO)this.mapper.map(response2, MessageDTO.class);
+            UserDTO userDTO = (UserDTO)this.mapper.map(user, UserDTO.class);
             messageDTO.setUserDTO(userDTO);
-            MessageResponse response = new MessageResponse(Collections.singletonList(messageDTO));
-            return Response.status(Response.Status.OK).entity(response).build();
-        }else{
+            MessageResponse response1 = new MessageResponse(Collections.singletonList(messageDTO));
+            return Response.status(Response.Status.OK).entity(response1).build();
+        } else {
             MessageResponse response = new MessageResponse(Collections.EMPTY_LIST);
             return Response.status(Response.Status.OK).entity(response).build();
         }
@@ -68,48 +84,54 @@ public final class MessageResource {
 
     @GET
     @Path("/updates")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({"application/json"})
     public Response getUpdates(@QueryParam("timestamp") String timestamp, @Context SecurityContext securityContext) {
         Preconditions.checkNotNull(timestamp);
-        DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+
         Date date;
         try {
             date = format.parse(timestamp);
-        } catch (ParseException e) {
+        } catch (ParseException var12) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
+        User user = (User)securityContext.getUserPrincipal();
+        List messageList = this.messageService.getUpdates(date, user);
+        LinkedList messageDTOList = new LinkedList();
+        UserDTO userDTO = (UserDTO)this.mapper.map(user, UserDTO.class);
+        Iterator response = messageList.iterator();
 
-        User user = (User) securityContext.getUserPrincipal();
-
-        List<Message> messageList = messageService.getUpdates(date, user);
-        List<MessageDTO> messageDTOList = new LinkedList<>();
-        UserDTO userDTO=mapper.map(user,UserDTO.class);
-        for (Message message : messageList) {
-            MessageDTO messageDTO=mapper.map(message, MessageDTO.class);
+        while(response.hasNext()) {
+            Message message = (Message)response.next();
+            MessageDTO messageDTO = (MessageDTO)this.mapper.map(message, MessageDTO.class);
             messageDTO.setUserDTO(userDTO);
             messageDTOList.add(messageDTO);
         }
-        MessageResponse response = new MessageResponse(messageDTOList);
-        return Response.status(Response.Status.OK).entity(response).build();
+
+        MessageResponse response1 = new MessageResponse(messageDTOList);
+        return Response.status(Response.Status.OK).entity(response1).build();
     }
 
     @GET
     @Path("/latestmessages")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({"application/json"})
     public Response getLatestMessages(@Context SecurityContext securityContext) {
-        User user = (User) securityContext.getUserPrincipal();
-        Set<User> followers = user.getFollowers();
-        List<Message> latestMessages = messageService.getLatestMessages(followers);
-        List<MessageDTO> messageDTOList = new LinkedList<>();
-        for (Message message : latestMessages) {
-            MessageDTO messageDTO=mapper.map(message, MessageDTO.class);
-            UserDTO userDTO=mapper.map(message.getUser(),UserDTO.class);
+        User user = (User)securityContext.getUserPrincipal();
+        Set followers = user.getFollowers();
+        List latestMessages = this.messageService.getLatestMessages(followers);
+        LinkedList messageDTOList = new LinkedList();
+        Iterator response = latestMessages.iterator();
+
+        while(response.hasNext()) {
+            Message message = (Message)response.next();
+            MessageDTO messageDTO = (MessageDTO)this.mapper.map(message, MessageDTO.class);
+            UserDTO userDTO = (UserDTO)this.mapper.map(message.getUser(), UserDTO.class);
             messageDTO.setUserDTO(userDTO);
             messageDTOList.add(messageDTO);
         }
-        MessageResponse response = new MessageResponse(messageDTOList);
-        return Response.status(Response.Status.OK).entity(response).build();
+
+        MessageResponse response1 = new MessageResponse(messageDTOList);
+        return Response.status(Response.Status.OK).entity(response1).build();
     }
 }
-

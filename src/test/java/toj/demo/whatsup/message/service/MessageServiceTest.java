@@ -13,15 +13,14 @@ import toj.demo.whatsup.message.dao.MessageDAO;
 import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.message.services.PersistentMessageService;
 
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.when;
-import static org.junit.Assert.*;
-
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by mihai.popovici on 10/29/2015.
@@ -58,12 +57,14 @@ public class MessageServiceTest {
     public void testGetStatusMessage() {
         List<Message> messages = new LinkedList<>();
         User user = new User("Mihai", "password");
-        messages.addAll(Arrays.asList(
-                new Message("wow", user, Date.from(Instant.now().minus(1, ChronoUnit.DAYS))),
-                new Message("cool", user, Date.from(Instant.now().minus(3, ChronoUnit.DAYS))),
-                new Message("sweet", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS))),
-                new Message("marvel", user, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)))
-        ));
+        messages.addAll(Arrays
+                        .asList(
+                                new Message("wow", user, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)), Date.from(Instant.now().minus(1, ChronoUnit.DAYS))),
+                                new Message("cool", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().minus(3, ChronoUnit.DAYS))),
+                                new Message("sweet", user, Date.from(Instant.now().minus(5, ChronoUnit.DAYS)), Date.from(Instant.now().minus(4, ChronoUnit.DAYS))),
+                                new Message("marvel", user, Date.from(Instant.now().minus(3, ChronoUnit.DAYS)), Date.from(Instant.now().minus(2, ChronoUnit.DAYS)))
+                        )
+        );
         when(messageDAO.getMessageByUser(user)).then(new Answer<Optional<Message>>() {
             @Override
             public Optional<Message> answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -100,12 +101,12 @@ public class MessageServiceTest {
         List<Message> messages = new LinkedList<>();
         User user = new User("Mihai", "password");
         messages.addAll(Arrays.asList(
-                new Message("wow", user, Date.from(Instant.now().minus(1, ChronoUnit.DAYS))),
-                new Message("cool", user, Date.from(Instant.now().minus(3, ChronoUnit.DAYS))),
-                new Message("sweet", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS))),
-                new Message("marvel", user, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)))
+                new Message("wow", user, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)),Date.from(Instant.now().minus(1,ChronoUnit.DAYS))),
+                new Message("cool", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)),Date.from(Instant.now().minus(3, ChronoUnit.DAYS))),
+                new Message("sweet", user, Date.from(Instant.now().minus(5, ChronoUnit.DAYS)),Date.from(Instant.now().minus(4, ChronoUnit.DAYS))),
+                new Message("marvel", user, Date.from(Instant.now().minus(3, ChronoUnit.DAYS)),Date.from(Instant.now().minus(2, ChronoUnit.DAYS)))
         ));
-        Date date = Date.from(Instant.now().minus(2, ChronoUnit.DAYS));
+        Date date = Date.from(Instant.now().minus(3, ChronoUnit.DAYS));
         when(messageDAO.getUpdates(date, user)).then(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -135,17 +136,17 @@ public class MessageServiceTest {
         User user = new User("Mihai", "password");
         User user1 = new User("Adi", "password");
         messages.addAll(Arrays.asList(
-                new Message("wow1", user1, Date.from(Instant.now().minus(1, ChronoUnit.DAYS))),
-                new Message("cool1", user1, Date.from(Instant.now().minus(3, ChronoUnit.DAYS))),
-                new Message("sweet1", user1, Date.from(Instant.now().minus(4, ChronoUnit.DAYS))),
-                new Message("marvel1", user1, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)))
+                new Message("wow", user, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)),Date.from(Instant.now().minus(1,ChronoUnit.DAYS))),
+                new Message("cool", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)),Date.from(Instant.now().minus(3, ChronoUnit.DAYS))),
+                new Message("sweet", user, Date.from(Instant.now().minus(5, ChronoUnit.DAYS)),Date.from(Instant.now().minus(4, ChronoUnit.DAYS))),
+                new Message("marvel", user, Date.from(Instant.now().minus(3, ChronoUnit.DAYS)),Date.from(Instant.now().minus(2, ChronoUnit.DAYS)))
         ));
         User user2 = new User("Julia", "password");
         messages.addAll(Arrays.asList(
-                new Message("wow", user2, Date.from(Instant.now().minus(1, ChronoUnit.DAYS))),
-                new Message("cool", user2, Date.from(Instant.now().minus(3, ChronoUnit.DAYS))),
-                new Message("sweet", user2, Date.from(Instant.now().minus(4, ChronoUnit.DAYS))),
-                new Message("marvel", user2, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)))
+                new Message("wow", user, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)),Date.from(Instant.now().minus(1,ChronoUnit.DAYS))),
+                new Message("cool", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)),Date.from(Instant.now().minus(3, ChronoUnit.DAYS))),
+                new Message("sweet", user, Date.from(Instant.now().minus(5, ChronoUnit.DAYS)),Date.from(Instant.now().minus(4, ChronoUnit.DAYS))),
+                new Message("marvel", user, Date.from(Instant.now().minus(3, ChronoUnit.DAYS)),Date.from(Instant.now().minus(2, ChronoUnit.DAYS)))
         ));
         user.addFollower(user1);
         user.addFollower(user2);

@@ -2,6 +2,7 @@ package toj.demo.whatsup.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 /**
@@ -21,6 +22,8 @@ public class Message implements Serializable {
 
     private Date creationTimestamp;
 
+    private Date deletionTimestamp;
+
     public Message() {
 
     }
@@ -29,11 +32,21 @@ public class Message implements Serializable {
         this.message = message;
         this.user=user;
         this.creationTimestamp = new Date();
+        this.deletionTimestamp = Date.from(creationTimestamp.toInstant().plus(10,ChronoUnit.MINUTES));
     }
-    public Message(String message, User user,Date creationTimestamp) {
+    public Message(String message, User user,Date creationTimestamp, Date deletionTimestamp) {
         this.message = message;
         this.user=user;
+        this.deletionTimestamp = deletionTimestamp;
         this.creationTimestamp = creationTimestamp;
+    }
+
+    public Date getDeletionTimestamp() {
+        return deletionTimestamp;
+    }
+
+    public void setDeletionTimestamp(Date deletionTimestamp) {
+        this.deletionTimestamp = deletionTimestamp;
     }
 
     public Date getCreationTimestamp() {

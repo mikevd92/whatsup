@@ -9,17 +9,17 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface MessageService {
+    void addNewMessage(Message var1);
 
-    void addNewMessage(Message message);
-
-    Optional<Message> getStatusMessage(User user);
+    Optional<Message> getStatusMessage(User var1);
 
     void removeAll();
 
-    List<Message> getUpdates(Date timestamp, User user);
+    List<Message> getUpdates(Date var1, User var2);
 
-    List<Message> getMessages(User user);
+    List<Message> getMessages(User var1);
 
-    List<Message> getLatestMessages(Set<User> users);
+    List<Message> getLatestMessages(Set<User> var1);
 
+    public void removeByDeletionTimestamp();
 }
