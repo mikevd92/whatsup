@@ -17,7 +17,6 @@ public interface DAO<T,ID extends Serializable>  {
     Optional<T> findOne(ID id);
 
     T save(T persisted);
-    void update(T updated);
 
     void removeAll();
 

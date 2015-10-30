@@ -11,5 +11,7 @@ public interface UserDAO extends DAO<User,Long> {
 
     public Optional<User> findUserByName(String name);
     public void removeAll();
+    public void addFollower(User toBeFollowed,User follower);
+    public void removeFollower(User toBeFollowed,User follower);
 
 }

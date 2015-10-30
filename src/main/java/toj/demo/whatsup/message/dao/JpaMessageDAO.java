@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
@@ -82,10 +83,11 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
             if (results.size() > 1)
                 list.add(results.get(1));
         }
+
         return list;
     }
 
-    public List<Message> getUserMessages(User user) {
+    private List<Message> getUserMessages(User user) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Message> cq = cb.createQuery(this.entityClass);
         Root<Message> messageRoot = cq.from(this.entityClass);

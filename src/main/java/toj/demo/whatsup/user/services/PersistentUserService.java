@@ -2,6 +2,7 @@ package toj.demo.whatsup.user.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.dao.UserDAO;
 import toj.demo.whatsup.user.http.resource.CredentialsDTO;
@@ -23,20 +24,14 @@ public class PersistentUserService implements UserService {
     }
 
     @Override
-    public void signup(String name, String password) {
-        User user=new User(name,password);
+    public void signup(Credentials credentials) {
+        User user=new User(credentials.getUsername(), credentials.getPassword());
         userDAO.save(user);
     }
 
     @Override
-    public void signup(CredentialsDTO credentialsDTO) {
-        User user=new User(credentialsDTO.getUsername(), credentialsDTO.getPassword());
-        userDAO.save(user);
-    }
-
-    @Override
-    public boolean checkUser(CredentialsDTO credentialsDTO) {
-        return userDAO.checkUser(credentialsDTO.getUsername(), credentialsDTO.getPassword());
+    public boolean checkUser(Credentials credentials) {
+        return userDAO.checkUser(credentials.getUsername(), credentials.getPassword());
     }
 
     @Override
@@ -45,7 +40,14 @@ public class PersistentUserService implements UserService {
     }
 
     @Override
-    public void update(User user) {
-        userDAO.update(user);
+    public void addFollower(User toBeFollowed, User follower) {
+         userDAO.addFollower(toBeFollowed,follower);
     }
+
+    @Override
+    public void removeFollower(User toBeFollowed, User follower) {
+         userDAO.removeFollower(toBeFollowed,follower);
+    }
+
+
 }

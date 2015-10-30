@@ -50,4 +50,16 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
             return Optional.ofNullable(null);
         }
     }
+
+    @Override
+    public void addFollower(User toBeFollowed, User follower) {
+        toBeFollowed.addFollower(follower);
+        entityManager.merge(toBeFollowed);
+    }
+
+    @Override
+    public void removeFollower(User toBeUnFollowed, User follower) {
+        toBeUnFollowed.removeFollower(follower);
+        entityManager.merge(toBeUnFollowed);
+    }
 }

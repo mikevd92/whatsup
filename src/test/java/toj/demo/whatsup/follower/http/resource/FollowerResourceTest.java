@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.test.jersey.BaseResourceTest;
 import toj.demo.whatsup.user.services.UserService;
@@ -41,10 +42,12 @@ public class FollowerResourceTest extends BaseResourceTest<FollowerResource> {
 
     @Before
     public void initialize() {
-        userService.signup("Mihai", "password");
+        Credentials credentialsMihai=new Credentials("Mihai","password");
+        userService.signup(credentialsMihai);
         follower = userService.get("Mihai").get();
         sessionId = userSessionService.createUserSession(follower);
-        userService.signup("Adi", "password");
+        Credentials credentialsAdi=new Credentials("Adi","password");
+        userService.signup(credentialsAdi);
         toBeFollowed = userService.get("Adi").get();
         userSessionService.createUserSession(toBeFollowed);
     }
