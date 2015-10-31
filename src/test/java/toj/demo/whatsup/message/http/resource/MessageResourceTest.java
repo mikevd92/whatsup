@@ -127,7 +127,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
         messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(4, ChronoUnit.DAYS)),Date.from(Instant.now().minus(3, ChronoUnit.DAYS))));
         Response latestMessagesResponse = target("message/latestmessages").queryParam("sessionId", tobeFollowedSessionId).request().get();
 
-        Stream<Message> stream=toBeFollowed.getFollowers().stream().flatMap(p -> messageService.getMessages(p).stream().limit(2));
+        Stream<Message> stream=toBeFollowed.getFollowers().stream().flatMap(p -> messageService.getMessages(p).stream().limit(2)).limit(10);
         List<MessageDTO> latestMessages = stream.map(p -> mapper.map(p,MessageDTO.class))
                 .collect(Collectors.toList());
         List<MessageDTO> results=latestMessagesResponse.readEntity(MessageResponse.class).getResults();

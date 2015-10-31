@@ -78,7 +78,7 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
 
     @Override
     public List<Message> getMessagesByUsers(Set<User> users) {
-        List<Message> list = users.stream().flatMap(p -> getMessagesByUser(p).stream().limit(2)).collect(Collectors.toList());
+        List<Message> list = users.stream().flatMap(p -> getMessagesByUser(p).stream().limit(2)).limit(10).collect(Collectors.toList());
         return list;
     }
 
