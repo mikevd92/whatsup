@@ -160,6 +160,7 @@ public class MessageServiceTest {
                         .flatMap(p -> messages.stream()
                                 .filter(m -> m.getUser().equals(p))
                                 .limit(2))
+                                .limit(10)
                         .collect(Collectors.toList());
             }
         });
@@ -170,6 +171,7 @@ public class MessageServiceTest {
                         .flatMap(p -> messages.stream()
                                 .filter(m -> m.getUser().equals(p))
                                 .limit(2))
+                                .limit(10)
                         .collect(Collectors.toList())
         );
 

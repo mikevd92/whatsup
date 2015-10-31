@@ -37,12 +37,6 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
     }
 
     @Test
-    public void testReturnsUserDetailsWhenUserCreated() {
-        final Response response=target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
-        assertEquals(response.getStatusInfo(),Response.Status.CREATED);
-    }
-
-    @Test
     public void testLoginsAfterUserCreatedSucceeds() {
         target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
         final Response response=target("user/login").request().post(Entity.json("{\"username\":\"Mihai\",\"password\":\"password\"}"));
