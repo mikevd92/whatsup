@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.test.jersey.BaseResourceTest;
+import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
 import toj.demo.whatsup.user.services.UserService;
 import toj.demo.whatsup.user.services.UserSessionService;
 
@@ -25,7 +26,7 @@ import static org.junit.Assert.assertEquals;
  * Created by mihai.popovici on 9/28/2015.
  */
 @ContextConfiguration
-public class FollowerResourceTest extends BaseResourceTest<FollowerResource> {
+public class FollowerResourceTest extends SpringManagedResourceTest<FollowerResource> {
 
     @Autowired
     private UserSessionService userSessionService;
@@ -65,11 +66,11 @@ public class FollowerResourceTest extends BaseResourceTest<FollowerResource> {
 
     @Test
     public void testNoSessionReturnsBadRequest() {
-        List<WebTarget> targets = Arrays.asList(
-                target("follower/follow").queryParam("userName", toBeFollowed.getUsername()),
-                target("follower/unsubscribe").queryParam("userName", toBeFollowed.getUsername())
-        );
-        testNoSessionPUT(targets);
+        Response followResponse=target("follower/follow").request().put(Entity.text(""));
+        assertEquals(followResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
+        Response unfollowResponse=target("follower/unsubscribe").request().delete();
+        assertEquals(unfollowResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
+
     }
 
 
@@ -81,7 +82,7 @@ public class FollowerResourceTest extends BaseResourceTest<FollowerResource> {
 
     @Test
     public void testUnFollowBadUserNameReturnsInternalServerError() {
-        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).queryParam("userName", "John").request().put(Entity.text(""));
+        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).queryParam("userName", "John").request().delete();
         assertEquals(response.getStatusInfo(), Response.Status.INTERNAL_SERVER_ERROR);
     }
 
@@ -100,14 +101,14 @@ public class FollowerResourceTest extends BaseResourceTest<FollowerResource> {
     @Test
     public void testUnfollowSucceeds() {
         target("follower/follow").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().put(Entity.text(""));
-        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().put(Entity.text(""));
+        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().delete();
         assertEquals(response.getStatusInfo(), Response.Status.OK);
     }
 
     @Test
     public void testUnfollowEmptyUserReturnsBadRequest() {
         target("follower/follow").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().put(Entity.text(""));
-        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).request().put(Entity.text(""));
+        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).request().delete();
         assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
 }

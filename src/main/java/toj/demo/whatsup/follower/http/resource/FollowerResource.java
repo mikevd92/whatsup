@@ -48,7 +48,7 @@ public final class FollowerResource {
         return Response.status(Response.Status.OK).build();
     }
 
-    @PUT
+    @DELETE
     @Path("/unsubscribe")
     @Produces(MediaType.APPLICATION_JSON)
     public Response unfollow(@QueryParam("userName") String userName, @Context SecurityContext securityContext) {
