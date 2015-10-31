@@ -9,34 +9,6 @@ import java.util.Date;
 @XmlRootElement
 public class MessageDTO implements Serializable {
 
-    @Override
-    public String toString() {
-        return "MessageDTO{" +
-                "msgId=" + msgId +
-                ", message='" + message + '\'' +
-                ", user=" + user +
-                ", creationTimestamp=" + creationTimestamp +
-                ", deletionTimestamp=" + deletionTimestamp +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        MessageDTO that = (MessageDTO) o;
-
-        if (msgId != that.msgId) return false;
-        if (message != null ? !message.equals(that.message) : that.message != null) return false;
-        if (user != null ? !user.equals(that.user) : that.user != null) return false;
-        if (creationTimestamp != null ? !creationTimestamp.equals(that.creationTimestamp) : that.creationTimestamp != null)
-            return false;
-        if (deletionTimestamp != null ? !deletionTimestamp.equals(that.deletionTimestamp) : that.deletionTimestamp != null)
-            return false;
-
-        return true;
-    }
 
     @Override
     public int hashCode() {
@@ -94,5 +66,33 @@ public class MessageDTO implements Serializable {
         this.message = message;
     }
 
+    @Override
+    public String toString() {
+        return "MessageDTO{" +
+                "msgId=" + msgId +
+                ", message='" + message + '\'' +
+                ", user=" + user +
+                ", creationTimestamp=" + creationTimestamp +
+                ", deletionTimestamp=" + deletionTimestamp +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MessageDTO that = (MessageDTO) o;
+
+        if (msgId != that.msgId) return false;
+        if (message != null ? !message.equals(that.message) : that.message != null) return false;
+        if (user != null ? !user.equals(that.user) : that.user != null) return false;
+        if (creationTimestamp != null ? !creationTimestamp.equals(that.creationTimestamp) : that.creationTimestamp != null)
+            return false;
+        if (deletionTimestamp != null ? !deletionTimestamp.equals(that.deletionTimestamp) : that.deletionTimestamp != null)
+            return false;
+
+        return true;
+    }
 
 }

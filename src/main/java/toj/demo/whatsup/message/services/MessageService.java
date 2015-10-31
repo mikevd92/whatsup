@@ -11,15 +11,15 @@ import java.util.Set;
 public interface MessageService {
     void addNewMessage(Message var1);
 
-    Optional<Message> getStatusMessage(User var1);
+    Optional<Message> getStatusMessage(User user);
 
     void removeAll();
 
-    List<Message> getUpdates(Date var1, User var2);
+    List<Message> getUpdates(Date date, User user);
 
-    List<Message> getMessages(User var1);
+    List<Message> getMessages(User user);
 
-    List<Message> getLatestMessages(Set<User> var1);
+    List<Message> getLatestMessages(Set<User> users);
 
     public void removeByDeletionTimestamp();
 }
