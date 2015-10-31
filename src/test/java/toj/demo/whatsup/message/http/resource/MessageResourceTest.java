@@ -97,16 +97,16 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Test
     public void testUpdatesSucceeds() {
-        Date timestamp = new Date();
+        Date timestamp = Date.from(Instant.now().minus(2, ChronoUnit.DAYS));
         messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(3, ChronoUnit.DAYS)),Date.from(Instant.now().minus(2, ChronoUnit.DAYS))));
-        messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(4, ChronoUnit.DAYS)),Date.from(Instant.now().minus(3, ChronoUnit.DAYS))));
+        messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(2, ChronoUnit.DAYS)),Date.from(Instant.now().plus(3, ChronoUnit.DAYS))));
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         Response updatesResponse = target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
         List<MessageDTO> results=updatesResponse.readEntity(MessageResponse.class).getResults();
         List<MessageDTO> updates = messageService.getUpdates(timestamp,user).stream().map(p -> mapper.map(p,MessageDTO.class)).collect(Collectors.toList());
 
         assertEquals(results,updates);
-        assertEquals(results.size(),1);
+        assertEquals(results.size(),2);
     }
 
     @Test
