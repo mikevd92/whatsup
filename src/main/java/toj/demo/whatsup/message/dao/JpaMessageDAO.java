@@ -8,6 +8,7 @@ import toj.demo.whatsup.domain.User;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.*;
@@ -82,8 +83,15 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
         return list;
     }
 
-
+    @Override
     public void removeByDeletionTimestamp(){
-        entityManager.createQuery("delete from Messages where deletionTimestamp<:currentTime").setParameter("currentTime", new Date()).executeUpdate();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaDelete<Message> delete = cb.createCriteriaDelete(this.entityClass);
+        Root<Message> messageRoot=delete.from(entityClass);
+        delete.where(
+                cb.lessThan(messageRoot.get(Message_.deletionTimestamp)
+                ,new Date()
+        ));
+        entityManager.createQuery(delete).executeUpdate();
     }
 }

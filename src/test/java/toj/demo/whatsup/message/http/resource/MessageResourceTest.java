@@ -135,7 +135,15 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
         assertEquals(results.size(),2);
 
     }
-
+    @Test
+    public void testRemoveByDeletionTimestamp(){
+        target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
+        target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "bla").request().post(Entity.text(""));
+        messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(3, ChronoUnit.DAYS)),Date.from(Instant.now().minus(2, ChronoUnit.DAYS))));
+        messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(4, ChronoUnit.DAYS)),Date.from(Instant.now().minus(3, ChronoUnit.DAYS))));
+        messageService.removeByDeletionTimestamp();
+        assertEquals(messageService.getMessages(user).size(),2);
+    }
 
     @Test
     public void testGetLatestMessagesReturnsEmptyList() {
