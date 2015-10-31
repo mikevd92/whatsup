@@ -40,26 +40,13 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
     private User follower;
     private String sessionId;
     private User toBeFollowed;
+    private Credentials credentialsAdi;
+    private Credentials credentialsMihai;
 
-    @Before
-    public void initialize() {
-        Credentials credentialsMihai=new Credentials("Mihai","password");
-        userService.signup(credentialsMihai);
-        follower = userService.get("Mihai").get();
-        sessionId = userSessionService.createUserSession(follower);
-        Credentials credentialsAdi=new Credentials("Adi","password");
-        userService.signup(credentialsAdi);
-        toBeFollowed = userService.get("Adi").get();
-        userSessionService.createUserSession(toBeFollowed);
-    }
-
-    @After
-    public void after() {
-        userService.removeAll();
-    }
 
     @Test
     public void testFollowNoSessionReturnsBadRequest() {
+        initFollowerSetup("Mihai1","Adi1");
         Response response = target("follower/follow").queryParam("userName", toBeFollowed.getUsername()).request().put(Entity.text(""));
         assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
@@ -76,39 +63,55 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
 
     @Test
     public void testFollowBadUserNameReturnsInternalServerError() {
-        Response response = target("follower/follow").queryParam("sessionId", sessionId).queryParam("userName", "John").request().put(Entity.text(""));
+        initFollowerSetup("Mihai2","Adi2");
+        Response response = target("follower/follow").queryParam("sessionId", sessionId).queryParam("username", "John").request().put(Entity.text(""));
         assertEquals(response.getStatusInfo(), Response.Status.INTERNAL_SERVER_ERROR);
     }
 
     @Test
     public void testUnFollowBadUserNameReturnsInternalServerError() {
-        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).queryParam("userName", "John").request().delete();
+        initFollowerSetup("Mihai3","Adi3");
+        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).queryParam("username", "John").request().delete();
         assertEquals(response.getStatusInfo(), Response.Status.INTERNAL_SERVER_ERROR);
     }
 
     @Test
     public void testFollowSucceeds() {
-        Response response = target("follower/follow").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().put(Entity.text(""));
+        initFollowerSetup("Mihai4","Adi4");
+        Response response = target("follower/follow").queryParam("sessionId", sessionId).queryParam("username", toBeFollowed.getUsername()).request().put(Entity.text(""));
         assertEquals(response.getStatusInfo(), Response.Status.OK);
     }
 
     @Test
     public void testFollowEmptyUserReturnsBadRequest() {
+        initFollowerSetup("Mihai5","Adi5");
         Response response = target("follower/follow").queryParam("sessionId", sessionId).request().put(Entity.text(""));
         assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
 
     @Test
     public void testUnfollowSucceeds() {
-        target("follower/follow").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().put(Entity.text(""));
-        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().delete();
+        initFollowerSetup("Mihai6","Adi6");
+        target("follower/follow").queryParam("sessionId", sessionId).queryParam("username", toBeFollowed.getUsername()).request().put(Entity.text(""));
+        Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).queryParam("username", toBeFollowed.getUsername()).request().delete();
         assertEquals(response.getStatusInfo(), Response.Status.OK);
     }
 
     @Test
     public void testUnfollowEmptyUserReturnsBadRequest() {
-        target("follower/follow").queryParam("sessionId", sessionId).queryParam("userName", toBeFollowed.getUsername()).request().put(Entity.text(""));
+        initFollowerSetup("Mihai7","Adi7");
+        target("follower/follow").queryParam("sessionId", sessionId).queryParam("username", toBeFollowed.getUsername()).request().put(Entity.text(""));
         Response response = target("follower/unsubscribe").queryParam("sessionId", sessionId).request().delete();
         assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
+    }
+    private void initFollowerSetup(String beFollowedName,String followerName){
+        credentialsMihai=new Credentials(beFollowedName,"password");
+        userService.signup(credentialsMihai);
+        follower = userService.get(beFollowedName).get();
+        sessionId = userSessionService.createUserSession(follower);
+        credentialsAdi=new Credentials(followerName,"password");
+        userService.signup(credentialsAdi);
+        toBeFollowed = userService.get(followerName).get();
+        userSessionService.createUserSession(toBeFollowed);
     }
 }

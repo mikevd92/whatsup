@@ -10,10 +10,9 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface MessageDAO extends DAO<Message,Long> {
-    public Optional<Message> getMessageByUser(User user);
-    public void removeAll();
-    public List<Message> getMessagesByUser(User user);
-    public List<Message> getUpdates(Date date,User user);
-    public List<Message> getMessagesByUsers(Set<User> users);
-    public void removeByDeletionTimestamp();
+    Optional<Message> getMessageByUser(User user);
+    List<Message> getMessagesByUser(User user);
+    List<Message> getUpdates(Date date,User user);
+    List<Message> getMessagesByUsers(Set<User> users);
+    void removeByDeletionTimestamp();
 }

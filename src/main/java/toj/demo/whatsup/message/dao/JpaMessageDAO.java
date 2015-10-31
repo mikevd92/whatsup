@@ -13,7 +13,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Repository
 public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
@@ -79,8 +78,7 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
 
     @Override
     public List<Message> getMessagesByUsers(Set<User> users) {
-        List<Message> list = users.stream().flatMap(p -> getMessagesByUser(p).stream().limit(2)).limit(10).collect(Collectors.toList());
-        return list;
+        return users.stream().flatMap(p -> getMessagesByUser(p).stream().limit(2)).limit(10).collect(Collectors.toList());
     }
 
     @Override

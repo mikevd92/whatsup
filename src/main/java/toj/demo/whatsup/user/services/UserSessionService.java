@@ -10,4 +10,9 @@ public interface UserSessionService {
     Optional<User> getUserBySession(String sessionId);
 
     boolean userExists(User user);
+
+    boolean sessionIdExists(String sessionId);
+
+    void removeUserSession(String sessionId);
+
 }

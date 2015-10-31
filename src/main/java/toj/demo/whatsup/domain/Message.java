@@ -10,6 +10,7 @@ import java.util.Date;
  */
 @Entity(name="Messages")
 public class Message implements Serializable {
+
     @Id
     @GeneratedValue
     private long msgId;
@@ -39,6 +40,10 @@ public class Message implements Serializable {
         this.user=user;
         this.deletionTimestamp = deletionTimestamp;
         this.creationTimestamp = creationTimestamp;
+    }
+
+    public long getMsgId() {
+        return msgId;
     }
 
     public Date getDeletionTimestamp() {

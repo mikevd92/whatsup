@@ -45,6 +45,13 @@ public class MessageDTO implements Serializable {
     public MessageDTO() {
 
     }
+    public long getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(long msgId) {
+        this.msgId = msgId;
+    }
 
     public Date getCreationTimestamp() {
         return creationTimestamp;

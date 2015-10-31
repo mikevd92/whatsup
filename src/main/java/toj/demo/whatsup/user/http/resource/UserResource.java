@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.User;
+import toj.demo.whatsup.http.filters.Session;
 import toj.demo.whatsup.user.services.UserService;
 import toj.demo.whatsup.user.services.UserSessionService;
 
@@ -61,5 +62,17 @@ public final class UserResource {
         String sessionId = userSessionService.createUserSession(user);
         SessionResponse sessionResponse = new SessionResponse(new SessionDTO(sessionId, user.getUsername()));
         return Response.status(Response.Status.OK).entity(sessionResponse).build();
+    }
+    @PUT
+    @Session
+    @Path("/logout")
+    public Response logout(@QueryParam("sessionId") String sessionId){
+        if(!userSessionService.sessionIdExists(sessionId)){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }else{
+            userSessionService.removeUserSession(sessionId);
+            return Response.status(Response.Status.OK).build();
+        }
+
     }
 }

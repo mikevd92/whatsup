@@ -32,7 +32,7 @@ public final class FollowerResource {
     @PUT
     @Path("/follow")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response follow(@QueryParam("userName") String userName, @Context SecurityContext securityContext) {
+    public Response follow(@QueryParam("username") String userName, @Context SecurityContext securityContext) {
         Preconditions.checkNotNull(userName);
         Optional<User> toBeFollowed = userService.get(userName);
         User follower = (User) securityContext.getUserPrincipal();
@@ -51,7 +51,7 @@ public final class FollowerResource {
     @DELETE
     @Path("/unsubscribe")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response unfollow(@QueryParam("userName") String userName, @Context SecurityContext securityContext) {
+    public Response unfollow(@QueryParam("username") String userName, @Context SecurityContext securityContext) {
         Preconditions.checkNotNull(userName);
         Optional<User> toBeUnFollowed = userService.get(userName);
         User follower = (User) securityContext.getUserPrincipal();

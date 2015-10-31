@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.dao.UserDAO;
-import toj.demo.whatsup.user.http.resource.CredentialsDTO;
 
 import java.util.Optional;
 
@@ -32,11 +31,6 @@ public class PersistentUserService implements UserService {
     @Override
     public boolean checkUser(Credentials credentials) {
         return userDAO.checkUser(credentials.getUsername(), credentials.getPassword());
-    }
-
-    @Override
-    public void removeAll() {
-        userDAO.removeAll();
     }
 
     @Override
