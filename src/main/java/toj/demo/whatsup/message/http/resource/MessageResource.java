@@ -10,7 +10,6 @@ import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.http.filters.Authentication;
 import toj.demo.whatsup.http.filters.Session;
 import toj.demo.whatsup.message.services.MessageService;
-import toj.demo.whatsup.user.http.resource.UserDTO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
