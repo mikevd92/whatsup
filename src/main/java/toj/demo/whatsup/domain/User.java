@@ -20,6 +20,7 @@ public class User implements Principal {
     @Column(name="Id")
     private long Id;
 
+    @Column(unique=true)
     private String username;
 
     private String password;
