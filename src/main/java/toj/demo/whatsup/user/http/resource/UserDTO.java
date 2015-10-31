@@ -12,12 +12,6 @@ public class UserDTO implements Serializable {
 
     private String password;
 
-    private Set<UserDTO> followers;
-
-    public UserDTO() {
-        followers = new LinkedHashSet<UserDTO>();
-    }
-
     public String getPassword() {
         return password;
     }

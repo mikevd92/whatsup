@@ -20,6 +20,34 @@ public class MessageDTO implements Serializable {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MessageDTO that = (MessageDTO) o;
+
+        if (msgId != that.msgId) return false;
+        if (message != null ? !message.equals(that.message) : that.message != null) return false;
+        if (user != null ? !user.equals(that.user) : that.user != null) return false;
+        if (creationTimestamp != null ? !creationTimestamp.equals(that.creationTimestamp) : that.creationTimestamp != null)
+            return false;
+        if (deletionTimestamp != null ? !deletionTimestamp.equals(that.deletionTimestamp) : that.deletionTimestamp != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (msgId ^ (msgId >>> 32));
+        result = 31 * result + (message != null ? message.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (creationTimestamp != null ? creationTimestamp.hashCode() : 0);
+        result = 31 * result + (deletionTimestamp != null ? deletionTimestamp.hashCode() : 0);
+        return result;
+    }
+
     private long msgId;
 
     private String message;
@@ -67,28 +95,4 @@ public class MessageDTO implements Serializable {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MessageDTO)) return false;
-
-        MessageDTO message1 = (MessageDTO) o;
-
-        if (msgId != message1.msgId) return false;
-        if (getMessage() != null ? !getMessage().equals(message1.getMessage()) : message1.getMessage() != null)
-            return false;
-        if (getUser() != null ? !getUser().equals(message1.getUser()) : message1.getUser() != null)
-            return false;
-        return !(getCreationTimestamp() != null ? !getCreationTimestamp().equals(message1.getCreationTimestamp()) : message1.getCreationTimestamp() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (msgId ^ (msgId >>> 32));
-        result = 31 * result + (getMessage() != null ? getMessage().hashCode() : 0);
-        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
-        result = 31 * result + (getCreationTimestamp() != null ? getCreationTimestamp().hashCode() : 0);
-        return result;
-    }
 }
