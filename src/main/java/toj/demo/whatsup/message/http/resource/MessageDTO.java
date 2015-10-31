@@ -9,13 +9,38 @@ import java.util.Date;
 @XmlRootElement
 public class MessageDTO implements Serializable {
 
+    @Override
+    public String toString() {
+        return "MessageDTO{" +
+                "msgId=" + msgId +
+                ", message='" + message + '\'' +
+                ", user=" + user +
+                ", creationTimestamp=" + creationTimestamp +
+                ", deletionTimestamp=" + deletionTimestamp +
+                '}';
+    }
+
     private long msgId;
 
     private String message;
 
     private UserDTO user;
 
+    public void setDeletionTimestamp(Date deletionTimestamp) {
+        this.deletionTimestamp = deletionTimestamp;
+    }
+
+    public void setCreationTimestamp(Date creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
     private Date creationTimestamp;
+
+    public Date getDeletionTimestamp() {
+        return deletionTimestamp;
+    }
+
+    private Date deletionTimestamp;
 
     public MessageDTO() {
 
@@ -25,11 +50,11 @@ public class MessageDTO implements Serializable {
         return creationTimestamp;
     }
 
-    public UserDTO getUserDTO() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUserDTO(UserDTO user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 
@@ -52,7 +77,7 @@ public class MessageDTO implements Serializable {
         if (msgId != message1.msgId) return false;
         if (getMessage() != null ? !getMessage().equals(message1.getMessage()) : message1.getMessage() != null)
             return false;
-        if (getUserDTO() != null ? !getUserDTO().equals(message1.getUserDTO()) : message1.getUserDTO() != null)
+        if (getUser() != null ? !getUser().equals(message1.getUser()) : message1.getUser() != null)
             return false;
         return !(getCreationTimestamp() != null ? !getCreationTimestamp().equals(message1.getCreationTimestamp()) : message1.getCreationTimestamp() != null);
 
@@ -62,7 +87,7 @@ public class MessageDTO implements Serializable {
     public int hashCode() {
         int result = (int) (msgId ^ (msgId >>> 32));
         result = 31 * result + (getMessage() != null ? getMessage().hashCode() : 0);
-        result = 31 * result + (getUserDTO() != null ? getUserDTO().hashCode() : 0);
+        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
         result = 31 * result + (getCreationTimestamp() != null ? getCreationTimestamp().hashCode() : 0);
         return result;
     }

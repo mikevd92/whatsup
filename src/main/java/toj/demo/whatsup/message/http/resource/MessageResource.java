@@ -18,7 +18,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 @Session
@@ -43,7 +47,7 @@ public final class MessageResource {
         User user = (User)securityContext.getUserPrincipal();
         Date date;
         if(deletionTimestamp!=null) {
-            SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+            SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.ENGLISH);
             try {
                 date = format.parse(deletionTimestamp);
             } catch (ParseException var12) {
@@ -72,8 +76,6 @@ public final class MessageResource {
         if(optionalMessage.isPresent()) {
             Message response2 = (Message)optionalMessage.get();
             MessageDTO messageDTO = (MessageDTO)this.mapper.map(response2, MessageDTO.class);
-            UserDTO userDTO = (UserDTO)this.mapper.map(user, UserDTO.class);
-            messageDTO.setUserDTO(userDTO);
             MessageResponse response1 = new MessageResponse(Collections.singletonList(messageDTO));
             return Response.status(Response.Status.OK).entity(response1).build();
         } else {
@@ -87,7 +89,7 @@ public final class MessageResource {
     @Produces({"application/json"})
     public Response getUpdates(@QueryParam("timestamp") String timestamp, @Context SecurityContext securityContext) {
         Preconditions.checkNotNull(timestamp);
-        SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.ENGLISH);
 
         Date date;
         try {
@@ -97,17 +99,7 @@ public final class MessageResource {
         }
 
         User user = (User)securityContext.getUserPrincipal();
-        List messageList = this.messageService.getUpdates(date, user);
-        LinkedList messageDTOList = new LinkedList();
-        UserDTO userDTO = (UserDTO)this.mapper.map(user, UserDTO.class);
-        Iterator response = messageList.iterator();
-
-        while(response.hasNext()) {
-            Message message = (Message)response.next();
-            MessageDTO messageDTO = (MessageDTO)this.mapper.map(message, MessageDTO.class);
-            messageDTO.setUserDTO(userDTO);
-            messageDTOList.add(messageDTO);
-        }
+        List messageDTOList = this.messageService.getUpdates(date, user).stream().map(p -> mapper.map(p,MessageDTO.class)).collect(Collectors.toList());
 
         MessageResponse response1 = new MessageResponse(messageDTOList);
         return Response.status(Response.Status.OK).entity(response1).build();
@@ -119,18 +111,9 @@ public final class MessageResource {
     public Response getLatestMessages(@Context SecurityContext securityContext) {
         User user = (User)securityContext.getUserPrincipal();
         Set followers = user.getFollowers();
-        List latestMessages = this.messageService.getLatestMessages(followers);
-        LinkedList messageDTOList = new LinkedList();
-        Iterator response = latestMessages.iterator();
 
-        while(response.hasNext()) {
-            Message message = (Message)response.next();
-            MessageDTO messageDTO = (MessageDTO)this.mapper.map(message, MessageDTO.class);
-            UserDTO userDTO = (UserDTO)this.mapper.map(message.getUser(), UserDTO.class);
-            messageDTO.setUserDTO(userDTO);
-            messageDTOList.add(messageDTO);
-        }
-
+        Stream<Message> stream=this.messageService.getLatestMessages(followers).stream();
+        List<MessageDTO> messageDTOList=stream.map(p -> mapper.map(p,MessageDTO.class)).collect(Collectors.toList());
         MessageResponse response1 = new MessageResponse(messageDTOList);
         return Response.status(Response.Status.OK).entity(response1).build();
     }
