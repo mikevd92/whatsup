@@ -75,7 +75,7 @@ public final class MessageResource {
         Optional optionalMessage = this.messageService.getStatusMessage(user);
         if(optionalMessage.isPresent()) {
             Message response2 = (Message)optionalMessage.get();
-            MessageDTO messageDTO = (MessageDTO)this.mapper.map(response2, MessageDTO.class);
+            MessageDTO messageDTO = this.mapper.map(response2, MessageDTO.class);
             MessageResponse response1 = new MessageResponse(Collections.singletonList(messageDTO));
             return Response.status(Response.Status.OK).entity(response1).build();
         } else {
