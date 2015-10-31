@@ -47,7 +47,7 @@ public final class MessageResource {
             SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.ENGLISH);
             try {
                 date = format.parse(deletionTimestamp);
-            } catch (ParseException var12) {
+            } catch (ParseException ex) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
             Date now=new Date();
@@ -71,10 +71,10 @@ public final class MessageResource {
         User user = (User)securityContext.getUserPrincipal();
         Optional optionalMessage = this.messageService.getStatusMessage(user);
         if(optionalMessage.isPresent()) {
-            Message response2 = (Message)optionalMessage.get();
-            MessageDTO messageDTO = this.mapper.map(response2, MessageDTO.class);
-            MessageResponse response1 = new MessageResponse(Collections.singletonList(messageDTO));
-            return Response.status(Response.Status.OK).entity(response1).build();
+            Message message = (Message)optionalMessage.get();
+            MessageDTO messageDTO = this.mapper.map(message, MessageDTO.class);
+            MessageResponse response = new MessageResponse(Collections.singletonList(messageDTO));
+            return Response.status(Response.Status.OK).entity(response).build();
         } else {
             MessageResponse response = new MessageResponse(Collections.EMPTY_LIST);
             return Response.status(Response.Status.OK).entity(response).build();
@@ -91,7 +91,7 @@ public final class MessageResource {
         Date date;
         try {
             date = format.parse(timestamp);
-        } catch (ParseException var12) {
+        } catch (ParseException ex) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
