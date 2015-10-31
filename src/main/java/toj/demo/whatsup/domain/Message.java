@@ -20,10 +20,6 @@ public class Message implements Serializable {
     @JoinColumn(name="Id")
     private User user;
 
-    public void setCreationTimestamp(Date creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
-    }
-
     private Date creationTimestamp;
 
     private Date deletionTimestamp;
@@ -49,10 +45,6 @@ public class Message implements Serializable {
         return deletionTimestamp;
     }
 
-    public void setDeletionTimestamp(Date deletionTimestamp) {
-        this.deletionTimestamp = deletionTimestamp;
-    }
-
     public Date getCreationTimestamp() {
         return creationTimestamp;
     }
@@ -65,29 +57,7 @@ public class Message implements Serializable {
         return message;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Message)) return false;
 
-        Message message1 = (Message) o;
-
-        if (msgId != message1.msgId) return false;
-        if (getMessage() != null ? !getMessage().equals(message1.getMessage()) : message1.getMessage() != null)
-            return false;
-        if (getUser() != null ? !getUser().equals(message1.getUser()) : message1.getUser() != null) return false;
-        return !(getCreationTimestamp() != null ? !getCreationTimestamp().equals(message1.getCreationTimestamp()) : message1.getCreationTimestamp() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (msgId ^ (msgId >>> 32));
-        result = 31 * result + (getMessage() != null ? getMessage().hashCode() : 0);
-        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
-        result = 31 * result + (getCreationTimestamp() != null ? getCreationTimestamp().hashCode() : 0);
-        return result;
-    }
 
     @Override
     public String toString() {
@@ -98,5 +68,31 @@ public class Message implements Serializable {
                 ", creationTimestamp=" + creationTimestamp +
                 ", deletionTimestamp=" + deletionTimestamp +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Message message1 = (Message) o;
+
+        if (msgId != message1.msgId) return false;
+        if (message != null ? !message.equals(message1.message) : message1.message != null) return false;
+        if (user != null ? !user.equals(message1.user) : message1.user != null) return false;
+        if (creationTimestamp != null ? !creationTimestamp.equals(message1.creationTimestamp) : message1.creationTimestamp != null)
+            return false;
+        return !(deletionTimestamp != null ? !deletionTimestamp.equals(message1.deletionTimestamp) : message1.deletionTimestamp != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (msgId ^ (msgId >>> 32));
+        result = 31 * result + (message != null ? message.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (creationTimestamp != null ? creationTimestamp.hashCode() : 0);
+        result = 31 * result + (deletionTimestamp != null ? deletionTimestamp.hashCode() : 0);
+        return result;
     }
 }
