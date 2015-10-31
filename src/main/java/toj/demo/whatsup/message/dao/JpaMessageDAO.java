@@ -11,6 +11,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository
 public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
@@ -22,7 +24,8 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
         CriteriaQuery<Message> cq = cb.createQuery(this.entityClass);
         Root<Message> messageRoot = cq.from(this.entityClass);
         cq.where(
-                cb.equal(messageRoot.get(Message_.user), user)
+                cb.equal(messageRoot.get(Message_.user), user),
+                cb.greaterThanOrEqualTo(messageRoot.get(Message_.deletionTimestamp),new Date())
         );
         cq.orderBy(
                 cb.desc(messageRoot.get(Message_.creationTimestamp))
@@ -42,7 +45,8 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
         CriteriaQuery<Message> cq = cb.createQuery(this.entityClass);
         Root<Message> messageRoot = cq.from(this.entityClass);
         cq.where(
-                cb.equal(messageRoot.get(Message_.user), user)
+                cb.equal(messageRoot.get(Message_.user), user),
+                cb.greaterThanOrEqualTo(messageRoot.get(Message_.deletionTimestamp),new Date())
         );
         cq.orderBy(
                 cb.desc(messageRoot.get(Message_.creationTimestamp))
@@ -60,7 +64,8 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
         cq.where(
                 cb.and(
                         cb.equal(messageRoot.get(Message_.user), user),
-                        cb.greaterThanOrEqualTo(messageRoot.get(Message_.creationTimestamp), date)
+                        cb.greaterThanOrEqualTo(messageRoot.get(Message_.creationTimestamp), date),
+                        cb.greaterThanOrEqualTo(messageRoot.get(Message_.deletionTimestamp),new Date())
                 )
         );
         cq.orderBy(
@@ -73,32 +78,11 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
 
     @Override
     public List<Message> getMessagesByUsers(Set<User> users) {
-        List<Message> list = new ArrayList<>();
-        Iterator<User> iterator = users.iterator();
-        while (iterator.hasNext() && list.size() < 10) {
-            List<Message> results = getUserMessages(iterator.next());
-            if (results.size() > 0)
-                list.add(results.get(0));
-            if (results.size() > 1)
-                list.add(results.get(1));
-        }
-
+        List<Message> list = users.stream().flatMap(p -> getMessagesByUser(p).stream().limit(2)).collect(Collectors.toList());
         return list;
     }
 
-    private List<Message> getUserMessages(User user) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Message> cq = cb.createQuery(this.entityClass);
-        Root<Message> messageRoot = cq.from(this.entityClass);
 
-        cq.where(
-                cb.equal(messageRoot.get(Message_.user), user)
-        );
-
-        cq.select(messageRoot);
-        TypedQuery<Message> query = entityManager.createQuery(cq);
-        return query.getResultList();
-    }
     public void removeByDeletionTimestamp(){
         entityManager.createQuery("delete from Messages where deletionTimestamp<:currentTime").setParameter("currentTime", new Date()).executeUpdate();
     }

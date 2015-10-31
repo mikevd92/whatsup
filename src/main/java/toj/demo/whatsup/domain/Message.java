@@ -20,6 +20,10 @@ public class Message implements Serializable {
     @JoinColumn(name="Id")
     private User user;
 
+    public void setCreationTimestamp(Date creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
     private Date creationTimestamp;
 
     private Date deletionTimestamp;
@@ -83,5 +87,16 @@ public class Message implements Serializable {
         result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
         result = 31 * result + (getCreationTimestamp() != null ? getCreationTimestamp().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "msgId=" + msgId +
+                ", message='" + message + '\'' +
+                ", user=" + user +
+                ", creationTimestamp=" + creationTimestamp +
+                ", deletionTimestamp=" + deletionTimestamp +
+                '}';
     }
 }

@@ -10,6 +10,7 @@ import java.util.Date;
 public abstract class Message_ {
 
 	public static volatile SingularAttribute<Message, Date> creationTimestamp;
+	public static volatile SingularAttribute<Message, Date> deletionTimestamp;
 	public static volatile SingularAttribute<Message, Long> msgId;
 	public static volatile SingularAttribute<Message, String> message;
 	public static volatile SingularAttribute<Message, User> user;

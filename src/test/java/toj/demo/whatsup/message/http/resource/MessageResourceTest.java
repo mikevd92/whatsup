@@ -18,7 +18,12 @@ import toj.demo.whatsup.user.services.UserSessionService;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,13 +45,14 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     private String sessionId;
     private User toBeFollowed;
+    private User user;
     private String tobeFollowedSessionId;
 
     @Before
     public void initialize() {
         Credentials credentialsMihai=new Credentials("Mihai","password");
         userService.signup(credentialsMihai);
-        User user = userService.get("Mihai").get();
+        user = userService.get("Mihai").get();
         sessionId = userSessionService.createUserSession(user);
         Credentials credentialsAdi=new Credentials("Adi","password");
         userService.signup(credentialsMihai);
@@ -77,10 +83,12 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     @Test
     public void testGetStatusCallSucceeds() {
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
+        messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(3, ChronoUnit.DAYS)),Date.from(Instant.now().minus(2, ChronoUnit.DAYS))));
+        messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(4, ChronoUnit.DAYS)),Date.from(Instant.now().minus(3, ChronoUnit.DAYS))));
         Response statusResponse = target("message/status").queryParam("sessionId", sessionId).request().get();
         MessageDTO message = statusResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getMessage(), "awesome");
-        assertEquals(message.getUserDTO().getUsername(), "Mihai");
+        assertEquals(message.getUser().getUsername(), "Mihai");
 
     }
 
@@ -93,11 +101,15 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     @Test
     public void testUpdatesSucceeds() {
         Date timestamp = new Date();
+        messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(3, ChronoUnit.DAYS)),Date.from(Instant.now().minus(2, ChronoUnit.DAYS))));
+        messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(4, ChronoUnit.DAYS)),Date.from(Instant.now().minus(3, ChronoUnit.DAYS))));
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         Response updatesResponse = target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
-        MessageDTO message = updatesResponse.readEntity(MessageResponse.class).getResults().get(0);
-        assertEquals(message.getUserDTO().getUsername(), "Mihai");
-        assertEquals(message.getMessage(), "awesome");
+        List<MessageDTO> results=updatesResponse.readEntity(MessageResponse.class).getResults();
+        List<MessageDTO> updates = messageService.getUpdates(timestamp,user).stream().map(p -> mapper.map(p,MessageDTO.class)).collect(Collectors.toList());
+
+        assertEquals(results,updates);
+        assertEquals(results.size(),1);
     }
 
     @Test
@@ -111,29 +123,19 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     public void testLatestMessagesSucceeds() {
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "bla").request().post(Entity.text(""));
+        messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(3, ChronoUnit.DAYS)),Date.from(Instant.now().minus(2, ChronoUnit.DAYS))));
+        messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(4, ChronoUnit.DAYS)),Date.from(Instant.now().minus(3, ChronoUnit.DAYS))));
         Response latestMessagesResponse = target("message/latestmessages").queryParam("sessionId", tobeFollowedSessionId).request().get();
-        List<MessageDTO> latestMessages = new ArrayList<>();
-        Set<User> followers = toBeFollowed.getFollowers();
-        Iterator<User> iterator = followers.iterator();
-        while (iterator.hasNext() && latestMessages.size() <= 10) {
-            List<Message> userMessages = messageService.getMessages(iterator.next());
-            if (userMessages.size() > 0) {
-                Message message = userMessages.get(userMessages.size() - 1);
-                MessageDTO messageDTO = mapper.map(message, MessageDTO.class);
-                UserDTO userDTO = mapper.map(message.getUser(), UserDTO.class);
-                messageDTO.setUserDTO(userDTO);
-                latestMessages.add(messageDTO);
-            }
-            if (userMessages.size() > 1) {
-                Message message = userMessages.get(userMessages.size() - 2);
-                MessageDTO messageDTO = mapper.map(message, MessageDTO.class);
-                UserDTO userDTO = mapper.map(message.getUser(), UserDTO.class);
-                messageDTO.setUserDTO(userDTO);
-                latestMessages.add(messageDTO);
-            }
-        }
-        assertEquals(latestMessagesResponse.readEntity(MessageResponse.class).getResults(), latestMessages);
+
+        Stream<Message> stream=toBeFollowed.getFollowers().stream().flatMap(p -> messageService.getMessages(p).stream().limit(2));
+        List<MessageDTO> latestMessages = stream.map(p -> mapper.map(p,MessageDTO.class))
+                .collect(Collectors.toList());
+        List<MessageDTO> results=latestMessagesResponse.readEntity(MessageResponse.class).getResults();
+        assertEquals(results, latestMessages);
+        assertEquals(results.size(),2);
+
     }
+
 
     @Test
     public void testGetLatestMessagesReturnsEmptyList() {
