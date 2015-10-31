@@ -78,29 +78,6 @@ public class MessageServiceTest {
     }
 
     @Test
-    public void testRemoveAll() {
-        List<Message> messages = new LinkedList<>();
-        User user = new User("Mihai", "password");
-        messages.addAll(Arrays.asList(
-                new Message("wow", user, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)), Date.from(Instant.now().plus(1, ChronoUnit.DAYS))),
-                new Message("cool", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().plus(3, ChronoUnit.DAYS))),
-                new Message("sweet", user, Date.from(Instant.now().minus(5, ChronoUnit.DAYS)), Date.from(Instant.now().plus(4, ChronoUnit.DAYS))),
-                new Message("marvel", user, Date.from(Instant.now().minus(3, ChronoUnit.DAYS)), Date.from(Instant.now().plus(2, ChronoUnit.DAYS))),
-                new Message("marvelous", user, Date.from(Instant.now().minus(3, ChronoUnit.DAYS)), Date.from(Instant.now().minus(2, ChronoUnit.DAYS))),
-                new Message("cooler", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().minus(3, ChronoUnit.DAYS)))
-        ));
-        doAnswer(new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
-                messages.clear();
-                return null;
-            }
-        }).when(messageDAO).removeAll();
-        messageService.removeAll();
-        assertEquals(messages.isEmpty(), true);
-    }
-
-    @Test
     public void testGetUpdates() {
         List<Message> messages = new LinkedList<>();
         User user = new User("Mihai", "password");

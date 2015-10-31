@@ -28,10 +28,6 @@ public class PersistentMessageService implements MessageService {
         return this.messageDAO.getMessageByUser(user);
     }
 
-    public void removeAll() {
-        this.messageDAO.removeAll();
-    }
-
     public List<Message> getUpdates(Date timestamp, User user) {
         return this.messageDAO.getUpdates(timestamp, user);
     }

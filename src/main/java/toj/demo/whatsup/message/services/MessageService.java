@@ -13,13 +13,11 @@ public interface MessageService {
 
     Optional<Message> getStatusMessage(User user);
 
-    void removeAll();
-
     List<Message> getUpdates(Date date, User user);
 
     List<Message> getMessages(User user);
 
     List<Message> getLatestMessages(Set<User> users);
 
-    public void removeByDeletionTimestamp();
+    void removeByDeletionTimestamp();
 }

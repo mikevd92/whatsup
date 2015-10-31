@@ -10,7 +10,7 @@ public class InMemoryUserSessionService implements UserSessionService {
     private HashMap<String, User> userSessions;
 
     public InMemoryUserSessionService() {
-        userSessions = new HashMap<String, User>();
+        userSessions = new HashMap<>();
     }
 
     @Override
@@ -28,6 +28,14 @@ public class InMemoryUserSessionService implements UserSessionService {
     @Override
     public boolean userExists(User user) {
         return userSessions.containsValue(user);
+    }
+
+    @Override
+    public boolean sessionIdExists(String sessionId) { return userSessions.containsKey(sessionId); }
+
+    @Override
+    public void removeUserSession(String sessionId){
+        userSessions.remove(sessionId);
     }
 
 }

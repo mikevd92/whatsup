@@ -68,24 +68,6 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testRemoveAll(){
-        List<User> userList=new ArrayList<>();
-        userList.add(new User("Mihai","password"));
-        userList.add(new User("Adi","password"));
-        userList.add(new User("Ovidiu","password"));
-        userList.add(new User("Jeff","password"));
-        userList.add(new User("Ioana","password"));
-        doAnswer(new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
-                userList.clear();
-                return null;
-            }
-        }).when(userDAO).removeAll();
-        userService.removeAll();
-        assertEquals(userList.isEmpty(),true);
-    }
-    @Test
     public void testAddFollower(){
         User toBeFollowed=new User("Mihai","password");
         User follower=new User("Adi","password");

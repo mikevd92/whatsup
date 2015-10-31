@@ -13,8 +13,8 @@ public interface UserService {
 
     boolean checkUser(Credentials credentials);
 
-    void removeAll();
     void addFollower(User toBeFollowed,User follower);
+
     void removeFollower(User toBeFollowed,User follower);
 
 }
