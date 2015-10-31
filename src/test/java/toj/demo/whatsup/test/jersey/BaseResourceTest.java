@@ -18,10 +18,4 @@ public abstract class BaseResourceTest<R> extends SpringManagedResourceTest<R> {
             assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
         }
     }
-    public void testNoSessionPUT(List<WebTarget> targets){
-        for(WebTarget target : targets){
-            Response response=target.request().put(Entity.text(""));
-            assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
-        }
-    }
 }
