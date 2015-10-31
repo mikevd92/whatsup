@@ -11,19 +11,16 @@ import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.test.jersey.BaseResourceTest;
 import toj.demo.whatsup.domain.User;
-import toj.demo.whatsup.user.http.resource.UserDTO;
 import toj.demo.whatsup.user.services.UserService;
 import toj.demo.whatsup.user.services.UserSessionService;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 
