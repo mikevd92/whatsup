@@ -48,12 +48,9 @@ public class UserServiceTest {
     public void testSignupWithCredentials(){
         List<User> userList=new ArrayList<>();
         User user=new User("Mihai","password");
-        when(userDAO.save(user)).then(new Answer<User>() {
-            @Override
-            public User answer(InvocationOnMock invocationOnMock) throws Throwable {
-                userList.add(user);
-                return user;
-            }
+        when(userDAO.save(user)).then(invocationOnMock -> {
+            userList.add(user);
+            return user;
         });
         Credentials credentials=new Credentials("Mihai","password");
         userService.signup(credentials);
@@ -71,12 +68,9 @@ public class UserServiceTest {
     public void testAddFollower(){
         User toBeFollowed=new User("Mihai","password");
         User follower=new User("Adi","password");
-        doAnswer(new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
-                toBeFollowed.addFollower(follower);
-                return null;
-            }
+        doAnswer(invocationOnMock -> {
+            toBeFollowed.addFollower(follower);
+            return null;
         }).when(userDAO).addFollower(toBeFollowed,follower);
         userService.addFollower(toBeFollowed,follower);
         assertEquals(toBeFollowed.getFollowers().isEmpty(),false);
@@ -86,12 +80,9 @@ public class UserServiceTest {
         User toBeFollowed=new User("Mihai","password");
         User follower=new User("Adi","password");
         toBeFollowed.addFollower(follower);
-        doAnswer(new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
-                toBeFollowed.removeFollower(follower);
-                return null;
-            }
+        doAnswer(invocationOnMock -> {
+            toBeFollowed.removeFollower(follower);
+            return null;
         }).when(userDAO).removeFollower(toBeFollowed,follower);
         userService.removeFollower(toBeFollowed,follower);
         assertEquals(toBeFollowed.getFollowers().isEmpty(),true);
