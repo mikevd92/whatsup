@@ -42,12 +42,9 @@ public class MessageServiceTest {
         User user = new User("Mihai", "password");
         Message message = new Message("wow", user);
         List<Message> messages = new ArrayList<>();
-        doAnswer(new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
-                messages.add(message);
-                return null;
-            }
+        doAnswer(invocationOnMock -> {
+            messages.add(message);
+            return null;
         }).when(messageDAO).save(message);
         messageService.addNewMessage(message);
         assertEquals(messages.isEmpty(), false);
@@ -67,12 +64,9 @@ public class MessageServiceTest {
                                 new Message("cooler", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().minus(3, ChronoUnit.DAYS)))
                         )
         );
-        when(messageDAO.getMessageByUser(user)).then(new Answer<Optional<Message>>() {
-            @Override
-            public Optional<Message> answer(InvocationOnMock invocationOnMock) throws Throwable {
-                messages.sort((a, b) -> a.getCreationTimestamp().after(b.getCreationTimestamp()) ? -1 : (a.getCreationTimestamp().equals(b.getCreationTimestamp()) ? 0 : 1));
-                return Optional.of(messages.stream().filter(p -> !p.getDeletionTimestamp().before(new Date())).collect(Collectors.toList()).get(0));
-            }
+        when(messageDAO.getMessageByUser(user)).then(invocationOnMock -> {
+            messages.sort((a, b) -> a.getCreationTimestamp().after(b.getCreationTimestamp()) ? -1 : (a.getCreationTimestamp().equals(b.getCreationTimestamp()) ? 0 : 1));
+            return Optional.of(messages.stream().filter(p -> !p.getDeletionTimestamp().before(new Date())).collect(Collectors.toList()).get(0));
         });
         assertEquals(messageService.getStatusMessage(user).get(), messages.get(0));
     }
@@ -90,12 +84,7 @@ public class MessageServiceTest {
                 new Message("cooler", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().minus(3, ChronoUnit.DAYS)))
         ));
         Date date = Date.from(Instant.now().minus(3, ChronoUnit.DAYS));
-        when(messageDAO.getUpdates(date, user)).then(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                return messages.stream().filter(p -> !p.getCreationTimestamp().before(date) && !p.getDeletionTimestamp().before(new Date())).collect(Collectors.toList());
-            }
-        });
+        when(messageDAO.getUpdates(date, user)).then(invocationOnMock -> messages.stream().filter(p -> !p.getCreationTimestamp().before(date) && !p.getDeletionTimestamp().before(new Date())).collect(Collectors.toList()));
         assertEquals(messageService.getUpdates(date, user).size(), 2);
     }
 
@@ -127,12 +116,9 @@ public class MessageServiceTest {
                 new Message("marvelous1", user, Date.from(Instant.now().minus(3, ChronoUnit.DAYS)), Date.from(Instant.now().minus(2, ChronoUnit.DAYS))),
                 new Message("cooler1", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().minus(3, ChronoUnit.DAYS)))
         ));
-        doAnswer(new Answer<Void>() {
-            @Override
-            public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
-                messages.removeIf(p -> p.getDeletionTimestamp().before(new Date()));
-                return null;
-            }
+        doAnswer(invocationOnMock -> {
+            messages.removeIf(p -> p.getDeletionTimestamp().before(new Date()));
+            return null;
         }).when(messageDAO).removeByDeletionTimestamp();
         messageService.removeByDeletionTimestamp();
         when(messageDAO.getMessagesByUser(user)).thenReturn(messages.stream().filter(p -> !p.getDeletionTimestamp().before(new Date())).collect(Collectors.toList()));
@@ -164,18 +150,15 @@ public class MessageServiceTest {
         user.addFollower(user1);
         user.addFollower(user2);
 
-        when(messageDAO.getMessagesByUsers(user.getFollowers())).then(new Answer<List<Message>>() {
-            @Override
-            public List<Message> answer(InvocationOnMock invocationOnMock) throws Throwable {
-                messages.sort((a, b) -> a.getCreationTimestamp().after(b.getCreationTimestamp()) ? -1 : (a.getCreationTimestamp().equals(b.getCreationTimestamp()) ? 0 : 1));
-                return user.getFollowers()
-                        .stream()
-                        .flatMap(p -> messages.stream()
-                                .filter(m -> m.getUser().equals(p) && !m.getDeletionTimestamp().before(new Date()))
-                                .limit(2))
-                                .limit(10)
-                        .collect(Collectors.toList());
-            }
+        when(messageDAO.getMessagesByUsers(user.getFollowers())).then(invocationOnMock -> {
+            messages.sort((a, b) -> a.getCreationTimestamp().after(b.getCreationTimestamp()) ? -1 : (a.getCreationTimestamp().equals(b.getCreationTimestamp()) ? 0 : 1));
+            return user.getFollowers()
+                    .stream()
+                    .flatMap(p -> messages.stream()
+                            .filter(m -> m.getUser().equals(p) && !m.getDeletionTimestamp().before(new Date()))
+                            .limit(2))
+                            .limit(10)
+                    .collect(Collectors.toList());
         });
         assertEquals(messageService.getLatestMessages(user.getFollowers()).size(), 4);
 
