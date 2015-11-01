@@ -39,10 +39,10 @@ public final class FollowerResource {
         if (!toBeFollowed.isPresent()) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        if(!toBeFollowed.get().equals(follower)) {
-            userService.addFollower(toBeFollowed.get(),follower);
-        }else{
+        if(toBeFollowed.get().equals(follower)) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }else{
+            userService.addFollower(toBeFollowed.get(),follower);
         }
 
         return Response.status(Response.Status.OK).build();
