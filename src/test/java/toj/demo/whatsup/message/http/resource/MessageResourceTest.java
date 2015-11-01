@@ -39,51 +39,68 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     @Autowired
     private Mapper mapper;
 
+    private  String sessionId;
+    private  User toBeFollowed;
+    private  User user;
+    private  String tobeFollowedSessionId;
+    private  Credentials credentialsMihai;
+    private  Credentials credentialsAdi;
+    private  static int count=0;
 
-    private String sessionId;
-    private User toBeFollowed;
-    private User user;
-    private String tobeFollowedSessionId;
-    private Credentials credentialsMihai;
-    private Credentials credentialsAdi;
+    @Before
+    public void initializes(){
+        credentialsMihai = new Credentials("Mihai"+count,"password");
+        userService.signup(credentialsMihai);
+        user = userService.get("Mihai"+count).get();
+        sessionId = userSessionService.createUserSession(user);
+        credentialsAdi=new Credentials("Adi"+count,"password");
+        userService.signup(credentialsAdi);
+        toBeFollowed = userService.get("Adi"+count).get();
+        tobeFollowedSessionId = userSessionService.createUserSession(toBeFollowed);
+        toBeFollowed.addFollower(user);
+    }
+    @After
+    public void after(){
+        count++;
+    }
 
     @Test
     public void testSubmitCorrectMessageSucceeds() {
-        initUserSetup("Mihai1");
+
         Response messageResponse = target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         assertEquals(messageResponse.getStatusInfo(), Response.Status.OK);
     }
 
     @Test
     public void testSubmitEmptyMessageReturnsBadRequest() {
-        initUserSetup("Mihai2");
+
         Response messageResponse = target("message/submit").queryParam("sessionId", sessionId).request().post(Entity.text(""));
         assertEquals(messageResponse.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
 
     @Test
     public void testGetStatusCallSucceeds() {
-        initUserSetup("Mihai3");
+
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(3, ChronoUnit.DAYS)),Date.from(Instant.now().minus(2, ChronoUnit.DAYS))));
         messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(4, ChronoUnit.DAYS)),Date.from(Instant.now().minus(3, ChronoUnit.DAYS))));
         Response statusResponse = target("message/status").queryParam("sessionId", sessionId).request().get();
         MessageDTO message = statusResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getMessage(), "awesome");
-        assertEquals(message.getUser().getUsername(), "Mihai3");
+        assertEquals(message.getUser().getUsername(), "Mihai"+count);
 
     }
 
     @Test
     public void testGetStatusCallReturnsEmptyList() {
-        initUserSetup("Mihai4");
+
         Response statusResponse = target("message/status").queryParam("sessionId", sessionId).request().get();
         assertEquals(Collections.EMPTY_LIST, statusResponse.readEntity(MessageResponse.class).getResults());
     }
 
     @Test
     public void testUpdatesSucceeds() {
-        initUserSetup("Mihai5");
+
         Date timestamp = Date.from(Instant.now().minus(2, ChronoUnit.DAYS));
         messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(3, ChronoUnit.DAYS)),Date.from(Instant.now().minus(2, ChronoUnit.DAYS))));
         messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(2, ChronoUnit.DAYS)),Date.from(Instant.now().plus(3, ChronoUnit.DAYS))));
@@ -98,7 +115,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Test
     public void testGetUpdatesReturnsEmptyList() {
-        initUserSetup("Mihai6");
+
         Date timestamp = new Date();
         Response updatesResponse = target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
         assertEquals(Collections.EMPTY_LIST, updatesResponse.readEntity(MessageResponse.class).getResults());
@@ -106,7 +123,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Test
     public void testLatestMessagesSucceeds() {
-        initFollowerSetup("Mihai7","Adi");
+
 
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "bla").request().post(Entity.text(""));
@@ -125,7 +142,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Test
     public void testRemoveByDeletionTimestamp(){
-        initUserSetup("Mihai8");
+
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "bla").request().post(Entity.text(""));
         messageService.addNewMessage(new Message("awesome",user,Date.from(Instant.now().minus(3, ChronoUnit.DAYS)),Date.from(Instant.now().minus(2, ChronoUnit.DAYS))));
@@ -136,7 +153,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Test
     public void testGetLatestMessagesReturnsEmptyList() {
-        initFollowerSetup("Mihai9","Adi1");
+
         Response latestMessagesResponse = target("message/latestmessages").queryParam("sessionId", tobeFollowedSessionId).request().get();
         assertEquals(Collections.EMPTY_LIST, latestMessagesResponse.readEntity(MessageResponse.class).getResults());
     }
@@ -154,24 +171,6 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
         testNoSessionGET(targets);
     }
 
-    private void initUserSetup(String userName) {
-        credentialsMihai=new Credentials(userName,"password");
-        userService.signup(credentialsMihai);
-        user = userService.get(userName).get();
-        sessionId = userSessionService.createUserSession(user);
-    }
 
-    private void initFollowerSetup(String beFollowedName,String followerName) {
-        credentialsMihai = new Credentials(beFollowedName,"password");
-        userService.signup(credentialsMihai);
-        user = userService.get(beFollowedName).get();
-        sessionId = userSessionService.createUserSession(user);
-        credentialsAdi=new Credentials(followerName,"password");
-        userService.signup(credentialsMihai);
-        userService.signup(credentialsAdi);
-        toBeFollowed = userService.get(followerName).get();
-        tobeFollowedSessionId = userSessionService.createUserSession(toBeFollowed);
-        toBeFollowed.addFollower(user);
-    }
 
 }
