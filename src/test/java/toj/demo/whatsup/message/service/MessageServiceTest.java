@@ -84,7 +84,10 @@ public class MessageServiceTest {
                 new Message("cooler", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().minus(3, ChronoUnit.DAYS)))
         ));
         Date date = Date.from(Instant.now().minus(3, ChronoUnit.DAYS));
-        when(messageDAO.getUpdates(date, user)).then(invocationOnMock -> messages.stream().filter(p -> !p.getCreationTimestamp().before(date) && !p.getDeletionTimestamp().before(new Date())).collect(Collectors.toList()));
+        when(messageDAO.getUpdates(date, user))
+                .then(invocationOnMock -> messages.stream()
+                .filter(p -> !p.getCreationTimestamp().before(date) && !p.getDeletionTimestamp().before(new Date()))
+                .collect(Collectors.toList()));
         assertEquals(messageService.getUpdates(date, user).size(), 2);
     }
 
