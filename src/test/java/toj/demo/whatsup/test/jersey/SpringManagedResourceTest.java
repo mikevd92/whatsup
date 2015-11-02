@@ -75,7 +75,8 @@ public abstract class SpringManagedResourceTest<R> {
                         resource.getRawType()
                 ).property("contextConfig", context)
                         .register(AuthenticationFilter.class)
-                        .register(SessionFilter.class);
+                        .register(SessionFilter.class)
+                        .register(NullPointerMapper.class);
 
             }
         };
