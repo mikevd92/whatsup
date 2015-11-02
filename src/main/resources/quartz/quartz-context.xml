@@ -9,6 +9,7 @@
 
     <context:annotation-config/>
     <context:component-scan base-package="quartz"/>
+    <import resource="classpath:/toj/demo/whatsup/message/services/services.xml" />
 
     <bean name="complexJobDetail"    class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="quartz.RepeatedJob" />
