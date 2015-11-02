@@ -68,7 +68,7 @@ public final class UserResource {
     @Path("/logout")
     public Response logout(@QueryParam("sessionId") String sessionId){
         if(!userSessionService.sessionIdExists(sessionId)){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.FORBIDDEN).build();
         }else{
             userSessionService.removeUserSession(sessionId);
             return Response.status(Response.Status.OK).build();
