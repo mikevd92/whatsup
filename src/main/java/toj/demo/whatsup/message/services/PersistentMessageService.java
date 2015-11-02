@@ -15,6 +15,9 @@ import java.util.Set;
 public class PersistentMessageService implements MessageService {
     private MessageDAO messageDAO;
 
+    public PersistentMessageService(){
+
+    }
     @Autowired
     public PersistentMessageService(MessageDAO messageDAO) {
         this.messageDAO = messageDAO;

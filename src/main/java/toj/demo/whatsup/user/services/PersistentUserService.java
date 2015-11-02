@@ -12,6 +12,10 @@ import java.util.Optional;
 public class PersistentUserService implements UserService {
 
     private UserDAO userDAO;
+
+    public PersistentUserService(){
+
+    }
     @Autowired
     public PersistentUserService(UserDAO userDAO){
         this.userDAO=userDAO;
