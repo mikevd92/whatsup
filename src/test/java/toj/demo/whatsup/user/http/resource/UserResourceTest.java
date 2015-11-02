@@ -30,26 +30,26 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
     @Test
     public void testReturnsCreatedOnCorrectRequest() {
 
-        final Response response = target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\""+count+",\"password\":\"password\"}"));
+        final Response response = target("user/signup").request().put(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
         assertEquals(Response.Status.CREATED, response.getStatusInfo());
 
     }
 
     @Test
     public void testLoginsAfterUserCreatedSucceeds() {
-        target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\""+count+",\"password\":\"password\"}"));
-        final Response response=target("user/login").request().post(Entity.json("{\"username\":\"Mihai\""+count+",\"password\":\"password\"}"));
+        target("user/signup").request().put(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
+        final Response response=target("user/login").request().post(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
         assertEquals(response.readEntity(SessionResponse.class).getResults().get(0).getUserName(),"Mihai"+count);
     }
     @Test
     public void testLoginInvalidUserNameFails(){
-        final Response response=target("user/login").request().post(Entity.json("{\"username\":\"Mihai\""+count+",\"password\":\"password\"}"));
+        final Response response=target("user/login").request().post(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
         assertEquals(response.getStatusInfo(),Response.Status.INTERNAL_SERVER_ERROR);
     }
     @Test
     public void testLogOutSucceeds(){
-        target("user/signup").request().put(Entity.json("{\"username\":\"Mihai\""+count+",\"password\":\"password\"}"));
-        Response loginResponse=target("user/login").request().post(Entity.json("{\"username\":\"Mihai\""+count+",\"password\":\"password\"}"));
+        target("user/signup").request().put(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
+        Response loginResponse=target("user/login").request().post(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
         String sessionId=loginResponse.readEntity(SessionResponse.class).getResults().get(0).getSessionId();
         Response logOutResponse=target("user/logout").queryParam("sessionId",sessionId).request().put(Entity.text(""));
         assertEquals(logOutResponse.getStatusInfo(),Response.Status.OK);
