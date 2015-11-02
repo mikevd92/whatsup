@@ -73,6 +73,15 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
 
     }
 
+    @Test
+    public void testWrongSessionReturnsForbidden() {
+        Response followResponse=target("follower/follow").queryParam("sessionId","wrong").request().put(Entity.text(""));
+        assertEquals(followResponse.getStatusInfo(), Response.Status.FORBIDDEN);
+        Response unfollowResponse=target("follower/unsubscribe").queryParam("sessionId","wrong").request().delete();
+        assertEquals(unfollowResponse.getStatusInfo(), Response.Status.FORBIDDEN);
+
+    }
+
 
     @Test
     public void testFollowBadUserNameReturnsInternalServerError() {

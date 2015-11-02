@@ -54,4 +54,14 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
         Response logOutResponse=target("user/logout").queryParam("sessionId",sessionId).request().put(Entity.text(""));
         assertEquals(logOutResponse.getStatusInfo(),Response.Status.OK);
     }
+    @Test
+     public void testLogOutNoSessionReturnsBadRequest(){
+        Response logOutResponse=target("user/logout").request().put(Entity.text(""));
+        assertEquals(logOutResponse.getStatusInfo(),Response.Status.BAD_REQUEST);
+    }
+    @Test
+    public void testLogOutWrongSessionReturnsInternalServerError(){
+        Response logOutResponse=target("user/logout").queryParam("sessionId","wrong").request().put(Entity.text(""));
+        assertEquals(logOutResponse.getStatusInfo(),Response.Status.FORBIDDEN);
+    }
 }

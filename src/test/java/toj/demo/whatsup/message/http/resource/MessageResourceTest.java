@@ -168,9 +168,20 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
                 target("message/updates").queryParam("timestamp", timestamp.toString()),
                 target("message/status")
         );
-        testNoSessionGET(targets);
+        testNoSessionGETBadRequest(targets);
     }
-
+    @Test
+    public void testWrongSessionReturnsForbidden() {
+        Date timestamp = new Date();
+        Response response=target("message/submit").queryParam("sessionId","wrong").request().post(Entity.text(""));
+        assertEquals(response.getStatusInfo(),Response.Status.FORBIDDEN);
+        List<WebTarget> targets = Arrays.asList(
+                target("message/latestmessages").queryParam("sessionId","wrong"),
+                target("message/updates").queryParam("sessionId","wrong").queryParam("timestamp", timestamp.toString()),
+                target("message/status").queryParam("sessionId","wrong")
+        );
+        testWrongSessionGETForbidden(targets);
+    }
 
 
 }
