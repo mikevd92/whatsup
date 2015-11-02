@@ -30,7 +30,7 @@ public final class UserResource {
         this.mapper=mapper;
     }
 
-    @PUT
+    @POST
     @Path("/signup")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -44,7 +44,7 @@ public final class UserResource {
         return Response.status(Response.Status.CREATED).build();
     }
 
-    @POST
+    @PUT
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
