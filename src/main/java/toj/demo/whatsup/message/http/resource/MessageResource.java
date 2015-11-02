@@ -69,9 +69,9 @@ public final class MessageResource {
     @Produces({"application/json"})
     public Response getStatusCall(@Context SecurityContext securityContext) {
         User user = (User)securityContext.getUserPrincipal();
-        Optional optionalMessage = this.messageService.getStatusMessage(user);
+        Optional<Message> optionalMessage = this.messageService.getStatusMessage(user);
         if(optionalMessage.isPresent()) {
-            Message message = (Message)optionalMessage.get();
+            Message message = optionalMessage.get();
             MessageDTO messageDTO = this.mapper.map(message, MessageDTO.class);
             MessageResponse response = new MessageResponse(Collections.singletonList(messageDTO));
             return Response.status(Response.Status.OK).entity(response).build();
@@ -96,7 +96,7 @@ public final class MessageResource {
         }
 
         User user = (User)securityContext.getUserPrincipal();
-        List messageDTOList = this.messageService.getUpdates(date, user).stream().map(p -> mapper.map(p,MessageDTO.class)).collect(Collectors.toList());
+        List<MessageDTO> messageDTOList = this.messageService.getUpdates(date, user).stream().map(p -> mapper.map(p,MessageDTO.class)).collect(Collectors.toList());
 
         MessageResponse response1 = new MessageResponse(messageDTOList);
         return Response.status(Response.Status.OK).entity(response1).build();
@@ -107,11 +107,11 @@ public final class MessageResource {
     @Produces({"application/json"})
     public Response getLatestMessages(@Context SecurityContext securityContext) {
         User user = (User)securityContext.getUserPrincipal();
-        Set followers = user.getFollowers();
+        Set<User> followers = user.getFollowers();
 
         Stream<Message> stream=this.messageService.getLatestMessages(followers).stream();
         List<MessageDTO> messageDTOList=stream.map(p -> mapper.map(p,MessageDTO.class)).collect(Collectors.toList());
-        MessageResponse response1 = new MessageResponse(messageDTOList);
-        return Response.status(Response.Status.OK).entity(response1).build();
+        MessageResponse response = new MessageResponse(messageDTOList);
+        return Response.status(Response.Status.OK).entity(response).build();
     }
 }
