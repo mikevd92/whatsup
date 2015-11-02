@@ -85,7 +85,7 @@ public class MessageServiceTest {
         ));
         Date date = Date.from(Instant.now().minus(3, ChronoUnit.DAYS));
         when(messageDAO.getUpdates(date, user))
-                .then(invocationOnMock -> messages.stream()
+                .thenReturn(messages.stream()
                 .filter(p -> !p.getCreationTimestamp().before(date) && !p.getDeletionTimestamp().before(new Date()))
                 .collect(Collectors.toList()));
         assertEquals(messageService.getUpdates(date, user).size(), 2);
