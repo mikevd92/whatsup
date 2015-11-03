@@ -13,16 +13,10 @@ import static org.junit.Assert.assertEquals;
 public abstract class BaseResourceTest<R> extends SpringManagedResourceTest<R> {
 
     public void testNoSessionGETBadRequest(List<WebTarget> targets){
-        for(WebTarget target : targets){
-            Response response=target.request().get();
-            assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
-        }
+        targets.forEach(p -> assertEquals(p.request().get().getStatusInfo(),Response.Status.BAD_REQUEST));
     }
     public void testWrongSessionGETForbidden(List<WebTarget> targets){
-        for(WebTarget target : targets){
-            Response response=target.queryParam("sessionId","wrong").request().get();
-            assertEquals(response.getStatusInfo(), Response.Status.FORBIDDEN);
-        }
+        targets.forEach(p -> assertEquals(p.queryParam("sessionId","wrong").request().get().getStatusInfo(),Response.Status.FORBIDDEN));
     }
 
 }
