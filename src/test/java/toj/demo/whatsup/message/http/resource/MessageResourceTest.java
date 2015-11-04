@@ -3,11 +3,13 @@ package toj.demo.whatsup.message.http.resource;
 import org.dozer.Mapper;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.Message;
+import toj.demo.whatsup.message.dao.MessageDAO;
 import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.test.jersey.BaseResourceTest;
 import toj.demo.whatsup.domain.User;
@@ -20,7 +22,9 @@ import javax.ws.rs.core.Response;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,6 +42,14 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Autowired
     private Mapper mapper;
+    private Function<Message,MessageDTO> mapFunction=p -> {
+        MessageDTO messageDTO = mapper.map(p, MessageDTO.class);
+        Message message = p;
+        if (message.getUser() != null) {
+            messageDTO.setUserName(message.getUser().getName());
+        }
+        return messageDTO;
+    };
 
     private  String sessionId;
     private  User toBeFollowed;
@@ -46,6 +58,10 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     private  Credentials credentialsMihai;
     private  Credentials credentialsAdi;
     private  static int count=0;
+
+
+
+
 
     @Before
     public void initializes(){
@@ -87,7 +103,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
         Response statusResponse = target("message/status").queryParam("sessionId", sessionId).request().get();
         MessageDTO message = statusResponse.readEntity(MessageResponse.class).getResults().get(0);
         assertEquals(message.getMessage(), "awesome");
-        assertEquals(message.getUser().getUsername(), "Mihai"+count);
+        assertEquals(message.getUserName(), "Mihai"+count);
 
     }
 
@@ -99,6 +115,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     }
 
     @Test
+
     public void testUpdatesSucceeds() {
 
         Date timestamp = Date.from(Instant.now().minus(2, ChronoUnit.DAYS));
@@ -107,7 +124,9 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
         target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         Response updatesResponse = target("message/updates").queryParam("sessionId", sessionId).queryParam("timestamp", timestamp.toString()).request().get();
         List<MessageDTO> results=updatesResponse.readEntity(MessageResponse.class).getResults();
-        List<MessageDTO> updates = messageService.getUpdates(timestamp,user).stream().map(p -> mapper.map(p,MessageDTO.class)).collect(Collectors.toList());
+        List<MessageDTO> updates = messageService.getUpdates(timestamp,user).stream()
+                .map(mapFunction)
+                .collect(Collectors.toList());
 
         assertEquals(results,updates);
         assertEquals(results.size(),2);
@@ -132,7 +151,9 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
         Response latestMessagesResponse = target("message/latestmessages").queryParam("sessionId", tobeFollowedSessionId).request().get();
 
         List<MessageDTO> latestMessages = toBeFollowed.getFollowers().stream().flatMap(p -> messageService.getMessages(p).stream().limit(2))
-                .limit(10).<MessageDTO>map(p -> mapper.map(p,MessageDTO.class)).collect(Collectors.toList());
+                .limit(10)
+                .<MessageDTO>map(mapFunction)
+                .collect(Collectors.toList());
 
         List<MessageDTO> results=latestMessagesResponse.readEntity(MessageResponse.class).getResults();
         assertEquals(results, latestMessages);

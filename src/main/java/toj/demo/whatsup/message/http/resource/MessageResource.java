@@ -18,6 +18,7 @@ import javax.ws.rs.core.SecurityContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,13 +27,25 @@ import java.util.stream.Stream;
 @Authentication
 @Path("/message")
 public final class MessageResource {
+
     private final MessageService messageService;
+
     private final Mapper mapper;
+
+    private Function<Message,MessageDTO> mapFunction;
 
     @Autowired
     public MessageResource(MessageService messageService, Mapper mapper) {
         this.messageService = messageService;
         this.mapper = mapper;
+        mapFunction=p -> {
+            MessageDTO messageDTO = mapper.map(p, MessageDTO.class);
+            Message message = p;
+            if (message.getUser() != null) {
+                messageDTO.setUserName(message.getUser().getName());
+            }
+            return messageDTO;
+        };
     }
 
     @POST
@@ -73,6 +86,9 @@ public final class MessageResource {
         if(optionalMessage.isPresent()) {
             Message message = optionalMessage.get();
             MessageDTO messageDTO = this.mapper.map(message, MessageDTO.class);
+            if(message.getUser()!=null) {
+                messageDTO.setUserName(message.getUser().getName());
+            }
             MessageResponse response = new MessageResponse(Collections.singletonList(messageDTO));
             return Response.status(Response.Status.OK).entity(response).build();
         } else {
@@ -96,7 +112,9 @@ public final class MessageResource {
         }
 
         User user = (User)securityContext.getUserPrincipal();
-        List<MessageDTO> messageDTOList = this.messageService.getUpdates(date, user).stream().map(p -> mapper.map(p,MessageDTO.class)).collect(Collectors.toList());
+        List<MessageDTO> messageDTOList = this.messageService.getUpdates(date, user).stream()
+                .map(mapFunction)
+                .collect(Collectors.toList());
 
         MessageResponse response1 = new MessageResponse(messageDTOList);
         return Response.status(Response.Status.OK).entity(response1).build();
@@ -110,7 +128,8 @@ public final class MessageResource {
         Set<User> followers = user.getFollowers();
 
         Stream<Message> stream=this.messageService.getLatestMessages(followers).stream();
-        List<MessageDTO> messageDTOList=stream.map(p -> mapper.map(p,MessageDTO.class)).collect(Collectors.toList());
+        List<MessageDTO> messageDTOList=stream.map(mapFunction)
+        .collect(Collectors.toList());
         MessageResponse response = new MessageResponse(messageDTOList);
         return Response.status(Response.Status.OK).entity(response).build();
     }

@@ -1,7 +1,5 @@
 package toj.demo.whatsup.message.http.resource;
 
-import toj.demo.whatsup.user.http.resource.UserDTO;
-
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
@@ -9,44 +7,35 @@ import java.util.Date;
 @XmlRootElement
 public class MessageDTO implements Serializable {
 
-
-    @Override
-    public int hashCode() {
-        int result = (int) (msgId ^ (msgId >>> 32));
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + (creationTimestamp != null ? creationTimestamp.hashCode() : 0);
-        result = 31 * result + (deletionTimestamp != null ? deletionTimestamp.hashCode() : 0);
-        return result;
-    }
-
     private long msgId;
 
     private String message;
 
-    private UserDTO user;
+    private String userName;
 
-    public void setDeletionTimestamp(Date deletionTimestamp) {
-        this.deletionTimestamp = deletionTimestamp;
-    }
-
-    public void setCreationTimestamp(Date creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
-    }
 
     private Date creationTimestamp;
 
-    public Date getDeletionTimestamp() {
-        return deletionTimestamp;
-    }
 
     private Date deletionTimestamp;
 
     public MessageDTO() {
 
     }
+
     public long getMsgId() {
         return msgId;
+    }
+
+    public Date getDeletionTimestamp() {
+        return deletionTimestamp;
+    }
+
+    public void setDeletionTimestamp(Date deletionTimestamp) {
+        this.deletionTimestamp = deletionTimestamp;
+    }
+    public void setCreationTimestamp(Date creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
     }
 
     public void setMsgId(long msgId) {
@@ -57,17 +46,17 @@ public class MessageDTO implements Serializable {
         return creationTimestamp;
     }
 
-    public UserDTO getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getMessage() {
         return message;
     }
+
 
     public void setMessage(String message) {
         this.message = message;
@@ -78,11 +67,12 @@ public class MessageDTO implements Serializable {
         return "MessageDTO{" +
                 "msgId=" + msgId +
                 ", message='" + message + '\'' +
-                ", user=" + user +
+                ", userName='" + userName + '\'' +
                 ", creationTimestamp=" + creationTimestamp +
                 ", deletionTimestamp=" + deletionTimestamp +
                 '}';
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -92,14 +82,23 @@ public class MessageDTO implements Serializable {
         MessageDTO that = (MessageDTO) o;
 
         if (msgId != that.msgId) return false;
-        if (message != null ? !message.equals(that.message) : that.message != null) return false;
-        if (user != null ? !user.equals(that.user) : that.user != null) return false;
         if (creationTimestamp != null ? !creationTimestamp.equals(that.creationTimestamp) : that.creationTimestamp != null)
             return false;
         if (deletionTimestamp != null ? !deletionTimestamp.equals(that.deletionTimestamp) : that.deletionTimestamp != null)
             return false;
+        if (message != null ? !message.equals(that.message) : that.message != null) return false;
+        if (userName != null ? !userName.equals(that.userName) : that.userName != null) return false;
 
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        int result = (int) (msgId ^ (msgId >>> 32));
+        result = 31 * result + (message != null ? message.hashCode() : 0);
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (creationTimestamp != null ? creationTimestamp.hashCode() : 0);
+        result = 31 * result + (deletionTimestamp != null ? deletionTimestamp.hashCode() : 0);
+        return result;
+    }
 }
