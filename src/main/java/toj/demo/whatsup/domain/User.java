@@ -37,10 +37,10 @@ public class User implements Principal {
             joinColumns = {@JoinColumn(name = "userId",referencedColumnName="ID")},
             inverseJoinColumns = {@JoinColumn(name = "followerId",referencedColumnName = "ID")} )
     private Set<User> followers;
+
     public User() {
         followers = new LinkedHashSet<User>();
     }
-
     public User(String username, String password,String email) {
         this.username = username;
         this.password = password;
@@ -59,10 +59,10 @@ public class User implements Principal {
     public void removeFollower(User user) {
         followers.remove(user);
     }
+
     public long getId() {
         return Id;
     }
-
     public Set<User> getFollowers() {
         return ImmutableSet.copyOf(followers);
     }
@@ -74,22 +74,24 @@ public class User implements Principal {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
 
-        if (getUsername() != null ? !getUsername().equals(user.getUsername()) : user.getUsername() != null)
-            return false;
-        return !(password != null ? !password.equals(user.password) : user.password != null);
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = getUsername() != null ? getUsername().hashCode() : 0;
-        result = 31 * result + (password != null ? password.hashCode() : 0);
+        int result = username != null ? username.hashCode() : 0;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
+
+
 
     @Override
     public String getName() {
