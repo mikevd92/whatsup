@@ -1,12 +1,6 @@
 package toj.demo.whatsup.domain;
 
 import jersey.repackaged.com.google.common.collect.ImmutableSet;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.Scheduler;
-import org.quartz.impl.matchers.GroupMatcher;
-
 import javax.persistence.*;
 import javax.security.auth.Subject;
 import java.security.Principal;
@@ -32,7 +26,7 @@ public class User implements Principal {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="Followers",
             joinColumns = {@JoinColumn(name = "userId",referencedColumnName="ID")},
             inverseJoinColumns = {@JoinColumn(name = "followerId",referencedColumnName = "ID")} )

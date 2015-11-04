@@ -19,7 +19,6 @@ import org.springframework.test.context.web.ServletTestExecutionListener;
 import toj.demo.whatsup.http.filters.AuthenticationFilter;
 import toj.demo.whatsup.http.filters.SessionFilter;
 import toj.demo.whatsup.mappers.NullPointerMapper;
-
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 
@@ -68,6 +67,7 @@ public abstract class SpringManagedResourceTest<R> {
     public final void setApplicationContext(final ApplicationContext context) {
         final TypeToken resource = new TypeToken<R>(getClass()) {
         };
+
         jerseyTest = new JerseyTest() {
             @Override
             protected Application configure() {
@@ -80,7 +80,5 @@ public abstract class SpringManagedResourceTest<R> {
 
             }
         };
-
     }
-
 }
