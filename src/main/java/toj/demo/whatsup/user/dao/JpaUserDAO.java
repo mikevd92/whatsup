@@ -2,6 +2,7 @@ package toj.demo.whatsup.user.dao;
 
 import org.springframework.stereotype.Repository;
 import toj.demo.whatsup.dao.JpaDAO;
+import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.domain.User_;
 import javax.persistence.NoResultException;
@@ -9,7 +10,9 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
@@ -61,5 +64,11 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
     public void removeFollower(User toBeUnFollowed, User follower) {
         toBeUnFollowed.removeFollower(follower);
         entityManager.merge(toBeUnFollowed);
+    }
+
+    @Override
+    public void addKeyWordsToUser(User user, Set<Keyword> keywords) {
+        user.getKeywords().addAll(keywords);
+        entityManager.merge(user);
     }
 }

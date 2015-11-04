@@ -10,7 +10,7 @@ import java.lang.reflect.ParameterizedType;
 public abstract class JpaDAO<T,ID extends Serializable> implements DAO<T,ID> {
     protected Class<T> entityClass;
 
-    @PersistenceContext(type= PersistenceContextType.EXTENDED)
+    @PersistenceContext
     protected EntityManager entityManager;
     @SuppressWarnings("unchecked")
     public JpaDAO()  {

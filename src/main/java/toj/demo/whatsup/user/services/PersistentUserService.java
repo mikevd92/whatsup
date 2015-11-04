@@ -3,10 +3,13 @@ package toj.demo.whatsup.user.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import toj.demo.whatsup.domain.Credentials;
+import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.user.dao.UserDAO;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Transactional
 public class PersistentUserService implements UserService {
@@ -39,7 +42,7 @@ public class PersistentUserService implements UserService {
 
     @Override
     public void addFollower(User toBeFollowed, User follower) {
-         userDAO.addFollower(toBeFollowed,follower);
+         userDAO.addFollower(toBeFollowed, follower);
     }
 
     @Override
@@ -47,5 +50,8 @@ public class PersistentUserService implements UserService {
          userDAO.removeFollower(toBeFollowed,follower);
     }
 
-
+    @Override
+    public void addKeywordsToUser(User user, Set<Keyword> keywords) {
+        userDAO.addKeyWordsToUser(user,keywords);
+    }
 }

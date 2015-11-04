@@ -60,9 +60,6 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     private  static int count=0;
 
 
-
-
-
     @Before
     public void initializes(){
         credentialsMihai = new Credentials("Mihai"+count,"password","misuvd92"+count+"@yahoo.com");

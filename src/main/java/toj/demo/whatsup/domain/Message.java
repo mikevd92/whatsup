@@ -13,13 +13,41 @@ public class Message {
 
     @Id
     @GeneratedValue
-    private long msgId;
+    private Long msgId;
 
     private String message;
 
     @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="Id")
     private User user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Message message1 = (Message) o;
+
+        if (creationTimestamp != null ? !creationTimestamp.equals(message1.creationTimestamp) : message1.creationTimestamp != null)
+            return false;
+        if (deletionTimestamp != null ? !deletionTimestamp.equals(message1.deletionTimestamp) : message1.deletionTimestamp != null)
+            return false;
+        if (message != null ? !message.equals(message1.message) : message1.message != null) return false;
+        if (msgId != null ? !msgId.equals(message1.msgId) : message1.msgId != null) return false;
+        if (user != null ? !user.equals(message1.user) : message1.user != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = msgId != null ? msgId.hashCode() : 0;
+        result = 31 * result + (message != null ? message.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (creationTimestamp != null ? creationTimestamp.hashCode() : 0);
+        result = 31 * result + (deletionTimestamp != null ? deletionTimestamp.hashCode() : 0);
+        return result;
+    }
 
     private Date creationTimestamp;
 
@@ -42,7 +70,7 @@ public class Message {
         this.creationTimestamp = creationTimestamp;
     }
 
-    public long getMsgId() {
+    public Long getMsgId() {
         return msgId;
     }
 
@@ -62,42 +90,4 @@ public class Message {
         return message;
     }
 
-
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "msgId=" + msgId +
-                ", message='" + message + '\'' +
-                ", user=" + user +
-                ", creationTimestamp=" + creationTimestamp +
-                ", deletionTimestamp=" + deletionTimestamp +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Message message1 = (Message) o;
-
-        if (msgId != message1.msgId) return false;
-        if (message != null ? !message.equals(message1.message) : message1.message != null) return false;
-        if (user != null ? !user.equals(message1.user) : message1.user != null) return false;
-        if (creationTimestamp != null ? !creationTimestamp.equals(message1.creationTimestamp) : message1.creationTimestamp != null)
-            return false;
-        return !(deletionTimestamp != null ? !deletionTimestamp.equals(message1.deletionTimestamp) : message1.deletionTimestamp != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (msgId ^ (msgId >>> 32));
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + (creationTimestamp != null ? creationTimestamp.hashCode() : 0);
-        result = 31 * result + (deletionTimestamp != null ? deletionTimestamp.hashCode() : 0);
-        return result;
-    }
 }

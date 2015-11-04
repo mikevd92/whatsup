@@ -16,7 +16,7 @@ public class User implements Principal {
     @Id
     @GeneratedValue
     @Column(name="Id")
-    private long Id;
+    private Long Id;
 
     @Column(unique=true)
     private String username;
@@ -26,15 +26,25 @@ public class User implements Principal {
 
     private String password;
 
+    private long notificationPeriod;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="UsersKeywords",
+            joinColumns = {@JoinColumn(name = "userId",referencedColumnName="Id")},
+            inverseJoinColumns = {@JoinColumn(name = "wordId",referencedColumnName = "wordId")} )
+    private Set<Keyword> keywords;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="Followers",
-            joinColumns = {@JoinColumn(name = "userId",referencedColumnName="ID")},
-            inverseJoinColumns = {@JoinColumn(name = "followerId",referencedColumnName = "ID")} )
+            joinColumns = {@JoinColumn(name = "userId",referencedColumnName="Id")},
+            inverseJoinColumns = {@JoinColumn(name = "followerId",referencedColumnName = "Id")} )
     private Set<User> followers;
 
     public User() {
         followers = new LinkedHashSet<User>();
     }
+
+
     public User(String username, String password,String email) {
         this.username = username;
         this.password = password;
@@ -45,7 +55,6 @@ public class User implements Principal {
     public String getEmail() {
         return email;
     }
-
     public void addFollower(User user) {
         followers.add(user);
     }
@@ -54,15 +63,31 @@ public class User implements Principal {
         followers.remove(user);
     }
 
-    public long getId() {
+    public Long getId() {
         return Id;
     }
+
     public Set<User> getFollowers() {
         return ImmutableSet.copyOf(followers);
     }
 
+    public Set<Keyword> getKeywords() {
+        return ImmutableSet.copyOf(keywords);
+    }
+
+    public void setKeywords(Set<Keyword> keywords) {
+        this.keywords = keywords;
+    }
     public String getUsername() {
         return username;
+    }
+
+    public long getNotificationPeriod() {
+        return notificationPeriod;
+    }
+
+    public void setNotificationPeriod(long notificationPeriod) {
+        this.notificationPeriod = notificationPeriod;
     }
 
     @Override
@@ -84,8 +109,6 @@ public class User implements Principal {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
-
-
 
     @Override
     public String getName() {
