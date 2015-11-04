@@ -2,6 +2,7 @@ package toj.demo.whatsup.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
@@ -9,7 +10,7 @@ import java.lang.reflect.ParameterizedType;
 public abstract class JpaDAO<T,ID extends Serializable> implements DAO<T,ID> {
     protected Class<T> entityClass;
 
-    @PersistenceContext
+    @PersistenceContext(type= PersistenceContextType.EXTENDED)
     protected EntityManager entityManager;
     @SuppressWarnings("unchecked")
     public JpaDAO()  {
