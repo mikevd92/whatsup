@@ -39,7 +39,7 @@ public class MessageServiceTest {
 
     @Test
     public void testAddNewMessage() {
-        User user = new User("Mihai", "password");
+        User user = new User("Mihai", "password","misuvd92@yahoo.com");
         Message message = new Message("wow", user);
         List<Message> messages = new ArrayList<>();
         doAnswer(invocationOnMock -> {
@@ -53,7 +53,7 @@ public class MessageServiceTest {
     @Test
     public void testGetStatusMessage() {
         List<Message> messages = new LinkedList<>();
-        User user = new User("Mihai", "password");
+        User user = new User("Mihai", "password","misuvd92@yahoo.com");
         messages.addAll(Arrays
                         .asList(
                                 new Message("wow", user, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)), Date.from(Instant.now().plus(1, ChronoUnit.DAYS))),
@@ -74,7 +74,7 @@ public class MessageServiceTest {
     @Test
     public void testGetUpdates() {
         List<Message> messages = new LinkedList<>();
-        User user = new User("Mihai", "password");
+        User user = new User("Mihai", "password","misuvd92@yahoo.com");
         messages.addAll(Arrays.asList(
                 new Message("wow", user, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)), Date.from(Instant.now().plus(1, ChronoUnit.DAYS))),
                 new Message("cool", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().plus(3, ChronoUnit.DAYS))),
@@ -94,7 +94,7 @@ public class MessageServiceTest {
     @Test
     public void testGetMessages() {
         List<Message> messages = new LinkedList<>();
-        User user = new User("Mihai", "password");
+        User user = new User("Mihai", "password","misuvd92@yahoo.com");
         messages.addAll(Arrays.asList(
                 new Message("wow1", user, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)), Date.from(Instant.now().plus(1, ChronoUnit.DAYS))),
                 new Message("cool1", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().plus(3, ChronoUnit.DAYS))),
@@ -110,7 +110,7 @@ public class MessageServiceTest {
     @Test
     public void testRemoveByDeletionTimestamp() {
         List<Message> messages = new LinkedList<>();
-        User user = new User("Mihai", "password");
+        User user = new User("Mihai", "password","misuvd92@yahoo.com");
         messages.addAll(Arrays.asList(
                 new Message("wow1", user, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)), Date.from(Instant.now().plus(1, ChronoUnit.DAYS))),
                 new Message("cool1", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().plus(3, ChronoUnit.DAYS))),
@@ -131,8 +131,8 @@ public class MessageServiceTest {
     @Test
     public void testGetLatestMessages() {
         List<Message> messages = new LinkedList<>();
-        User user = new User("Mihai", "password");
-        User user1 = new User("Adi", "password");
+        User user = new User("Mihai", "password","misuvd92@yahoo.com");
+        User user1 = new User("Adi", "password","adi@yahoo.com");
         messages.addAll(Arrays.asList(
                 new Message("wow1", user1, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)), Date.from(Instant.now().plus(1, ChronoUnit.DAYS))),
                 new Message("cool1", user1, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().plus(3, ChronoUnit.DAYS))),
@@ -141,7 +141,7 @@ public class MessageServiceTest {
                 new Message("marvelous1", user1, Date.from(Instant.now().minus(3, ChronoUnit.DAYS)), Date.from(Instant.now().minus(2, ChronoUnit.DAYS))),
                 new Message("cooler1", user1, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().minus(3, ChronoUnit.DAYS)))
         ));
-        User user2 = new User("Julia", "password");
+        User user2 = new User("Julia", "password","julia@yahoo.com");
         messages.addAll(Arrays.asList(
                 new Message("wow2", user2, Date.from(Instant.now().minus(2, ChronoUnit.DAYS)), Date.from(Instant.now().plus(1, ChronoUnit.DAYS))),
                 new Message("cool2", user2, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().plus(3, ChronoUnit.DAYS))),
