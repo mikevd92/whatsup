@@ -1,6 +1,11 @@
 package toj.demo.whatsup.domain;
 
 import jersey.repackaged.com.google.common.collect.ImmutableSet;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.Scheduler;
+import org.quartz.impl.matchers.GroupMatcher;
 
 import javax.persistence.*;
 import javax.security.auth.Subject;
@@ -14,7 +19,6 @@ import java.util.Set;
 @Entity(name = "Users")
 public class User implements Principal {
 
-
     @Id
     @GeneratedValue
     @Column(name="Id")
@@ -23,22 +27,29 @@ public class User implements Principal {
     @Column(unique=true)
     private String username;
 
+    @Column(unique = true)
+    private String email;
+
     private String password;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="Followers",
             joinColumns = {@JoinColumn(name = "userId",referencedColumnName="ID")},
             inverseJoinColumns = {@JoinColumn(name = "followerId",referencedColumnName = "ID")} )
     private Set<User> followers;
-
     public User() {
         followers = new LinkedHashSet<User>();
     }
 
-
-    public User(String username, String password) {
+    public User(String username, String password,String email) {
         this.username = username;
         this.password = password;
+        this.email = email;
         followers = new LinkedHashSet<User>();
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void addFollower(User user) {

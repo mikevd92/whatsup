@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
 import toj.demo.whatsup.user.services.UserService;
 import toj.demo.whatsup.user.services.UserSessionService;
@@ -15,6 +16,9 @@ import static org.junit.Assert.assertEquals;
 
 @ContextConfiguration
 public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
+
+    @Autowired
+    private UserService userService;
 
     private static int count=0;
     @After
@@ -30,16 +34,20 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
     @Test
     public void testReturnsCreatedOnCorrectRequest() {
 
-        final Response response = target("user/signup").request().post(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
+        final Response response = target("user/signup").request().post(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\",\"email\":\"misuvd92"+count+"@yahoo.com\"}"));
         assertEquals(Response.Status.CREATED, response.getStatusInfo());
 
     }
 
     @Test
     public void testLoginsAfterUserCreatedSucceeds() {
-        target("user/signup").request().post(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
+        target("user/signup").request().post(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\",\"email\":\"misuvd92"+count+"@yahoo.com\"}"));
         final Response response=target("user/login").request().put(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
-        assertEquals(response.readEntity(SessionResponse.class).getResults().get(0).getUserName(),"Mihai"+count);
+        SessionResponse sessionResponse=response.readEntity(SessionResponse.class);
+        String name=sessionResponse.getResults().get(0).getUserName();
+        assertEquals(name,"Mihai"+count);
+        assertEquals(userService.get(name).get().getEmail(),"misuvd92"+count+"@yahoo.com");
+
     }
     @Test
     public void testLoginInvalidUserNameFails(){
@@ -48,7 +56,7 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
     }
     @Test
     public void testLogOutSucceeds(){
-        target("user/signup").request().post(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
+        target("user/signup").request().post(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\",\"email\":\"misuvd92"+count+"@yahoo.com\"}"));
         Response loginResponse=target("user/login").request().put(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
         String sessionId=loginResponse.readEntity(SessionResponse.class).getResults().get(0).getSessionId();
         Response logOutResponse=target("user/logout").queryParam("sessionId",sessionId).request().put(Entity.text(""));

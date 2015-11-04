@@ -28,7 +28,7 @@ public class PersistentUserService implements UserService {
 
     @Override
     public void signup(Credentials credentials) {
-        User user=new User(credentials.getUsername(), credentials.getPassword());
+        User user=new User(credentials.getUsername(), credentials.getPassword(),credentials.getEmail());
         userDAO.save(user);
     }
 

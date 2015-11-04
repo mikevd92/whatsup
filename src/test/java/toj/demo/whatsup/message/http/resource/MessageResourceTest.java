@@ -65,11 +65,11 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Before
     public void initializes(){
-        credentialsMihai = new Credentials("Mihai"+count,"password");
+        credentialsMihai = new Credentials("Mihai"+count,"password","misuvd92"+count+"@yahoo.com");
         userService.signup(credentialsMihai);
         user = userService.get("Mihai"+count).get();
         sessionId = userSessionService.createUserSession(user);
-        credentialsAdi=new Credentials("Adi"+count,"password");
+        credentialsAdi=new Credentials("Adi"+count,"password","adi"+count+"@yahoo.com");
         userService.signup(credentialsAdi);
         toBeFollowed = userService.get("Adi"+count).get();
         tobeFollowedSessionId = userSessionService.createUserSession(toBeFollowed);

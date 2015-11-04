@@ -39,7 +39,7 @@ public class UserServiceTest {
 
     @Test
     public void testGet(){
-        Optional<User> userOptional=Optional.of(new User("Mihai","password"));
+        Optional<User> userOptional=Optional.of(new User("Mihai","password","misuvd92@yahoo.com"));
         when(userDAO.findUserByName("Mihai")).thenReturn(userOptional);
         assertEquals(userService.get("Mihai"),userOptional);
     }
@@ -47,12 +47,12 @@ public class UserServiceTest {
     @Test
     public void testSignupWithCredentials(){
         List<User> userList=new ArrayList<>();
-        User user=new User("Mihai","password");
+        User user=new User("Mihai","password","misuvd92@yahoo.com");
         when(userDAO.save(user)).then(invocationOnMock -> {
             userList.add(user);
             return user;
         });
-        Credentials credentials=new Credentials("Mihai","password");
+        Credentials credentials=new Credentials("Mihai","password","misuvd92@yahoo.com");
         userService.signup(credentials);
         assertEquals(userList.isEmpty(), false);
     }
@@ -60,14 +60,14 @@ public class UserServiceTest {
     @Test
     public void testCheckUser(){
         when(userDAO.checkUser("Mihai","password")).thenReturn(true);
-        Credentials credentials=new Credentials("Mihai","password");
+        Credentials credentials=new Credentials("Mihai","password","misuvd92@yahoo.com");
         assertEquals(userService.checkUser(credentials),true);
     }
 
     @Test
     public void testAddFollower(){
-        User toBeFollowed=new User("Mihai","password");
-        User follower=new User("Adi","password");
+        User toBeFollowed=new User("Mihai","password","misuvd92@yahoo.com");
+        User follower=new User("Adi","password","adi@yahoo.com");
         doAnswer(invocationOnMock -> {
             toBeFollowed.addFollower(follower);
             return null;
@@ -77,8 +77,8 @@ public class UserServiceTest {
     }
     @Test
     public void testRemoveFollower(){
-        User toBeFollowed=new User("Mihai","password");
-        User follower=new User("Adi","password");
+        User toBeFollowed=new User("Mihai","password","misuvd92@yahoo.com");
+        User follower=new User("Adi","password","adi@yahoo.com");
         toBeFollowed.addFollower(follower);
         doAnswer(invocationOnMock -> {
             toBeFollowed.removeFollower(follower);

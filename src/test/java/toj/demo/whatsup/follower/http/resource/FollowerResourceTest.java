@@ -43,11 +43,11 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
 
     @Before
     public void initialize(){
-        credentialsMihai = new Credentials("Mihai"+count,"password");
+        credentialsMihai = new Credentials("Mihai"+count,"password","misuvd92"+count+"@yahoo.com");
         userService.signup(credentialsMihai);
         toBeFollowed = userService.get("Mihai"+count).get();
         toBeFollowedSessionId = userSessionService.createUserSession(toBeFollowed);
-        credentialsAdi=new Credentials("Adi"+count,"password");
+        credentialsAdi=new Credentials("Adi"+count,"password","adi"+count+"@yahoo.com");
         userService.signup(credentialsAdi);
         follower = userService.get("Adi"+count).get();
         followerSessionId = userSessionService.createUserSession(follower);
