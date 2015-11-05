@@ -51,6 +51,7 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
         userService.signup(credentialsAdi);
         follower = userService.get("Adi"+count).get();
         followerSessionId = userSessionService.createUserSession(follower);
+
     }
     @After
     public void after(){
@@ -97,8 +98,14 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
 
     @Test
     public void testFollowSucceeds() {
+        Credentials credentialsIon = new Credentials("Ion"+count,"password","Ion"+count+"@yahoo.com");
+        userService.signup(credentialsIon);
+        User toBeFollowedSecond = userService.get("Ion"+count).get();
+        String toBeFollowedSecondSessionId = userSessionService.createUserSession(toBeFollowedSecond);
         Response response = target("follower/follow").queryParam("sessionId", followerSessionId).queryParam("username", toBeFollowed.getUsername()).request().put(Entity.text(""));
         assertEquals(response.getStatusInfo(), Response.Status.OK);
+        Response responseSecond = target("follower/follow").queryParam("sessionId", followerSessionId).queryParam("username", toBeFollowedSecond.getUsername()).request().put(Entity.text(""));
+        assertEquals(responseSecond.getStatusInfo(), Response.Status.OK);
     }
 
     @Test

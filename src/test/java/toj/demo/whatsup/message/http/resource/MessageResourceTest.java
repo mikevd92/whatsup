@@ -79,7 +79,6 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
 
     @Test
     public void testSubmitCorrectMessageSucceeds() {
-
         Response messageResponse = target("message/submit").queryParam("sessionId", sessionId).queryParam("message", "awesome").request().post(Entity.text(""));
         assertEquals(messageResponse.getStatusInfo(), Response.Status.OK);
     }

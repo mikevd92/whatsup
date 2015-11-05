@@ -42,6 +42,7 @@ public class User implements Principal {
 
     public User() {
         followers = new LinkedHashSet<User>();
+        keywords = new LinkedHashSet<Keyword>();
     }
 
 

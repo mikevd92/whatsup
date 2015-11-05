@@ -4,6 +4,7 @@ import toj.demo.whatsup.dao.DAO;
 
 import toj.demo.whatsup.domain.Keyword;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,5 +12,6 @@ import java.util.Set;
  */
 public interface KeywordDAO extends DAO<Keyword,Long> {
     void saveKeywords(Set<Keyword> keywords);
+    Set<String> getKeyWordsTextsByTexts(Set<String> texts);
 
 }

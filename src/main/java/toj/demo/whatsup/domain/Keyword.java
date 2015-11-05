@@ -13,14 +13,14 @@ public class Keyword {
     private Long wordId;
 
     @Column(unique = true)
-    private String content;
+    private String text;
 
-    public Keyword(String content) {
-        this.content = content;
+    public Keyword(String test) {
+        this.text = text;
     }
 
-    public String getContent() {
-        return content;
+    public String getText() {
+        return text;
     }
 
     public Long getWordId() {

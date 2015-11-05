@@ -2,6 +2,7 @@ package toj.demo.whatsup.notify.services;
 
 import toj.demo.whatsup.domain.Keyword;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -9,5 +10,5 @@ import java.util.Set;
  */
 public interface KeywordService {
     public void saveKeywords(Set<Keyword> keywords);
-
+    public Set<String> getKeywordsTextsByTexts(Set<String> texts);
 }

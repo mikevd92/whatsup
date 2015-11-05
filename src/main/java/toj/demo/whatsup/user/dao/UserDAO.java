@@ -20,4 +20,6 @@ public interface UserDAO extends DAO<User,Long> {
 
     void addKeyWordsToUser(User user,Set<Keyword> keywords);
 
+    void changeNotifyPeriod(User user,Long period);
+
 }

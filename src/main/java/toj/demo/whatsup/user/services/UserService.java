@@ -22,4 +22,6 @@ public interface UserService {
 
     public void addKeywordsToUser(User user,Set<Keyword> keywords);
 
+    public void changeNotifyPeriod(User user,Long period);
+
 }

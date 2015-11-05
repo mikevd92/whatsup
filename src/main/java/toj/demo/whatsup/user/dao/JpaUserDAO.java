@@ -71,4 +71,10 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
         user.getKeywords().addAll(keywords);
         entityManager.merge(user);
     }
+
+    @Override
+    public void changeNotifyPeriod(User user, Long period) {
+        user.setNotificationPeriod(period);
+        entityManager.merge(user);
+    }
 }

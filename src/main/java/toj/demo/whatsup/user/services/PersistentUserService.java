@@ -54,4 +54,9 @@ public class PersistentUserService implements UserService {
     public void addKeywordsToUser(User user, Set<Keyword> keywords) {
         userDAO.addKeyWordsToUser(user,keywords);
     }
+
+    @Override
+    public void changeNotifyPeriod(User user, Long period) {
+        userDAO.changeNotifyPeriod(user,period);
+    }
 }

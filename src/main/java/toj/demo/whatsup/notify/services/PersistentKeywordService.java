@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.notify.dao.KeywordDAO;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,7 +14,10 @@ import java.util.Set;
 @Transactional
 public class PersistentKeywordService implements KeywordService {
 
-    private final KeywordDAO keywordDAO;
+    private KeywordDAO keywordDAO;
+
+    public PersistentKeywordService(){}
+
     @Autowired
     public PersistentKeywordService(KeywordDAO keywordDAO) {
         this.keywordDAO = keywordDAO;
@@ -22,5 +26,10 @@ public class PersistentKeywordService implements KeywordService {
     @Override
     public void saveKeywords(Set<Keyword> keywords) {
         keywordDAO.saveKeywords(keywords);
+    }
+
+    @Override
+    public Set<String> getKeywordsTextsByTexts(Set<String> texts) {
+        return keywordDAO.getKeyWordsTextsByTexts(texts);
     }
 }
