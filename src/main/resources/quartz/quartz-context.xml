@@ -27,7 +27,7 @@
         <property name="repeatInterval" value="60000" />
     </bean>
 
-    <bean  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <bean id="deleteScheduler"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="jobDetails">
             <list>
                 <ref bean="complexJobDetail" />
@@ -38,6 +38,13 @@
                 <ref bean="simpleTrigger" />
             </list>
         </property>
+        <!--<property name="schedulerName" value="DeleteScheduler"/>-->
+        <property name="configLocation" value="classpath:quartz/delete-scheduler.properties" />
     </bean>
+    <bean id="mailScheduler"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <!--<property name="schedulerName" value="MailScheduler"/>-->
+        <property name="configLocation" value="classpath:quartz/mail-scheduler.properties" />
+    </bean>
+
 
 </beans>
