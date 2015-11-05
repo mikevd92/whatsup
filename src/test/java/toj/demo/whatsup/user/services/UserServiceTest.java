@@ -10,6 +10,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.User;
+import toj.demo.whatsup.email.services.MailService;
 import toj.demo.whatsup.user.dao.UserDAO;
 import static org.junit.Assert.*;
 
@@ -29,8 +30,11 @@ public class UserServiceTest {
     @Mock
     private UserDAO userDAO;
 
+    @Mock
+    private MailService mailService;
+
     @InjectMocks
-    private UserService userService=new PersistentUserService(userDAO);
+    private UserService userService=new PersistentUserService(userDAO,mailService);
 
     @Before
     public void setUp(){

@@ -2,5 +2,29 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-        
+
+    <bean id="mailService" class="toj.demo.whatsup.email.services.ConcreteMailService"></bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.mail.yahoo.com"/>
+        <property name="port" value="465"/>
+        <property name="username" value="misuvd92@yahoo.com"/>
+        <property name="password" value="Misuvd00"/>
+        <property name="javaMailProperties">
+
+            <props>
+                <!-- Use SMTP transport protocol -->
+                <prop key="mail.transport.protocol">smtps</prop>
+
+                <!-- Use SMTP-AUTH to authenticate to SMTP server -->
+                <prop key="mail.smtps.auth">true</prop>
+
+                <!-- Use TLS to encrypt communication with SMTP server -->
+                <prop key="mail.smtps.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+
+            </props>
+        </property>
+    </bean>
+
 </beans>

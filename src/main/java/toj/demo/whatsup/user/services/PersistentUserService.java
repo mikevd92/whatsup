@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
+import toj.demo.whatsup.email.services.MailService;
 import toj.demo.whatsup.user.dao.UserDAO;
 
 import java.util.List;
@@ -15,13 +16,15 @@ import java.util.Set;
 public class PersistentUserService implements UserService {
 
     private UserDAO userDAO;
+    private MailService mailService;
 
     public PersistentUserService(){
 
     }
     @Autowired
-    public PersistentUserService(UserDAO userDAO){
-        this.userDAO=userDAO;
+    public PersistentUserService(UserDAO userDAO,MailService mailService){
+        this.userDAO = userDAO;
+        this.mailService = mailService;
     }
 
     @Override
