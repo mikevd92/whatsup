@@ -10,15 +10,17 @@
     <context:annotation-config/>
     <context:component-scan base-package="quartz"/>
     <import resource="classpath:/toj/demo/whatsup/message/services/services.xml" />
+    <import resource="classpath:/toj/demo/whatsup/email/services/services.xml" />
+    <import resource="classpath:/toj/demo/whatsup/user/services/services.xml" />
 
-    <bean name="complexJobDetail"    class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <bean id="complexJobDetail"    class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="quartz.RepeatedJob" />
+        <property name="durability" value="true" />
         <property name="jobDataAsMap">
             <map>
                 <entry key="messageService" value-ref="messageService" />
             </map>
         </property>
-        <property name="durability" value="true" />
     </bean>
 
     <bean id="simpleTrigger"  class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
@@ -27,7 +29,44 @@
         <property name="repeatInterval" value="60000" />
     </bean>
 
-    <bean  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <bean id="recoveryJobDetail"    class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="quartz.RecoveryJob" />
+        <property name="durability" value="true" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="userService" value-ref="userService" />
+            </map>
+        </property>
+    </bean>
+
+   <bean id="recoveryTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="recoveryJobDetail" />
+        <property name="startDelay" value="0" />
+        <property name="repeatCount" value="0" />
+    </bean>
+
+    <bean id="schedulingJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="quartz.SchedulingJob" />
+        <property name="durability" value="true" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="messageService" value-ref="messageService" />
+                <entry key="userService" value-ref="userService" />
+                <entry key="mailService" value-ref="mailService" />
+                <entry key="mailScheduler" value-ref="mailScheduler" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="schedulingTrigger"  class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="schedulingJobDetail" />
+        <property name="startDelay" value="2000" />
+        <property name="repeatInterval" value="1000" />
+    </bean>
+
+
+    <bean id="deleteScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="schedulerName" value="DeleteScheduler"/>
         <property name="jobDetails">
             <list>
                 <ref bean="complexJobDetail" />
@@ -38,6 +77,32 @@
                 <ref bean="simpleTrigger" />
             </list>
         </property>
+        <property name="configLocation" value="classpath:quartz/delete-scheduler.properties" />
+
     </bean>
+
+    <bean id="mailScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="schedulerName" value="MailScheduler"/>
+        <property name="configLocation" value="classpath:quartz/mail-scheduler.properties" />
+    </bean>
+
+    <bean id="userScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="schedulerName" value="UserScheduler"/>
+        <property name="configLocation" value="classpath:quartz/user-scheduler.properties" />
+        <property name="jobDetails">
+            <list>
+                <ref bean="schedulingJobDetail" />
+                <ref bean="recoveryJobDetail"/>
+            </list>
+        </property>
+        <property name="triggers">
+            <list>
+                <ref bean="schedulingTrigger" />
+                <ref bean="recoveryTrigger" />
+            </list>
+        </property>
+
+    </bean>
+
 
 </beans>

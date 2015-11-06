@@ -1,5 +1,6 @@
 package toj.demo.whatsup.user.services;
 
+import toj.demo.whatsup.domain.AssignedStatus;
 import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
@@ -22,6 +23,15 @@ public interface UserService {
 
     public void addKeywordsToUser(User user,Set<Keyword> keywords);
 
-    public void changeNotifyPeriod(User user,Long period);
+    public void changeNotifyPeriod(User user, int period);
+
+    public void setAssignedStatus(User user,AssignedStatus assignedStatus);
+
+    public List<User> findAll();
+
+    public List<User> findAllUnassigned();
+
+    public void resetHasJobAssigned();
+
 
 }

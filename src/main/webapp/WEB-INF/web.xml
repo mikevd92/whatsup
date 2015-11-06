@@ -28,10 +28,10 @@
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
     <!-- Added by Gabi-->
-    <context-param>
+    <!--<context-param>
         <param-name>quartz:config-file</param-name>
         <param-value>/quartz/quartz.properties</param-value>
-    </context-param>
+    </context-param>-->
     <context-param>
         <param-name>quartz:shutdown-on-unload</param-name>
         <param-value>true</param-value>

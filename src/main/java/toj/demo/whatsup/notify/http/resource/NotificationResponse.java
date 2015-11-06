@@ -11,7 +11,7 @@ public class NotificationResponse {
 
     private String username;
 
-    private Long notifyPeriodInHours;
+    private Integer notifyPeriodInHours;
 
     @Override
     public String toString() {
@@ -25,12 +25,12 @@ public class NotificationResponse {
     public NotificationResponse(){
 
     }
-    public NotificationResponse(String sessionId, String username, Long notifyPeriodInHours){
+    public NotificationResponse(String sessionId, String username, Integer notifyPeriodInHours){
         this.sessionId = sessionId;
         this.username = username;
         this.notifyPeriodInHours=notifyPeriodInHours;
     }
-    public Long getNotifyPeriodInHours() {
+    public int getNotifyPeriodInHours() {
         return notifyPeriodInHours;
     }
     public String getUsername() {

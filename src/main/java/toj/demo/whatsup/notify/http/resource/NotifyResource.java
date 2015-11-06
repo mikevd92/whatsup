@@ -44,6 +44,7 @@ public class NotifyResource {
         keywordsStrings.removeAll(keywordService.getKeywordsTextsByTexts(keywordsStrings));
         Set<Keyword> keywords=keywordsStrings.stream().map(p -> new Keyword(p)).collect(Collectors.toSet());
         keywordService.saveKeywords(keywords);
+        userService.addKeywordsToUser(userService.get(user.getName()).get(),keywords);
         return Response.status(Response.Status.OK).entity(keywordsSet).build();
     }
     @PUT
@@ -51,7 +52,7 @@ public class NotifyResource {
     @Session
     @Authentication
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changeNotifyPeriod(@QueryParam("sessionId") String sessionId,@QueryParam("notifyperiod")Long notifyPeriod,@Context SecurityContext context){
+    public Response changeNotifyPeriod(@QueryParam("sessionId") String sessionId,@QueryParam("notifyperiod") Integer notifyPeriod,@Context SecurityContext context){
         User user=(User)context.getUserPrincipal();
         userService.changeNotifyPeriod(user,notifyPeriod);
         NotificationResponse notificationResponse =new NotificationResponse(sessionId,user.getUsername(),notifyPeriod);

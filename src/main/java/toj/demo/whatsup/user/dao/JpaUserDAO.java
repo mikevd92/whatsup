@@ -2,6 +2,7 @@ package toj.demo.whatsup.user.dao;
 
 import org.springframework.stereotype.Repository;
 import toj.demo.whatsup.dao.JpaDAO;
+import toj.demo.whatsup.domain.AssignedStatus;
 import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.domain.User_;
@@ -9,6 +10,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
@@ -68,13 +70,53 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
 
     @Override
     public void addKeyWordsToUser(User user, Set<Keyword> keywords) {
-        user.getKeywords().addAll(keywords);
+        user.addKeywords(keywords);
         entityManager.merge(user);
     }
 
     @Override
-    public void changeNotifyPeriod(User user, Long period) {
+    public void changeNotifyPeriod(User user, int period) {
         user.setNotificationPeriod(period);
         entityManager.merge(user);
     }
+
+    @Override
+    public List<User> findAll() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> cq = cb.createQuery(this.entityClass);
+        Root<User> userRoot = cq.from(this.entityClass);
+        cq.select(userRoot);
+        TypedQuery<User> query=entityManager.createQuery(cq);
+        return query.getResultList();
+    }
+
+    @Override
+    public void resetHasJobAssigned() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<User> cu=cb.createCriteriaUpdate(this.entityClass);
+        Root<User> userRoot=cu.from(this.entityClass);
+        cu.set(userRoot.get(User_.assignedStatus), AssignedStatus.UNASSIGNED);
+        entityManager.createQuery(cu).executeUpdate();
+    }
+
+    @Override
+    public List<User> findAllUnassigned() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> cq = cb.createQuery(this.entityClass);
+        Root<User> userRoot = cq.from(this.entityClass);
+        cq.where(
+                cb.equal(userRoot.get(User_.assignedStatus),AssignedStatus.UNASSIGNED)
+        );
+        cq.select(userRoot);
+        TypedQuery<User> query=entityManager.createQuery(cq);
+        return query.getResultList();
+    }
+
+    @Override
+    public void setAssignedStatus(User user, AssignedStatus assignedStatus) {
+        user.setAssignedStatus(assignedStatus);
+        entityManager.merge(user);
+    }
+
+
 }

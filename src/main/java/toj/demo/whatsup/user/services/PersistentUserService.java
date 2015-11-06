@@ -2,6 +2,7 @@ package toj.demo.whatsup.user.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import toj.demo.whatsup.domain.AssignedStatus;
 import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
@@ -21,7 +22,7 @@ public class PersistentUserService implements UserService {
     }
     @Autowired
     public PersistentUserService(UserDAO userDAO){
-        this.userDAO=userDAO;
+        this.userDAO = userDAO;
     }
 
     @Override
@@ -53,10 +54,33 @@ public class PersistentUserService implements UserService {
     @Override
     public void addKeywordsToUser(User user, Set<Keyword> keywords) {
         userDAO.addKeyWordsToUser(user,keywords);
+
     }
 
     @Override
-    public void changeNotifyPeriod(User user, Long period) {
+    public void changeNotifyPeriod(User user, int period) {
         userDAO.changeNotifyPeriod(user,period);
     }
+
+    @Override
+    public void setAssignedStatus(User user, AssignedStatus assignedStatus) {
+        userDAO.setAssignedStatus(user,assignedStatus);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userDAO.findAll();
+    }
+
+    @Override
+    public List<User> findAllUnassigned() {
+        return userDAO.findAllUnassigned();
+    }
+
+    @Override
+    public void resetHasJobAssigned() {
+        userDAO.resetHasJobAssigned();
+    }
+
+
 }

@@ -2,6 +2,7 @@ package toj.demo.whatsup.message.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.message.dao.MessageDAO;
@@ -41,6 +42,11 @@ public class PersistentMessageService implements MessageService {
 
     public List<Message> getLatestMessages(Set<User> users) {
         return this.messageDAO.getMessagesByUsers(users);
+    }
+
+    @Override
+    public List<Message> getMessagesByKeyWords(Set<Keyword> keywords) {
+        return messageDAO.getMessagesByKeyWords(keywords);
     }
 
     public void removeByDeletionTimestamp(){

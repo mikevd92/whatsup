@@ -33,10 +33,8 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
 
     @Test
     public void testReturnsCreatedOnCorrectRequest() {
-
         final Response response = target("user/signup").request().post(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\",\"email\":\"misuvd92"+count+"@yahoo.com\"}"));
         assertEquals(Response.Status.CREATED, response.getStatusInfo());
-
     }
 
     @Test

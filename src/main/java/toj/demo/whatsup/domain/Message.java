@@ -40,6 +40,16 @@ public class Message {
     }
 
     @Override
+    public String toString() {
+        return "Message{" +
+                "msgId=" + msgId +
+                ", message='" + message + '\'' +
+                ", user=" + user.getUsername() +
+                ", creationTimestamp=" + creationTimestamp +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         int result = msgId != null ? msgId.hashCode() : 0;
         result = 31 * result + (message != null ? message.hashCode() : 0);

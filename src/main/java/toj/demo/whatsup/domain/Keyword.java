@@ -8,6 +8,8 @@ import javax.persistence.*;
 @Entity(name="Keywords")
 public class Keyword {
 
+
+
     @Id
     @GeneratedValue
     private Long wordId;
@@ -15,7 +17,7 @@ public class Keyword {
     @Column(unique = true)
     private String text;
 
-    public Keyword(String test) {
+    public Keyword(String text) {
         this.text = text;
     }
 
@@ -27,5 +29,15 @@ public class Keyword {
         return wordId;
     }
 
+    public Keyword(){
 
+    }
+
+    @Override
+    public String toString() {
+        return "Keyword{" +
+                "wordId=" + wordId +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }

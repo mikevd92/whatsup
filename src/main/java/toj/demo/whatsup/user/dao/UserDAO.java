@@ -1,9 +1,11 @@
 package toj.demo.whatsup.user.dao;
 
 import toj.demo.whatsup.dao.DAO;
+import toj.demo.whatsup.domain.AssignedStatus;
 import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,6 +22,16 @@ public interface UserDAO extends DAO<User,Long> {
 
     void addKeyWordsToUser(User user,Set<Keyword> keywords);
 
-    void changeNotifyPeriod(User user,Long period);
+    void changeNotifyPeriod(User user, int period);
+
+    public List<User> findAll();
+
+    public void resetHasJobAssigned();
+
+    public List<User> findAllUnassigned();
+
+    public void setAssignedStatus(User user,AssignedStatus assignedStatus);
+
+
 
 }

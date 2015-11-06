@@ -7,6 +7,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import quartz.MailJob;
 import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.message.dao.MessageDAO;
@@ -37,6 +40,8 @@ public class MessageServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    private StringBuilder stringBuilder;
+
     @Test
     public void testAddNewMessage() {
         User user = new User("Mihai", "password","misuvd92@yahoo.com");
@@ -64,11 +69,22 @@ public class MessageServiceTest {
                                 new Message("cooler", user, Date.from(Instant.now().minus(4, ChronoUnit.DAYS)), Date.from(Instant.now().minus(3, ChronoUnit.DAYS)))
                         )
         );
+
         when(messageDAO.getMessageByUser(user)).then(invocationOnMock -> {
             messages.sort((a, b) -> a.getCreationTimestamp().after(b.getCreationTimestamp()) ? -1 : (a.getCreationTimestamp().equals(b.getCreationTimestamp()) ? 0 : 1));
             return Optional.of(messages.stream().filter(p -> !p.getDeletionTimestamp().before(new Date())).collect(Collectors.toList()).get(0));
         });
         assertEquals(messageService.getStatusMessage(user).get(), messages.get(0));
+    }
+
+    @Test
+    public void testBuilder(){
+
+        JobDetail jobDetail= JobBuilder.newJob(MailJob.class)
+                .build();
+        jobDetail.getJobDataMap().put("messageService",messageService);
+
+
     }
 
     @Test
