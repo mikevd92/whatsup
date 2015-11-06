@@ -56,7 +56,6 @@ public class SchedulingJob extends QuartzJobBean {
         unassignedUsers = userService.findAllUnassigned();
         if(unassignedUsers.size()!=0) {
             for (User user : unassignedUsers) {
-                if (user.getNotificationPeriod() != null && user.getKeywords().size() != 0) {
                     JobDetail jobDetail = JobBuilder.newJob(MailJob.class).withIdentity("job-" + user.getUsername(), "mailGroup").build();
                     jobDetail.getJobDataMap().put("messageService", messageService);
                     jobDetail.getJobDataMap().put("mailService", mailService);
@@ -74,7 +73,6 @@ public class SchedulingJob extends QuartzJobBean {
                     } catch (SchedulerException e) {
                         e.printStackTrace();
                     }
-                }
             }
         }
     }

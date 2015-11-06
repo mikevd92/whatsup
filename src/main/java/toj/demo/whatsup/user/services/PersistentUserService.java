@@ -68,11 +68,6 @@ public class PersistentUserService implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userDAO.findAll();
-    }
-
-    @Override
     public List<User> findAllUnassigned() {
         return userDAO.findAllUnassigned();
     }

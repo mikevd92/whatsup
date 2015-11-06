@@ -4,13 +4,20 @@ import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import toj.demo.whatsup.domain.Credentials;
+import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
+import toj.demo.whatsup.notify.services.KeywordService;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
 import toj.demo.whatsup.user.services.UserService;
 import toj.demo.whatsup.user.services.UserSessionService;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
+
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,6 +26,9 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private KeywordService keywordService;
 
     private static int count=0;
     @After
@@ -47,11 +57,13 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
         assertEquals(userService.get(name).get().getEmail(),"misuvd92"+count+"@yahoo.com");
 
     }
+
     @Test
     public void testLoginInvalidUserNameFails(){
         final Response response=target("user/login").request().put(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
         assertEquals(response.getStatusInfo(),Response.Status.INTERNAL_SERVER_ERROR);
     }
+
     @Test
     public void testLogOutSucceeds(){
         target("user/signup").request().post(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\",\"email\":\"misuvd92"+count+"@yahoo.com\"}"));
@@ -60,11 +72,13 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
         Response logOutResponse=target("user/logout").queryParam("sessionId",sessionId).request().put(Entity.text(""));
         assertEquals(logOutResponse.getStatusInfo(),Response.Status.OK);
     }
+
     @Test
      public void testLogOutNoSessionReturnsBadRequest(){
         Response logOutResponse=target("user/logout").request().put(Entity.text(""));
         assertEquals(logOutResponse.getStatusInfo(),Response.Status.BAD_REQUEST);
     }
+
     @Test
     public void testLogOutWrongSessionReturnsInternalServerError(){
         Response logOutResponse=target("user/logout").queryParam("sessionId","wrong").request().put(Entity.text(""));

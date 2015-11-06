@@ -40,8 +40,6 @@ public class MessageServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    private StringBuilder stringBuilder;
-
     @Test
     public void testAddNewMessage() {
         User user = new User("Mihai", "password","misuvd92@yahoo.com");
@@ -75,16 +73,6 @@ public class MessageServiceTest {
             return Optional.of(messages.stream().filter(p -> !p.getDeletionTimestamp().before(new Date())).collect(Collectors.toList()).get(0));
         });
         assertEquals(messageService.getStatusMessage(user).get(), messages.get(0));
-    }
-
-    @Test
-    public void testBuilder(){
-
-        JobDetail jobDetail= JobBuilder.newJob(MailJob.class)
-                .build();
-        jobDetail.getJobDataMap().put("messageService",messageService);
-
-
     }
 
     @Test
@@ -180,6 +168,5 @@ public class MessageServiceTest {
                     .collect(Collectors.toList());
         });
         assertEquals(messageService.getLatestMessages(user.getFollowers()).size(), 4);
-
     }
 }

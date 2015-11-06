@@ -32,7 +32,6 @@ public class MailJob implements Job {
             mailService=(MailService)jobExecutionContext.getMergedJobDataMap().get("mailService");
         if(user==null)
             user=(User)jobExecutionContext.getMergedJobDataMap().get("user");
-        //System.out.println(messageService+" "+mailService+" "+user+"---------------------------------------------------------------------------------------------------------------------------------");
         messages=messageService.getMessagesByKeyWords(user.getKeywords());
         mailMessage=new SimpleMailMessage();
         if(messages.size()!=0) {

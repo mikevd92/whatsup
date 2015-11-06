@@ -27,8 +27,6 @@ public interface UserService {
 
     public void setAssignedStatus(User user,AssignedStatus assignedStatus);
 
-    public List<User> findAll();
-
     public List<User> findAllUnassigned();
 
     public void resetHasJobAssigned();
