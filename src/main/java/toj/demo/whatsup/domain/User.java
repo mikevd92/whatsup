@@ -26,7 +26,11 @@ public class User implements Principal {
 
     private String password;
 
-    private long notificationPeriod;
+    private Integer notificationPeriod;
+
+
+    @Enumerated(EnumType.STRING)
+    private AssignedStatus assignedStatus=AssignedStatus.UNASSIGNED;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="UsersKeywords",
@@ -45,7 +49,6 @@ public class User implements Principal {
         keywords = new LinkedHashSet<Keyword>();
     }
 
-
     public User(String username, String password,String email) {
         this.username = username;
         this.password = password;
@@ -53,13 +56,14 @@ public class User implements Principal {
         followers = new LinkedHashSet<User>();
     }
 
+
     public String getEmail() {
         return email;
     }
+
     public void addFollower(User user) {
         followers.add(user);
     }
-
     public void removeFollower(User user) {
         followers.remove(user);
     }
@@ -76,20 +80,42 @@ public class User implements Principal {
         return ImmutableSet.copyOf(keywords);
     }
 
-    public void setKeywords(Set<Keyword> keywords) {
-        this.keywords = keywords;
+    public void addKeywords(Set<Keyword> keywords) {
+        this.keywords.addAll(keywords);
     }
+
     public String getUsername() {
         return username;
     }
+    public AssignedStatus getAssignedStatus() {
+        return assignedStatus;
+    }
 
-    public long getNotificationPeriod() {
+    public void setAssignedStatus(AssignedStatus assignedStatus) {
+        this.assignedStatus = assignedStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "notificationPeriod=" + notificationPeriod +
+                ", assignedStatus=" + assignedStatus +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", Id=" + Id +
+                ", username='" + username + '\'' +
+                '}';
+    }
+
+    public Integer getNotificationPeriod() {
         return notificationPeriod;
     }
 
-    public void setNotificationPeriod(long notificationPeriod) {
+    public void setNotificationPeriod(Integer notificationPeriod) {
         this.notificationPeriod = notificationPeriod;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

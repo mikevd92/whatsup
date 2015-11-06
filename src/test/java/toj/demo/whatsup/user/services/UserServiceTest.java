@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.email.services.MailService;
@@ -34,7 +35,7 @@ public class UserServiceTest {
     private MailService mailService;
 
     @InjectMocks
-    private UserService userService=new PersistentUserService(userDAO,mailService);
+    private UserService userService=new PersistentUserService(userDAO);
 
     @Before
     public void setUp(){

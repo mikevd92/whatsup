@@ -1,6 +1,7 @@
 package toj.demo.whatsup.message.dao;
 
 import toj.demo.whatsup.dao.DAO;
+import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.domain.User;
 
@@ -15,4 +16,5 @@ public interface MessageDAO extends DAO<Message,Long> {
     List<Message> getUpdates(Date date,User user);
     List<Message> getMessagesByUsers(Set<User> users);
     void removeByDeletionTimestamp();
+    List<Message> getMessagesByKeyWords(Set<Keyword> keywords);
 }

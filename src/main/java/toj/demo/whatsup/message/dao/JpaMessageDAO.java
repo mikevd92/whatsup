@@ -2,6 +2,7 @@ package toj.demo.whatsup.message.dao;
 
 import org.springframework.stereotype.Repository;
 import toj.demo.whatsup.dao.JpaDAO;
+import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.domain.Message_;
 import toj.demo.whatsup.domain.User;
@@ -13,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.*;
 import java.util.stream.Collectors;
+import javax.persistence.criteria.Predicate;
 
 @Repository
 public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
@@ -66,6 +68,7 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
                         cb.equal(messageRoot.get(Message_.user), user),
                         cb.greaterThanOrEqualTo(messageRoot.get(Message_.creationTimestamp), date),
                         cb.greaterThanOrEqualTo(messageRoot.get(Message_.deletionTimestamp),new Date())
+
                 )
         );
         cq.orderBy(
@@ -91,5 +94,19 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
                 ,new Date()
         ));
         entityManager.createQuery(delete).executeUpdate();
+    }
+
+    @Override
+    public List<Message> getMessagesByKeyWords(Set<Keyword> keywords) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Message> cq = cb.createQuery(this.entityClass);
+        Root<Message> messageRoot = cq.from(this.entityClass);
+        List<Predicate> predicateList=keywords.stream().map(p -> cb.like(messageRoot.get(Message_.message),"%"+p.getText()+"%")).collect(Collectors.toList());
+        Predicate[] predicates=new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(cb.or(predicates));
+        cq.select(messageRoot);
+        TypedQuery<Message> query=entityManager.createQuery(cq);
+        return query.getResultList();
     }
 }

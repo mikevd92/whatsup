@@ -1,5 +1,6 @@
 package toj.demo.whatsup.message.services;
 
+import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.domain.User;
 
@@ -18,6 +19,8 @@ public interface MessageService {
     List<Message> getMessages(User user);
 
     List<Message> getLatestMessages(Set<User> users);
+
+    List<Message> getMessagesByKeyWords(Set<Keyword> keywords);
 
     void removeByDeletionTimestamp();
 }
