@@ -59,7 +59,6 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
     private  Credentials credentialsAdi;
     private  static int count=0;
 
-
     @Before
     public void initializes(){
         credentialsMihai = new Credentials("Mihai"+count,"password","misuvd92"+count+"@yahoo.com");
@@ -186,6 +185,7 @@ public class MessageResourceTest extends BaseResourceTest<MessageResource> {
         );
         testNoSessionGETBadRequest(targets);
     }
+
     @Test
     public void testWrongSessionReturnsForbidden() {
         Date timestamp = new Date();

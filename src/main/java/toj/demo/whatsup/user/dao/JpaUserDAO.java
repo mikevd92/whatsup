@@ -8,10 +8,8 @@ import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.domain.User_;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -81,16 +79,6 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public List<User> findAll() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> cq = cb.createQuery(this.entityClass);
-        Root<User> userRoot = cq.from(this.entityClass);
-        cq.select(userRoot);
-        TypedQuery<User> query=entityManager.createQuery(cq);
-        return query.getResultList();
-    }
-
-    @Override
     public void resetHasJobAssigned() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaUpdate<User> cu=cb.createCriteriaUpdate(this.entityClass);
@@ -105,10 +93,14 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
         CriteriaQuery<User> cq = cb.createQuery(this.entityClass);
         Root<User> userRoot = cq.from(this.entityClass);
         cq.where(
-                cb.equal(userRoot.get(User_.assignedStatus),AssignedStatus.UNASSIGNED)
+                cb.equal(userRoot.get(User_.assignedStatus),AssignedStatus.UNASSIGNED),
+                cb.isTrue(userRoot.get(User_.notificationPeriod).isNotNull()),
+                cb.isNotEmpty(userRoot.get(User_.keywords))
+
         );
         cq.select(userRoot);
         TypedQuery<User> query=entityManager.createQuery(cq);
+
         return query.getResultList();
     }
 
