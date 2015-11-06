@@ -2,22 +2,15 @@ package quartz;
 
 import org.quartz.*;
 import org.quartz.impl.StdScheduler;
-import org.quartz.listeners.JobChainingJobListener;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import toj.demo.whatsup.domain.AssignedStatus;
-import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.email.services.MailService;
 import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.user.services.UserService;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * Created by mihai.popovici on 11/6/2015.
