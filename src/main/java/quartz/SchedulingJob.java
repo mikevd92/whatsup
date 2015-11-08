@@ -49,13 +49,14 @@ public class SchedulingJob extends QuartzJobBean {
         unassignedUsers = userService.findAllUnassigned();
         if(unassignedUsers.size()!=0) {
             for (User user : unassignedUsers) {
-                    JobDetail jobDetail = JobBuilder.newJob(MailJob.class).withIdentity("job-" + user.getUsername(), "mailGroup").build();
+                    JobDetail jobDetail = JobBuilder.newJob(MailJob.class).withIdentity("job-" + user.getId(), "mailGroup").build();
                     jobDetail.getJobDataMap().put("messageService", messageService);
                     jobDetail.getJobDataMap().put("mailService", mailService);
-                    jobDetail.getJobDataMap().put("user", user);
+                    jobDetail.getJobDataMap().put("userService",userService);
+                    jobDetail.getJobDataMap().put("userId", user.getId());
                     Trigger trigger = TriggerBuilder
                             .newTrigger()
-                            .withIdentity("trigger-" + user.getUsername(), "mailTriggerGroup")
+                            .withIdentity("trigger-" + user.getId(), "mailTriggerGroup")
                             .withSchedule(
                                     SimpleScheduleBuilder.simpleSchedule()
                                             .withIntervalInSeconds(user.getNotificationPeriod() * 3600).repeatForever())

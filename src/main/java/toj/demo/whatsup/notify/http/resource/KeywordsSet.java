@@ -10,6 +10,10 @@ import java.util.Set;
 @XmlRootElement
 public class KeywordsSet {
 
+    public void setKeywords(Set<String> keywords) {
+        this.keywords = keywords;
+    }
+
     private Set<String> keywords;
 
     public KeywordsSet(){
@@ -23,6 +27,7 @@ public class KeywordsSet {
     public Set<String> getKeywords() {
         return keywords;
     }
+
 
 
 }

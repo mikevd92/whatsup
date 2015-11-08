@@ -19,6 +19,8 @@ public interface UserService {
 
     void addFollower(User toBeFollowed,User follower);
 
+    Optional<User> findUserById(Long userId);
+
     void removeFollower(User toBeFollowed,User follower);
 
     public void addKeywordsToUser(User user,Set<Keyword> keywords);

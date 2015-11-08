@@ -37,13 +37,24 @@ public class JpaKeywordDAO extends JpaDAO<Keyword,Long> implements KeywordDAO {
     }
 
     @Override
-    public Set<String> getKeyWordsTextsByTexts(Set<String> texts) {
+    public Set<String> checkExistingKeywordTexts(Set<String> texts) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<String> cq = cb.createQuery(String.class);
         Root<Keyword> keywordRoot = cq.from(this.entityClass);
         cq.where(cb.isTrue(keywordRoot.get(Keyword_.text).in(texts)));
         cq.select(keywordRoot.get(Keyword_.text));
         TypedQuery<String> query=entityManager.createQuery(cq);
+        return new LinkedHashSet<>(query.getResultList());
+    }
+
+    @Override
+    public Set<Keyword> getExistingKeywords(Set<String> texts) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Keyword> cq = cb.createQuery(entityClass);
+        Root<Keyword> keywordRoot = cq.from(this.entityClass);
+        cq.where(cb.isTrue(keywordRoot.get(Keyword_.text).in(texts)));
+        cq.select(keywordRoot);
+        TypedQuery<Keyword> query=entityManager.createQuery(cq);
         return new LinkedHashSet<>(query.getResultList());
     }
 

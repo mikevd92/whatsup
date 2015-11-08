@@ -19,6 +19,8 @@ import javax.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.stream.Collectors;
 
 /**
  * Created by mihai.popovici on 11/4/2015.
@@ -69,10 +71,16 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
     public void testNotifyAndAdd()
     {
         target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana\",\"Maria\",\"Mihaela\"]}"));
-        target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana1\",\"Maria1\",\"Mihaela1\"]}"));
+        target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana\",\"Maria\",\"Mihaela1\"]}"));
         target("notify/changeperiod").queryParam("sessionId",sessionId).queryParam("notifyperiod",3).request().put(Entity.text(""));
+        Response response=target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana\",\"Maria2\",\"Mihaela2\"]}"));
+
         User user=userService.get("Mihai"+count).get();
         assertEquals(user.getNotificationPeriod(),new Integer(3));
-        assertEquals(user.getKeywords().size(),6);
+        Set<String> responseKeywords=response.readEntity(KeywordsSet.class).getKeywords();
+        Set<String> expectedKeywords=new LinkedHashSet<String>(Arrays.asList("Ioana","Maria","Mihaela","Mihaela1","Maria2","Mihaela2"));
+        expectedKeywords=expectedKeywords.stream().sorted().collect(Collectors.toSet());
+        assertEquals(responseKeywords,expectedKeywords);
+
     }
 }

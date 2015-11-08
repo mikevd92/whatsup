@@ -8,12 +8,14 @@ import toj.demo.whatsup.http.filters.Authentication;
 import toj.demo.whatsup.http.filters.Session;
 import toj.demo.whatsup.notify.services.KeywordService;
 import toj.demo.whatsup.user.services.UserService;
+import toj.demo.whatsup.user.services.UserSessionService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,11 +27,13 @@ import java.util.stream.Collectors;
 public class NotifyResource {
     private final UserService userService;
     private final KeywordService keywordService;
+    private final UserSessionService userSessionService;
 
     @Autowired
-    public NotifyResource(UserService userService,KeywordService keywordService) {
+    public NotifyResource(UserService userService,KeywordService keywordService,UserSessionService userSessionService) {
         this.userService = userService;
         this.keywordService = keywordService;
+        this.userSessionService=userSessionService;
     }
 
     @PUT
@@ -38,15 +42,33 @@ public class NotifyResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Session
     @Authentication
-    public Response addKeywords(KeywordsSet keywordsSet,@Context SecurityContext context){
+    public Response addKeywords(KeywordsSet keywordsSet,@Context SecurityContext context,@QueryParam("sessionId") String sessionId){
         User user=(User)context.getUserPrincipal();
         Set<String> keywordsStrings=keywordsSet.getKeywords();
-        keywordsStrings.removeAll(keywordService.getKeywordsTextsByTexts(keywordsStrings));
-        Set<Keyword> keywords=keywordsStrings.stream().map(p -> new Keyword(p)).collect(Collectors.toSet());
-        keywordService.saveKeywords(keywords);
-        userService.addKeywordsToUser(userService.get(user.getName()).get(),keywords);
+
+        Set<Keyword> oldKeywords=keywordService.getExistingKeywords(keywordsStrings);
+
+        user=userService.get(user.getName()).get();
+        Set<Keyword> existingKeywords=user.getKeywords();
+        oldKeywords=oldKeywords.stream().filter(p -> existingKeywords.contains(p)).collect(Collectors.toSet());
+        if(oldKeywords.size()!=0){
+            userService.addKeywordsToUser(user,oldKeywords);
+        }
+
+        Set<String> newKeywordStrings=new LinkedHashSet<>();
+        newKeywordStrings.addAll(keywordsStrings);
+        newKeywordStrings.removeAll(keywordService.checkExistingKeywordTexts(newKeywordStrings));
+        if(newKeywordStrings.size()!=0) {
+            Set<Keyword> newKeywords = newKeywordStrings.stream().map(p -> new Keyword(p)).collect(Collectors.toSet());
+            keywordService.saveKeywords(newKeywords);
+            userService.addKeywordsToUser(user, newKeywords);
+        }
+        userSessionService.updateSession(sessionId,user);
+        Set<String> oldKeywordStrings=user.getKeywords().stream().map(p -> p.getText()).sorted().collect(Collectors.toSet());
+        keywordsSet.setKeywords(oldKeywordStrings);
         return Response.status(Response.Status.OK).entity(keywordsSet).build();
     }
+
     @PUT
     @Path("/changeperiod")
     @Session
