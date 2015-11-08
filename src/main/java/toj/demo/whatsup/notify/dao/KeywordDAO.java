@@ -12,6 +12,7 @@ import java.util.Set;
  */
 public interface KeywordDAO extends DAO<Keyword,Long> {
     void saveKeywords(Set<Keyword> keywords);
-    Set<String> getKeyWordsTextsByTexts(Set<String> texts);
+    Set<String> checkExistingKeywordTexts(Set<String> texts);
+    public Set<Keyword> getExistingKeywords(Set<String> texts);
 
 }

@@ -24,6 +24,8 @@ public interface UserDAO extends DAO<User,Long> {
 
     void changeNotifyPeriod(User user, int period);
 
+    Optional<User> findUserById(Long userId);
+
     public void resetHasJobAssigned();
 
     public List<User> findAllUnassigned();

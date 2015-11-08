@@ -79,6 +79,12 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
     }
 
     @Override
+    public Optional<User> findUserById(Long id) {
+        return Optional.ofNullable(entityManager.find(entityClass,id));
+    }
+
+
+    @Override
     public void resetHasJobAssigned() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaUpdate<User> cu=cb.createCriteriaUpdate(this.entityClass);

@@ -10,5 +10,6 @@ import java.util.Set;
  */
 public interface KeywordService {
     public void saveKeywords(Set<Keyword> keywords);
-    public Set<String> getKeywordsTextsByTexts(Set<String> texts);
+    public Set<String> checkExistingKeywordTexts(Set<String> texts);
+    public Set<Keyword> getExistingKeywords(Set<String> texts);
 }

@@ -47,6 +47,11 @@ public class PersistentUserService implements UserService {
     }
 
     @Override
+    public Optional<User> findUserById(Long userId) {
+        return userDAO.findUserById(userId);
+    }
+
+    @Override
     public void removeFollower(User toBeFollowed, User follower) {
          userDAO.removeFollower(toBeFollowed,follower);
     }

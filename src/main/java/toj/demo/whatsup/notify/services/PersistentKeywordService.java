@@ -29,7 +29,12 @@ public class PersistentKeywordService implements KeywordService {
     }
 
     @Override
-    public Set<String> getKeywordsTextsByTexts(Set<String> texts) {
-        return keywordDAO.getKeyWordsTextsByTexts(texts);
+    public Set<String> checkExistingKeywordTexts(Set<String> texts) {
+        return keywordDAO.checkExistingKeywordTexts(texts);
+    }
+
+    @Override
+    public Set<Keyword> getExistingKeywords(Set<String> texts) {
+        return keywordDAO.getExistingKeywords(texts);
     }
 }

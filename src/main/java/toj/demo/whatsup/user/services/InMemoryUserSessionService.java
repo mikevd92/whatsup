@@ -34,6 +34,11 @@ public class InMemoryUserSessionService implements UserSessionService {
     public boolean sessionIdExists(String sessionId) { return userSessions.containsKey(sessionId); }
 
     @Override
+    public void updateSession(String sessionId, User user) {
+        userSessions.put(sessionId,user);
+    }
+
+    @Override
     public void removeUserSession(String sessionId){
         userSessions.remove(sessionId);
     }
