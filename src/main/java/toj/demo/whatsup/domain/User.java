@@ -84,6 +84,8 @@ public class User implements Principal {
         this.keywords.addAll(keywords);
     }
 
+    public void removeKeywords(Set<Keyword> keywords) { this.keywords.removeAll(keywords);}
+
     public String getUsername() {
         return username;
     }

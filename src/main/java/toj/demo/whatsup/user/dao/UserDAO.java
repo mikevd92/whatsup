@@ -26,9 +26,9 @@ public interface UserDAO extends DAO<User,Long> {
 
     Optional<User> findUserById(Long userId);
 
-    public void resetHasJobAssigned();
+    public List<User> findAllAssigned();
 
-    public List<User> findAllUnassigned();
+    public void removeKeywordsFromUser(User user,Set<Keyword> keywords);
 
     public void setAssignedStatus(User user,AssignedStatus assignedStatus);
 

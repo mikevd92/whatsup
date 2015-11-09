@@ -1,5 +1,6 @@
 package toj.demo.whatsup.user.services;
 
+import org.quartz.SchedulerException;
 import toj.demo.whatsup.domain.AssignedStatus;
 import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.Keyword;
@@ -25,13 +26,16 @@ public interface UserService {
 
     public void addKeywordsToUser(User user,Set<Keyword> keywords);
 
+    public void removeKeywordsFromUser(User user,Set<Keyword> keywords);
+
+    public void removeJob(User user) throws SchedulerException;
+
+    public void addJob(User user) throws SchedulerException;
+
+    public boolean checkJobExists(Long id) throws SchedulerException;
+
     public void changeNotifyPeriod(User user, int period);
 
-    public void setAssignedStatus(User user,AssignedStatus assignedStatus);
-
-    public List<User> findAllUnassigned();
-
-    public void resetHasJobAssigned();
-
+    public List<User> findAllAssigned();
 
 }

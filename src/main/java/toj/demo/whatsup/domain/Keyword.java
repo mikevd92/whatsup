@@ -8,8 +8,6 @@ import javax.persistence.*;
 @Entity(name="Keywords")
 public class Keyword {
 
-
-
     @Id
     @GeneratedValue
     private Long wordId;

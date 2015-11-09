@@ -13,8 +13,6 @@ public interface UserSessionService {
 
     boolean sessionIdExists(String sessionId);
 
-    public void updateSession(String sessionId,User user);
-
     void removeUserSession(String sessionId);
 
 }

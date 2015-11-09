@@ -80,26 +80,16 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
 
     @Override
     public Optional<User> findUserById(Long id) {
-        return Optional.ofNullable(entityManager.find(entityClass,id));
-    }
-
-
-    @Override
-    public void resetHasJobAssigned() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaUpdate<User> cu=cb.createCriteriaUpdate(this.entityClass);
-        Root<User> userRoot=cu.from(this.entityClass);
-        cu.set(userRoot.get(User_.assignedStatus), AssignedStatus.UNASSIGNED);
-        entityManager.createQuery(cu).executeUpdate();
+        return Optional.ofNullable(entityManager.find(entityClass, id));
     }
 
     @Override
-    public List<User> findAllUnassigned() {
+    public List<User> findAllAssigned() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> cq = cb.createQuery(this.entityClass);
         Root<User> userRoot = cq.from(this.entityClass);
         cq.where(
-                cb.equal(userRoot.get(User_.assignedStatus),AssignedStatus.UNASSIGNED),
+                cb.equal(userRoot.get(User_.assignedStatus),AssignedStatus.ASSIGNED),
                 cb.isTrue(userRoot.get(User_.notificationPeriod).isNotNull()),
                 cb.isNotEmpty(userRoot.get(User_.keywords))
 
@@ -108,6 +98,12 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
         TypedQuery<User> query=entityManager.createQuery(cq);
 
         return query.getResultList();
+    }
+
+    @Override
+    public void removeKeywordsFromUser(User user, Set<Keyword> keywords) {
+        user.removeKeywords(keywords);
+        entityManager.merge(user);
     }
 
     @Override
