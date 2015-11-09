@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.nio.file.attribute.UserPrincipal;
 import java.security.Principal;
 import java.util.Optional;
 

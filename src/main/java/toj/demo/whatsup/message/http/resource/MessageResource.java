@@ -61,11 +61,11 @@ public final class MessageResource {
             try {
                 date = format.parse(deletionTimestamp);
             } catch (ParseException ex) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return Response.status(Response.Status.BAD_REQUEST).build();
             }
             Date now=new Date();
             if(date.before(now)){
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return Response.status(Response.Status.BAD_REQUEST).build();
             }
             Message message = new Message(msg, user,now,date);
             this.messageService.addNewMessage(message);
@@ -108,7 +108,7 @@ public final class MessageResource {
         try {
             date = format.parse(timestamp);
         } catch (ParseException ex) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
         User user = (User)securityContext.getUserPrincipal();

@@ -85,15 +85,15 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
 
 
     @Test
-    public void testFollowBadUserNameReturnsInternalServerError() {
+    public void testFollowBadUserNameReturnsBadRequest() {
         Response response = target("follower/follow").queryParam("sessionId", followerSessionId).queryParam("username", "John").request().put(Entity.text(""));
-        assertEquals(response.getStatusInfo(), Response.Status.INTERNAL_SERVER_ERROR);
+        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
 
     @Test
-    public void testUnFollowBadUserNameReturnsInternalServerError() {
+    public void testUnFollowBadUserNameReturnsBadRequest() {
         Response response = target("follower/unsubscribe").queryParam("sessionId", followerSessionId).queryParam("username", "John").request().delete();
-        assertEquals(response.getStatusInfo(), Response.Status.INTERNAL_SERVER_ERROR);
+        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class FollowerResourceTest extends SpringManagedResourceTest<FollowerReso
     @Test
     public void testFollowerFollowsFollower(){
         Response response = target("follower/follow").queryParam("sessionId", toBeFollowedSessionId).queryParam("username", toBeFollowed.getUsername()).request().put(Entity.text(""));
-        assertEquals(response.getStatusInfo(), Response.Status.INTERNAL_SERVER_ERROR);
+        assertEquals(response.getStatusInfo(), Response.Status.BAD_REQUEST);
     }
 
     @Test

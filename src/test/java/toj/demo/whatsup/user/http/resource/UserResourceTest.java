@@ -61,7 +61,7 @@ public class UserResourceTest extends SpringManagedResourceTest<UserResource> {
     @Test
     public void testLoginInvalidUserNameFails(){
         final Response response=target("user/login").request().put(Entity.json("{\"username\":\"Mihai"+count+"\",\"password\":\"password\"}"));
-        assertEquals(response.getStatusInfo(),Response.Status.INTERNAL_SERVER_ERROR);
+        assertEquals(response.getStatusInfo(),Response.Status.BAD_REQUEST);
     }
 
     @Test

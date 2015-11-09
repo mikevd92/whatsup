@@ -31,9 +31,6 @@ public class UserServiceTest {
     @Mock
     private UserDAO userDAO;
 
-    @Mock
-    private MailService mailService;
-
     @InjectMocks
     private UserService userService=new PersistentUserService(userDAO);
 

@@ -37,7 +37,7 @@ public final class UserResource {
     public Response signup(CredentialsDTO credentialsDTO) {
         final Optional<User> user = userService.get(credentialsDTO.getUsername());
         if (user.isPresent()) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
         Credentials credentials=mapper.map(credentialsDTO,Credentials.class);
         userService.signup(credentials);
@@ -51,12 +51,12 @@ public final class UserResource {
     public Response login(CredentialsDTO credentialsDTO) {
         Credentials credentials=mapper.map(credentialsDTO,Credentials.class);
         if (!userService.checkUser(credentials)) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
         User user = userService.get(credentialsDTO.getUsername()).get();
         if (userSessionService.userExists(user)) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
         String sessionId = userSessionService.createUserSession(user);

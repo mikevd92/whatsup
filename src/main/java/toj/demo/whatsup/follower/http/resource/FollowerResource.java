@@ -37,10 +37,10 @@ public final class FollowerResource {
         Optional<User> toBeFollowed = userService.get(userName);
         User follower = (User) securityContext.getUserPrincipal();
         if (!toBeFollowed.isPresent()) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
         if(toBeFollowed.get().equals(follower)) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }else{
             userService.addFollower(toBeFollowed.get(),follower);
         }
@@ -56,7 +56,7 @@ public final class FollowerResource {
         Optional<User> toBeUnFollowed = userService.get(userName);
         User follower = (User) securityContext.getUserPrincipal();
         if (!toBeUnFollowed.isPresent()) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
         userService.removeFollower(toBeUnFollowed.get(),follower);
         return Response.status(Response.Status.OK).build();
