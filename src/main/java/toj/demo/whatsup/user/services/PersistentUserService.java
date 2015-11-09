@@ -14,6 +14,9 @@ import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.user.dao.UserDAO;
 
 import javax.annotation.Resource;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -87,7 +90,7 @@ public class PersistentUserService implements UserService {
         JobKey key=new JobKey(keyString,"mailGroup");
         mailScheduler.pauseJob(key);
         mailScheduler.deleteJob(key);
-        setAssignedStatus(user,AssignedStatus.UNASSIGNED);
+        setAssignedStatus(user, AssignedStatus.UNASSIGNED);
     }
 
     @Override
@@ -102,7 +105,8 @@ public class PersistentUserService implements UserService {
                 .withIdentity(new StringBuilder("trigger-").append(user.getId()).toString(), "mailTriggerGroup")
                 .withSchedule(
                         SimpleScheduleBuilder.simpleSchedule()
-                                .withIntervalInSeconds(user.getNotificationPeriod() * 3600).repeatForever())
+                                .withIntervalInHours(user.getNotificationPeriod()).repeatForever())
+                .startAt(Date.from(Instant.now().plus(user.getNotificationPeriod(), ChronoUnit.HOURS)))
                 .build();
         setAssignedStatus(user, AssignedStatus.ASSIGNED);
         mailScheduler.scheduleJob(jobDetail, trigger);
@@ -116,7 +120,20 @@ public class PersistentUserService implements UserService {
     }
 
     @Override
-    public void changeNotifyPeriod(User user, int period) {
+    public void changeNotifyPeriod(User user, int period) throws SchedulerException {
+        TriggerKey triggerKey=new TriggerKey(new StringBuilder("trigger-").append(user.getId()).toString(), "mailTriggerGroup");
+        if(mailScheduler.checkExists(triggerKey)) {
+            Date oldFireTime = mailScheduler.getTrigger(triggerKey).getNextFireTime();
+            Trigger newTrigger = TriggerBuilder
+                    .newTrigger()
+                    .withIdentity(new StringBuilder("trigger-").append(user.getId()).toString(), "mailTriggerGroup")
+                    .withSchedule(
+                            SimpleScheduleBuilder.simpleSchedule()
+                                    .withIntervalInHours(period).repeatForever())
+                    .startAt(oldFireTime)
+                    .build();
+            mailScheduler.rescheduleJob(newTrigger.getKey(), newTrigger);
+        }
         userDAO.changeNotifyPeriod(user, period);
     }
 

@@ -120,7 +120,7 @@ public class NotifyResource {
     @Session
     @Authentication
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changeNotifyPeriod(@QueryParam("sessionId") String sessionId,@QueryParam("notifyperiod") Integer notifyPeriod,@Context SecurityContext context){
+    public Response changeNotifyPeriod(@QueryParam("sessionId") String sessionId,@QueryParam("notifyperiod") Integer notifyPeriod,@Context SecurityContext context) throws SchedulerException {
         User user=(User)context.getUserPrincipal();
         userService.changeNotifyPeriod(user,notifyPeriod);
         NotificationResponse notificationResponse =new NotificationResponse(sessionId,user.getUsername(),notifyPeriod);

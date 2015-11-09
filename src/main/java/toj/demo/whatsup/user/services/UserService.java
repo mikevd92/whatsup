@@ -34,7 +34,7 @@ public interface UserService {
 
     public boolean checkJobExists(Long id) throws SchedulerException;
 
-    public void changeNotifyPeriod(User user, int period);
+    public void changeNotifyPeriod(User user, int period) throws SchedulerException;
 
     public List<User> findAllAssigned();
 

@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.quartz.JobKey;
 import org.quartz.SchedulerException;
+import org.quartz.Trigger;
 import org.quartz.TriggerKey;
 import org.quartz.impl.StdScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,9 @@ import static org.junit.Assert.*;
 import javax.annotation.Resource;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.SortedSet;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -73,7 +73,18 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
         Response response=target("notify/changeperiod").queryParam("sessionId",sessionId).queryParam("notifyperiod",3).request().put(Entity.text(""));
         NotificationResponse response1=response.readEntity(NotificationResponse.class);
         assertTrue(response1.equals(new NotificationResponse(sessionId,user.getUsername(),3)));
-
+        target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana\",\"Maria\",\"Mihaela\"]}"));
+        target("notify/requestjob").queryParam("sessionId",sessionId).request().post(Entity.text(""));
+        target("notify/changeperiod").queryParam("sessionId",sessionId).queryParam("notifyperiod",7).request().put(Entity.text(""));
+        TriggerKey triggerKey=new TriggerKey("trigger-"+user.getId(),"mailTriggerGroup");
+        Trigger trigger;
+        try {
+            trigger=mailScheduler.getTrigger(triggerKey);
+            Date nextFireTime=trigger.getFireTimeAfter(trigger.getNextFireTime());
+            assertEquals(nextFireTime, Date.from(Instant.ofEpochMilli(trigger.getNextFireTime().getTime()).plus(user.getNotificationPeriod(), ChronoUnit.HOURS)));
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
     }
     @Test
     public void testChangePeriodAndAddKeywordsSucceeds()
