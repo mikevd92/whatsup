@@ -9,7 +9,6 @@ import toj.demo.whatsup.domain.User_;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
