@@ -2,14 +2,12 @@ package toj.demo.whatsup.user.dao;
 
 import org.springframework.stereotype.Repository;
 import toj.demo.whatsup.dao.JpaDAO;
-import toj.demo.whatsup.domain.AssignedStatus;
 import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.domain.User_;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 

@@ -31,23 +31,30 @@ public class MailJob implements Job {
     List<Message> messages;
     private Optional<User> userOptional;
     private Set<Keyword> keywords;
+    private SerializableMailSender mailSender;
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         if(messageDAO==null)
             messageDAO=(MessageDAO)jobExecutionContext.getMergedJobDataMap().get("messageDAO");
-        if(mailService==null)
-            mailService=(MailService)jobExecutionContext.getMergedJobDataMap().get("mailService");
+        if(mailService==null) {
+            mailService = (MailService) jobExecutionContext.getMergedJobDataMap().get("mailService");
+            mailSender=mailService.getMailSender();
+            mailSender.setHost("smtp.mail.yahoo.com");
+            mailSender.setPort(465);
+            mailSender.setProtocol("smtps");
+            mailSender.setUsername("misuvd92@yahoo.com");
+            mailSender.setPassword("Misuvd00");
+            mailSender.getJavaMailProperties().setProperty("mail.smtps.auth","true");
+            mailSender.getJavaMailProperties().setProperty("mail.smtps.starttls.enable","true");
+            mailSender.getJavaMailProperties().setProperty("mail.debug","true");
+        }
         if(userDAO==null)
             userDAO=(UserDAO)jobExecutionContext.getMergedJobDataMap().get("userDAO");
         if(userId==null)
             userId=(Long)jobExecutionContext.getMergedJobDataMap().get("userId");
         userOptional=userDAO.findUserById(userId);
-        SerializableMailSender mailSender=mailService.getMailSender();
-        System.out.println(mailSender);
-        System.out.println(mailSender.getHost()+" "+mailSender.getPort());
-        System.out.println(messageDAO.getEntityManager());
-        /*if(userOptional.isPresent()) {
+        if(userOptional.isPresent()) {
             keywords=userOptional.get().getKeywords();
             mailMessage = new SimpleMailMessage();
             mailMessage.setSubject("Messages with requested keywords");
@@ -68,6 +75,6 @@ public class MailJob implements Job {
                     mailService.sendMail(mailMessage);
                 }
             }
-        }*/
+        }
     }
 }

@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.notify.dao.KeywordDAO;
-
-import java.util.List;
 import java.util.Set;
 
 /**

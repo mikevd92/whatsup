@@ -1,8 +1,6 @@
 package toj.demo.whatsup.notify.services;
 
 import toj.demo.whatsup.domain.Keyword;
-
-import java.util.List;
 import java.util.Set;
 
 /**

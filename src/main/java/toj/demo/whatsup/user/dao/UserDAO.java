@@ -1,11 +1,8 @@
 package toj.demo.whatsup.user.dao;
 
 import toj.demo.whatsup.dao.DAO;
-import toj.demo.whatsup.domain.AssignedStatus;
 import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
-
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 

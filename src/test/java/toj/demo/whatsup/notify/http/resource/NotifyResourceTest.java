@@ -10,10 +10,8 @@ import org.quartz.TriggerKey;
 import org.quartz.impl.StdScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import toj.demo.whatsup.domain.AssignedStatus;
-import toj.demo.whatsup.domain.Credentials;
-import toj.demo.whatsup.domain.Keyword;
-import toj.demo.whatsup.domain.User;
+import toj.demo.whatsup.domain.*;
+import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.notify.services.KeywordService;
 import toj.demo.whatsup.test.jersey.SpringManagedResourceTest;
 import toj.demo.whatsup.user.services.UserService;
@@ -43,6 +41,8 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private MessageService messageService;
     @Autowired
     private UserSessionService userSessionService;
     @Resource(name="mailScheduler")
@@ -85,7 +85,6 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
-        target("notify/removejob").queryParam("sessionId",sessionId).request().delete();
     }
     @Test
     public void testChangePeriodAndAddKeywordsSucceeds()
@@ -120,6 +119,7 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
     public void testRequestNotifyJobSucceeds(){
         target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana\",\"Maria\",\"Mihaela\"]}"));
         target("notify/changeperiod").queryParam("sessionId",sessionId).queryParam("notifyperiod",3).request().put(Entity.text(""));
+        messageService.addNewMessage(new Message("Ioana",user,new Date(),Date.from(Instant.now().plus(4,ChronoUnit.DAYS))));
         Response response=target("notify/requestjob").queryParam("sessionId",sessionId).request().post(Entity.text(""));
         JobKey jobKey=new JobKey("job-"+user.getId(),"mailGroup");
         try {
@@ -128,13 +128,12 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
             e.printStackTrace();
         }
         try {
-            Thread.sleep(10000);
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         user=userService.get("Mihai"+count).get();
         assertEquals(response.getStatusInfo(),Response.Status.OK);
-        target("notify/removejob").queryParam("sessionId",sessionId).request().delete();
     }
     @Test
     public void testRemoveNotifyJobSucceeds(){

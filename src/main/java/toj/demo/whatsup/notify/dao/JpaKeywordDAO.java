@@ -9,9 +9,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Selection;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 /**

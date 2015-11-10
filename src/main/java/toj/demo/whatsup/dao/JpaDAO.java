@@ -2,10 +2,9 @@ package toj.demo.whatsup.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.Optional;
+
 
 
 public abstract class JpaDAO<T,ID extends Serializable> implements DAO<T,ID> {

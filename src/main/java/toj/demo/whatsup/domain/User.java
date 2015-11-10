@@ -14,7 +14,7 @@ import java.util.Set;
 public class User implements Principal {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="Id")
     private Long Id;
 

@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Keyword {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long wordId;
 
     @Column(unique = true)

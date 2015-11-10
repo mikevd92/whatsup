@@ -5,22 +5,20 @@ import org.quartz.impl.StdScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import quartz.MailJob;
-import toj.demo.whatsup.domain.AssignedStatus;
 import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.email.services.MailService;
 import toj.demo.whatsup.message.dao.MessageDAO;
-import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.user.dao.UserDAO;
 
 import javax.annotation.Resource;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 
 @Transactional
 public class PersistentUserService implements UserService {
@@ -107,8 +105,7 @@ public class PersistentUserService implements UserService {
                         SimpleScheduleBuilder.simpleSchedule()
                                 .withIntervalInHours(user.getNotificationPeriod()).repeatForever())
                                 //.withIntervalInSeconds(1).repeatForever())
-                //.startAt(Date.from(Instant.now().plus(user.getNotificationPeriod(), ChronoUnit.HOURS)))
-               // .startAt(Date.from(Instant.now()))
+                .startAt(Date.from(Instant.now().plus(user.getNotificationPeriod(), ChronoUnit.HOURS)))
                 .build();
         mailScheduler.scheduleJob(jobDetail, trigger);
 
