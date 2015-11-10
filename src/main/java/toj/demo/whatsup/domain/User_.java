@@ -9,7 +9,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(User.class)
 public abstract class User_ {
 
-	public static volatile SingularAttribute<User, AssignedStatus> assignedStatus;
 	public static volatile SingularAttribute<User, String> password;
 	public static volatile SetAttribute<User, User> followers;
 	public static volatile SetAttribute<User, Keyword> keywords;

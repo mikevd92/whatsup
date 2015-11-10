@@ -36,6 +36,4 @@ public interface UserService {
 
     public void changeNotifyPeriod(User user, int period) throws SchedulerException;
 
-    public List<User> findAllAssigned();
-
 }

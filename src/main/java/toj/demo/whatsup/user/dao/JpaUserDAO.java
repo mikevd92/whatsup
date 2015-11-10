@@ -83,33 +83,9 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
     }
 
     @Override
-    public List<User> findAllAssigned() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> cq = cb.createQuery(this.entityClass);
-        Root<User> userRoot = cq.from(this.entityClass);
-        cq.where(
-                cb.equal(userRoot.get(User_.assignedStatus),AssignedStatus.ASSIGNED),
-                cb.isTrue(userRoot.get(User_.notificationPeriod).isNotNull()),
-                cb.isNotEmpty(userRoot.get(User_.keywords))
-
-        );
-        cq.select(userRoot);
-        TypedQuery<User> query=entityManager.createQuery(cq);
-
-        return query.getResultList();
-    }
-
-    @Override
     public void removeKeywordsFromUser(User user, Set<Keyword> keywords) {
         user.removeKeywords(keywords);
         entityManager.merge(user);
     }
-
-    @Override
-    public void setAssignedStatus(User user, AssignedStatus assignedStatus) {
-        user.setAssignedStatus(assignedStatus);
-        entityManager.merge(user);
-    }
-
 
 }

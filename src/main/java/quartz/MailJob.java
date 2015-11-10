@@ -8,8 +8,9 @@ import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.Message;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.email.services.MailService;
-import toj.demo.whatsup.message.services.MessageService;
-import toj.demo.whatsup.user.services.UserService;
+import toj.demo.whatsup.email.services.SerializableMailSender;
+import toj.demo.whatsup.message.dao.MessageDAO;
+import toj.demo.whatsup.user.dao.UserDAO;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,10 +23,10 @@ public class MailJob implements Job {
 
     private MailService mailService;
 
-    private MessageService messageService;
+    private MessageDAO messageDAO;
     private Long userId;
     private StringBuilder stringBuilder;
-    private UserService userService;
+    private UserDAO userDAO;
     SimpleMailMessage mailMessage;
     List<Message> messages;
     private Optional<User> userOptional;
@@ -33,16 +34,20 @@ public class MailJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        if(messageService==null)
-            messageService=(MessageService)jobExecutionContext.getMergedJobDataMap().get("messageService");
+        if(messageDAO==null)
+            messageDAO=(MessageDAO)jobExecutionContext.getMergedJobDataMap().get("messageDAO");
         if(mailService==null)
             mailService=(MailService)jobExecutionContext.getMergedJobDataMap().get("mailService");
-        if(userService==null)
-            userService=(UserService)jobExecutionContext.getMergedJobDataMap().get("userService");
+        if(userDAO==null)
+            userDAO=(UserDAO)jobExecutionContext.getMergedJobDataMap().get("userDAO");
         if(userId==null)
             userId=(Long)jobExecutionContext.getMergedJobDataMap().get("userId");
-        userOptional=userService.findUserById(userId);
-        if(userOptional.isPresent()) {
+        userOptional=userDAO.findUserById(userId);
+        SerializableMailSender mailSender=mailService.getMailSender();
+        System.out.println(mailSender);
+        System.out.println(mailSender.getHost()+" "+mailSender.getPort());
+        System.out.println(messageDAO.getEntityManager());
+        /*if(userOptional.isPresent()) {
             keywords=userOptional.get().getKeywords();
             mailMessage = new SimpleMailMessage();
             mailMessage.setSubject("Messages with requested keywords");
@@ -52,7 +57,7 @@ public class MailJob implements Job {
                 mailMessage.setText("Please add some keywords!");
                 mailService.sendMail(mailMessage);
             }else{
-                messages = messageService.getMessagesByKeyWords(keywords);
+                messages = messageDAO.getMessagesByKeyWords(keywords);
                 if (messages.size() == 0) {
                     mailMessage.setText("No messages to display");
                     mailService.sendMail(mailMessage);
@@ -63,6 +68,6 @@ public class MailJob implements Job {
                     mailService.sendMail(mailMessage);
                 }
             }
-        }
+        }*/
     }
 }

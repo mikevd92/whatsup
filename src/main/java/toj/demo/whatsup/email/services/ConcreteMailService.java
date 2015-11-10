@@ -9,8 +9,12 @@ import org.springframework.mail.SimpleMailMessage;
  */
 public class ConcreteMailService implements MailService {
 
+    public SerializableMailSender getMailSender() {
+        return mailSender;
+    }
+
     @Autowired
-    private MailSender mailSender;
+    private SerializableMailSender mailSender;
 
     @Override
     public void sendMail(SimpleMailMessage mailMessage) {

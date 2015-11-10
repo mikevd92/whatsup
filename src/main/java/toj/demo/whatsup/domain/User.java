@@ -28,10 +28,6 @@ public class User implements Principal {
 
     private Integer notificationPeriod;
 
-
-    @Enumerated(EnumType.STRING)
-    private AssignedStatus assignedStatus=AssignedStatus.UNASSIGNED;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="UsersKeywords",
             joinColumns = {@JoinColumn(name = "userId",referencedColumnName="Id")},
@@ -89,19 +85,11 @@ public class User implements Principal {
     public String getUsername() {
         return username;
     }
-    public AssignedStatus getAssignedStatus() {
-        return assignedStatus;
-    }
-
-    public void setAssignedStatus(AssignedStatus assignedStatus) {
-        this.assignedStatus = assignedStatus;
-    }
 
     @Override
     public String toString() {
         return "User{" +
                 "notificationPeriod=" + notificationPeriod +
-                ", assignedStatus=" + assignedStatus +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", Id=" + Id +

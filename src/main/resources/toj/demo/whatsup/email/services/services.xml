@@ -5,7 +5,7 @@
 
     <bean id="mailService" class="toj.demo.whatsup.email.services.ConcreteMailService"></bean>
 
-    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <bean id="mailSender" class="toj.demo.whatsup.email.services.SerializableMailSender">
         <property name="host" value="smtp.mail.yahoo.com"/>
         <property name="port" value="465"/>
         <property name="username" value="misuvd92@yahoo.com"/>

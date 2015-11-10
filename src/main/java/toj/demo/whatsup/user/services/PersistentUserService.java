@@ -10,6 +10,7 @@ import toj.demo.whatsup.domain.Credentials;
 import toj.demo.whatsup.domain.Keyword;
 import toj.demo.whatsup.domain.User;
 import toj.demo.whatsup.email.services.MailService;
+import toj.demo.whatsup.message.dao.MessageDAO;
 import toj.demo.whatsup.message.services.MessageService;
 import toj.demo.whatsup.user.dao.UserDAO;
 
@@ -29,7 +30,7 @@ public class PersistentUserService implements UserService {
     private StdScheduler mailScheduler;
 
     @Autowired
-    private MessageService messageService;
+    private MessageDAO messageDAO;
 
     @Autowired
     private MailService mailService;
@@ -90,15 +91,14 @@ public class PersistentUserService implements UserService {
         JobKey key=new JobKey(keyString,"mailGroup");
         mailScheduler.pauseJob(key);
         mailScheduler.deleteJob(key);
-        setAssignedStatus(user, AssignedStatus.UNASSIGNED);
     }
 
     @Override
     public void addJob(User user) throws SchedulerException {
         JobDetail jobDetail = JobBuilder.newJob(MailJob.class).withIdentity(new StringBuilder("job-").append(user.getId()).toString(), "mailGroup").build();
-        jobDetail.getJobDataMap().put("messageService", messageService);
+        jobDetail.getJobDataMap().put("messageDAO", messageDAO);
         jobDetail.getJobDataMap().put("mailService", mailService);
-        jobDetail.getJobDataMap().put("userService",this);
+        jobDetail.getJobDataMap().put("userDAO",userDAO);
         jobDetail.getJobDataMap().put("userId", user.getId());
         Trigger trigger = TriggerBuilder
                 .newTrigger()
@@ -106,9 +106,10 @@ public class PersistentUserService implements UserService {
                 .withSchedule(
                         SimpleScheduleBuilder.simpleSchedule()
                                 .withIntervalInHours(user.getNotificationPeriod()).repeatForever())
-                .startAt(Date.from(Instant.now().plus(user.getNotificationPeriod(), ChronoUnit.HOURS)))
+                                //.withIntervalInSeconds(1).repeatForever())
+                //.startAt(Date.from(Instant.now().plus(user.getNotificationPeriod(), ChronoUnit.HOURS)))
+               // .startAt(Date.from(Instant.now()))
                 .build();
-        setAssignedStatus(user, AssignedStatus.ASSIGNED);
         mailScheduler.scheduleJob(jobDetail, trigger);
 
     }
@@ -135,15 +136,6 @@ public class PersistentUserService implements UserService {
             mailScheduler.rescheduleJob(newTrigger.getKey(), newTrigger);
         }
         userDAO.changeNotifyPeriod(user, period);
-    }
-
-    public void setAssignedStatus(User user, AssignedStatus assignedStatus) {
-        userDAO.setAssignedStatus(user,assignedStatus);
-    }
-
-    @Override
-    public List<User> findAllAssigned() {
-        return userDAO.findAllAssigned();
     }
 
 

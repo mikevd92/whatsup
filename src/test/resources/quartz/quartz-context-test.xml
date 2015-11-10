@@ -45,7 +45,7 @@
 
     <bean id="mailScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="schedulerName" value="MailScheduler"/>
-        <property name="configLocation" value="classpath:quartz/mail-scheduler.properties" />
+        <property name="configLocation" value="classpath:quartz/mail-scheduler-test.properties" />
     </bean>
 
 </beans>

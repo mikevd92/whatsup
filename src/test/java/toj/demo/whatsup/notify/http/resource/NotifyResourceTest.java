@@ -53,7 +53,7 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
 
     @Before
     public void initialize(){
-        credentialsMihai = new Credentials("Mihai"+count,"password","misuvd92+"+count+"@yahoo.com");
+        credentialsMihai = new Credentials("Mihai"+count,"password","misuvd92"+count+"@yahoo.com");
         userService.signup(credentialsMihai);
         user = userService.get("Mihai"+count).get();
         sessionId = userSessionService.createUserSession(user);
@@ -85,6 +85,7 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
+        target("notify/removejob").queryParam("sessionId",sessionId).request().delete();
     }
     @Test
     public void testChangePeriodAndAddKeywordsSucceeds()
@@ -127,14 +128,13 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
             e.printStackTrace();
         }
         try {
-            Thread.sleep(4000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         user=userService.get("Mihai"+count).get();
-        assertEquals(user.getAssignedStatus(), AssignedStatus.ASSIGNED);
         assertEquals(response.getStatusInfo(),Response.Status.OK);
-
+        target("notify/removejob").queryParam("sessionId",sessionId).request().delete();
     }
     @Test
     public void testRemoveNotifyJobSucceeds(){
@@ -156,7 +156,6 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
         }
         user=userService.get("Mihai"+count).get();
         assertEquals(response.getStatusInfo(),Response.Status.OK);
-        assertEquals(user.getAssignedStatus(), AssignedStatus.UNASSIGNED);
     }
     @Test
     public void testRemoveInexistentNotifyJobFails(){
