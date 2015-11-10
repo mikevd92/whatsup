@@ -127,8 +127,9 @@ public class PersistentUserService implements UserService {
                     .withIdentity(new StringBuilder("trigger-").append(user.getId()).toString(), "mailTriggerGroup")
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
-                                    .withIntervalInHours(period).repeatForever())
-                    .startAt(oldFireTime)
+                                    //.withIntervalInHours(period).repeatForever())
+                                    .withIntervalInSeconds(1).repeatForever())
+                    //.startAt(oldFireTime)
                     .build();
             mailScheduler.rescheduleJob(newTrigger.getKey(), newTrigger);
         }
