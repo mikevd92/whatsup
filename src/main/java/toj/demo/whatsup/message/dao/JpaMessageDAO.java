@@ -19,6 +19,8 @@ import javax.persistence.criteria.Predicate;
 @Repository
 public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
 
+    private static final long serialVersionUID = 1L;
+
     @Override
     public Optional<Message> getMessageByUser(User user) {
 
@@ -109,4 +111,5 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
         TypedQuery<Message> query=entityManager.createQuery(cq);
         return query.getResultList();
     }
+
 }

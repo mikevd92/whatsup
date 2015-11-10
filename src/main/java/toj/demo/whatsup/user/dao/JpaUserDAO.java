@@ -14,6 +14,7 @@ import java.util.Set;
 @Repository
 public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
 
+    private static final long serialVersionUID = 3L;
     @Override
     public boolean checkUser(String name, String password) {
         try {
