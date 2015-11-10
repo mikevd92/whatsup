@@ -161,7 +161,6 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        user=userService.get("Mihai"+count).get();
         assertEquals(response.getStatusInfo(),Response.Status.OK);
     }
     @Test
