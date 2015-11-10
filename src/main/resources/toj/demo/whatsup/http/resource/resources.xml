@@ -12,4 +12,5 @@
     <import resource="classpath:/toj/demo/whatsup/follower/http/resource/resources.xml" />
     <import resource="classpath:/toj/demo/whatsup/notify/http/resource/resources.xml" />
     <import resource="classpath*:/quartz/quartz-context.xml"/>
+    <import resource="classpath:/toj/demo/whatsup/email/services/services.xml"/>
 </beans>
