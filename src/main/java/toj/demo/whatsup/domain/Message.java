@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Created by mihai.popovici on 9/25/2015.
  */
-@Entity(name="Messages")
+@Entity(name="Message")
 public class Message {
 
     @Id
