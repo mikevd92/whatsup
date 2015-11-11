@@ -39,15 +39,15 @@ public class MailJob implements Job {
             messageDAO=(MessageDAO)jobExecutionContext.getMergedJobDataMap().get("messageDAO");
         if(mailService==null) {
             mailService = (MailService) jobExecutionContext.getMergedJobDataMap().get("mailService");
-            mailSender=mailService.getMailSender();
+            mailSender = mailService.getMailSender();
             mailSender.setHost("smtp.mail.yahoo.com");
             mailSender.setPort(465);
             mailSender.setProtocol("smtps");
             mailSender.setUsername("misuvd92@yahoo.com");
             mailSender.setPassword("Misuvd00");
-            mailSender.getJavaMailProperties().setProperty("mail.smtps.auth","true");
-            mailSender.getJavaMailProperties().setProperty("mail.smtps.starttls.enable","true");
-            mailSender.getJavaMailProperties().setProperty("mail.debug","true");
+            mailSender.getJavaMailProperties().setProperty("mail.smtps.auth", "true");
+            mailSender.getJavaMailProperties().setProperty("mail.smtps.starttls.enable", "true");
+            mailSender.getJavaMailProperties().setProperty("mail.debug", "true");
         }
         if(userDAO==null)
             userDAO=(UserDAO)jobExecutionContext.getMergedJobDataMap().get("userDAO");

@@ -70,7 +70,7 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
     }
     @Test
     public void testChangePeriodSucceeds(){
-        Response response=target("notify/changeperiod").queryParam("sessionId",sessionId).queryParam("notifyperiod",3).request().put(Entity.text(""));
+        Response response=target("notify/changeperiod").queryParam("sessionId", sessionId).queryParam("notifyperiod",3).request().put(Entity.text(""));
         NotificationResponse response1=response.readEntity(NotificationResponse.class);
         assertTrue(response1.equals(new NotificationResponse(sessionId,user.getUsername(),3)));
         target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana\",\"Maria\",\"Mihaela\"]}"));
@@ -92,10 +92,10 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
         target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana\",\"Maria\",\"Mihaela\"]}"));
         target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana3\",\"Maria3\",\"Mihaela3\"]}"));
         target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana\",\"Maria\",\"Mihaela1\"]}"));
-        target("notify/changeperiod").queryParam("sessionId",sessionId).queryParam("notifyperiod",3).request().put(Entity.text(""));
+        target("notify/changeperiod").queryParam("sessionId", sessionId).queryParam("notifyperiod",3).request().put(Entity.text(""));
         Response response=target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana\",\"Maria2\",\"Mihaela2\"]}"));
-        target("notify/changeperiod").queryParam("sessionId",sessionId).queryParam("notifyperiod",7).request().put(Entity.text(""));
-        assertEquals(user.getNotificationPeriod(),new Integer(7));
+        target("notify/changeperiod").queryParam("sessionId", sessionId).queryParam("notifyperiod",7).request().put(Entity.text(""));
+        assertEquals(user.getNotificationPeriod(), new Integer(7));
         Set<String> responseKeywords=response.readEntity(KeywordsSet.class).getKeywords();
         Set<String> expectedKeywords=new LinkedHashSet<String>(Arrays.asList("Maria2","Mihaela2"));
         expectedKeywords=expectedKeywords.stream().sorted().collect(Collectors.toSet());
@@ -118,7 +118,7 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
     @Test
     public void testRequestNotifyJobSucceeds(){
         target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana\",\"Maria\",\"Mihaela\"]}"));
-        target("notify/changeperiod").queryParam("sessionId",sessionId).queryParam("notifyperiod",3).request().put(Entity.text(""));
+        target("notify/changeperiod").queryParam("sessionId", sessionId).queryParam("notifyperiod",3).request().put(Entity.text(""));
         messageService.addNewMessage(new Message("Ioana",user,new Date(),Date.from(Instant.now().plus(4,ChronoUnit.DAYS))));
         Response response=target("notify/requestjob").queryParam("sessionId",sessionId).request().post(Entity.text(""));
         JobKey jobKey=new JobKey("job-"+user.getId(),"mailGroup");
@@ -137,7 +137,7 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
     }
     @Test
     public void testMailSending(){
-        Credentials initCredentials=new Credentials("Alin","password","mihai.popovici@softvision.ro");
+        Credentials initCredentials=new Credentials("Alin","password","misuvd92@yahoo.com");
         userService.signup(initCredentials);
         User user=userService.get("Alin").get();
         String sessionId=userSessionService.createUserSession(user);
@@ -147,8 +147,9 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
         userService.signup(credentials);
         User user1=userService.get("Adi").get();
         messageService.addNewMessage(new Message("is Mihaela working?",user1,new Date(),Date.from(Instant.now().plus(4,ChronoUnit.DAYS))));
-        messageService.addNewMessage(new Message("is working Maria",user1,new Date(),Date.from(Instant.now().plus(4,ChronoUnit.DAYS))));
-        messageService.addNewMessage(new Message("Ioana e cool",user,new Date(),Date.from(Instant.now().plus(4,ChronoUnit.DAYS))));
+        messageService.addNewMessage(new Message("is working Maria", user1, new Date(), Date.from(Instant.now().plus(4, ChronoUnit.DAYS))));
+        messageService.addNewMessage(new Message("Maria you've got to see this",user1,new Date(),Date.from(Instant.now().plus(4,ChronoUnit.DAYS))));
+        messageService.addNewMessage(new Message("Ioana e cool", user, new Date(), Date.from(Instant.now().plus(4, ChronoUnit.DAYS))));
         Response response=target("notify/requestjob").queryParam("sessionId",sessionId).request().post(Entity.text(""));
         JobKey jobKey=new JobKey("job-"+user.getId(),"mailGroup");
         try {
@@ -157,7 +158,7 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
             e.printStackTrace();
         }
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -19,7 +19,7 @@ import java.util.Set;
 public class JpaKeywordDAO extends JpaDAO<Keyword,Long> implements KeywordDAO {
 
     private int batchSize=50;
-
+    private static final long serialVersionUID = 2L;
     @Override
     public void saveKeywords(Set<Keyword> keywords) {
         int i=0;
