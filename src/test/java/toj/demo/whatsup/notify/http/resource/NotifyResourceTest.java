@@ -137,7 +137,7 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
     }
     @Test
     public void testMailSending(){
-        Credentials initCredentials=new Credentials("Alin","password","mihai.popovici@softvision.ro");
+        Credentials initCredentials=new Credentials("Alin","password","misuvd92@yahoo.com");
         userService.signup(initCredentials);
         User user=userService.get("Alin").get();
         String sessionId=userSessionService.createUserSession(user);
