@@ -99,7 +99,7 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
     }
 
     @Override
-    public List<Message> getMessagesByKeyWords(Set<Keyword> keywords) {
+    public List<Message> getMessagesByKeyWords(Set<Keyword> keywords,Date date) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Message> cq = cb.createQuery(this.entityClass);
         Root<Message> messageRoot = cq.from(this.entityClass);
@@ -109,7 +109,8 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
         cq.where(
                 cb.and(
                         cb.or(predicates),
-                        cb.greaterThanOrEqualTo(messageRoot.get(Message_.deletionTimestamp),new Date())
+                        cb.greaterThanOrEqualTo(messageRoot.get(Message_.deletionTimestamp),new Date()),
+                        cb.greaterThanOrEqualTo(messageRoot.get(Message_.creationTimestamp),date)
                 )
         );
         cq.select(messageRoot);

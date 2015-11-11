@@ -103,9 +103,9 @@ public class PersistentUserService implements UserService {
                 .withIdentity(new StringBuilder("trigger-").append(user.getId()).toString(), "mailTriggerGroup")
                 .withSchedule(
                         SimpleScheduleBuilder.simpleSchedule()
-                                //.withIntervalInHours(user.getNotificationPeriod()).repeatForever())
-                                .withIntervalInSeconds(user.getNotificationPeriod()).repeatForever())
-                //.startAt(Date.from(Instant.now().plus(user.getNotificationPeriod(), ChronoUnit.HOURS)))
+                                .withIntervalInHours(user.getNotificationPeriod()).repeatForever())
+                               // .withIntervalInSeconds(user.getNotificationPeriod()).repeatForever())
+                .startAt(Date.from(Instant.now().plus(user.getNotificationPeriod(), ChronoUnit.HOURS)))
                 .build();
         mailScheduler.scheduleJob(jobDetail, trigger);
 
@@ -127,8 +127,8 @@ public class PersistentUserService implements UserService {
                     .withIdentity(new StringBuilder("trigger-").append(user.getId()).toString(), "mailTriggerGroup")
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
-                                    //.withIntervalInHours(period).repeatForever())
-                                    .withIntervalInSeconds(period).repeatForever())
+                                    .withIntervalInHours(period).repeatForever())
+                                    //.withIntervalInSeconds(period).repeatForever())
                     .startAt(oldFireTime)
                     .build();
             JobKey jobKey=new JobKey(new StringBuilder("job-").append(user.getId()).toString(),"mailGroup");

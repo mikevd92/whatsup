@@ -16,5 +16,5 @@ public interface MessageDAO extends DAO<Message,Long> {
     List<Message> getUpdates(Date date,User user);
     List<Message> getMessagesByUsers(Set<User> users);
     void removeByDeletionTimestamp();
-    List<Message> getMessagesByKeyWords(Set<Keyword> keywords);
+    List<Message> getMessagesByKeyWords(Set<Keyword> keywords,Date date);
 }

@@ -44,11 +44,6 @@ public class PersistentMessageService implements MessageService {
         return this.messageDAO.getMessagesByUsers(users);
     }
 
-    @Override
-    public List<Message> getMessagesByKeyWords(Set<Keyword> keywords) {
-        return messageDAO.getMessagesByKeyWords(keywords);
-    }
-
     public void removeByDeletionTimestamp(){
         messageDAO.removeByDeletionTimestamp();
     }

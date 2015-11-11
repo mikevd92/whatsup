@@ -12,6 +12,9 @@ import toj.demo.whatsup.email.services.SerializableMailSender;
 import toj.demo.whatsup.message.dao.MessageDAO;
 import toj.demo.whatsup.user.dao.UserDAO;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -32,6 +35,7 @@ public class MailJob implements Job {
     private Optional<User> userOptional;
     private Set<Keyword> keywords;
     private SerializableMailSender mailSender;
+    private Date date;
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -64,7 +68,8 @@ public class MailJob implements Job {
                 mailMessage.setText("Please add some keywords!");
                 mailService.sendMail(mailMessage);
             }else{
-                messages = messageDAO.getMessagesByKeyWords(keywords);
+                date=Date.from(Instant.now().minus(userOptional.get().getNotificationPeriod(), ChronoUnit.HOURS));
+                messages = messageDAO.getMessagesByKeyWords(keywords,date);
                 if (messages.size() == 0) {
                     mailMessage.setText("No messages to display");
                     mailService.sendMail(mailMessage);

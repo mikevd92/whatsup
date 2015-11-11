@@ -20,7 +20,5 @@ public interface MessageService {
 
     List<Message> getLatestMessages(Set<User> users);
 
-    List<Message> getMessagesByKeyWords(Set<Keyword> keywords);
-
     void removeByDeletionTimestamp();
 }
