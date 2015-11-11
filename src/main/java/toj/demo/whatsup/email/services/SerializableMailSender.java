@@ -8,5 +8,5 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.io.Serializable;
 
 public class SerializableMailSender extends JavaMailSenderImpl implements Serializable {
-
+    private static final long serialVersionUID = 6L;
 }

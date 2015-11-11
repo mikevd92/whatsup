@@ -9,6 +9,7 @@ import org.springframework.mail.SimpleMailMessage;
  */
 public class ConcreteMailService implements MailService {
 
+    private static final long serialVersionUID = 5L;
     public SerializableMailSender getMailSender() {
         return mailSender;
     }
