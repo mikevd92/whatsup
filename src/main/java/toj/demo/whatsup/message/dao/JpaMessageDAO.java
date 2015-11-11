@@ -110,7 +110,7 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
                 cb.and(
                         cb.or(predicates),
                         cb.greaterThanOrEqualTo(messageRoot.get(Message_.deletionTimestamp),new Date()),
-                        cb.greaterThanOrEqualTo(messageRoot.get(Message_.creationTimestamp),date)
+                        cb.greaterThan(messageRoot.get(Message_.creationTimestamp),date)
                 )
         );
         cq.select(messageRoot);
