@@ -104,7 +104,7 @@ public class PersistentUserService implements UserService {
                 .withSchedule(
                         SimpleScheduleBuilder.simpleSchedule()
                                 //.withIntervalInHours(user.getNotificationPeriod()).repeatForever())
-                                .withIntervalInSeconds(1).repeatForever())
+                                .withIntervalInSeconds(user.getNotificationPeriod()).repeatForever())
                 //.startAt(Date.from(Instant.now().plus(user.getNotificationPeriod(), ChronoUnit.HOURS)))
                 .build();
         mailScheduler.scheduleJob(jobDetail, trigger);
@@ -128,10 +128,13 @@ public class PersistentUserService implements UserService {
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
                                     //.withIntervalInHours(period).repeatForever())
-                                    .withIntervalInSeconds(1).repeatForever())
-                    //.startAt(oldFireTime)
+                                    .withIntervalInSeconds(period).repeatForever())
+                    .startAt(oldFireTime)
                     .build();
+            JobKey jobKey=new JobKey(new StringBuilder("job-").append(user.getId()).toString(),"mailGroup");
+            mailScheduler.pauseJob(jobKey);
             mailScheduler.rescheduleJob(newTrigger.getKey(), newTrigger);
+            mailScheduler.resumeJob(jobKey);
         }
         userDAO.changeNotifyPeriod(user, period);
     }
