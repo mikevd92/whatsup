@@ -168,7 +168,7 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
             e.printStackTrace();
         }
         try {
-            Thread.sleep(7000);
+            Thread.sleep(8000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
