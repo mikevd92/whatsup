@@ -137,20 +137,30 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
     }
     @Test
     public void testMailSending(){
-        Credentials initCredentials=new Credentials("Alin","password","misuvd92@yahoo.com");
+        Credentials initCredentials=new Credentials("Alin","password","mihai.popovici@softvision.ro");
         userService.signup(initCredentials);
         User user=userService.get("Alin").get();
         String sessionId=userSessionService.createUserSession(user);
         target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Ioana\",\"Maria\",\"Mihaela\"]}"));
-        target("notify/changeperiod").queryParam("sessionId",sessionId).queryParam("notifyperiod",3).request().put(Entity.text(""));
+        target("notify/changeperiod").queryParam("sessionId",sessionId).queryParam("notifyperiod",1).request().put(Entity.text(""));
         Credentials credentials=new Credentials("Adi","password","adi@yahoo.com");
         userService.signup(credentials);
         User user1=userService.get("Adi").get();
         messageService.addNewMessage(new Message("is Mihaela working?",user1,new Date(),Date.from(Instant.now().plus(4,ChronoUnit.DAYS))));
         messageService.addNewMessage(new Message("is working Maria", user1, new Date(), Date.from(Instant.now().plus(4, ChronoUnit.DAYS))));
-        messageService.addNewMessage(new Message("Maria you've got to see this",user1,new Date(),Date.from(Instant.now().plus(4,ChronoUnit.DAYS))));
-        messageService.addNewMessage(new Message("Ioana e cool", user, new Date(), Date.from(Instant.now().plus(4, ChronoUnit.DAYS))));
         Response response=target("notify/requestjob").queryParam("sessionId",sessionId).request().post(Entity.text(""));
+        target("notify/addkeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Vlad\"]}"));
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        target("notify/removekeywords").queryParam("sessionId",sessionId).request().put(Entity.json("{\"keywords\":[\"Maria\"]}"));
+        target("notify/changeperiod").queryParam("sessionId",sessionId).queryParam("notifyperiod",4).request().put(Entity.text(""));
+        messageService.addNewMessage(new Message("Vlad you've got to see this",user1,new Date(),Date.from(Instant.now().plus(4,ChronoUnit.DAYS))));
+        messageService.addNewMessage(new Message("Ioana e cool", user, new Date(), Date.from(Instant.now().plus(7, ChronoUnit.DAYS))));
+
+
         JobKey jobKey=new JobKey("job-"+user.getId(),"mailGroup");
         try {
             assertTrue(mailScheduler.checkExists(jobKey));
@@ -158,7 +168,7 @@ public class NotifyResourceTest extends SpringManagedResourceTest<NotifyResource
             e.printStackTrace();
         }
         try {
-            Thread.sleep(10000);
+            Thread.sleep(7000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
