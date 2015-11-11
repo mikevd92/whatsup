@@ -106,7 +106,12 @@ public class JpaMessageDAO extends JpaDAO<Message, Long> implements MessageDAO {
         List<Predicate> predicateList=keywords.stream().map(p -> cb.like(messageRoot.get(Message_.message),"%"+p.getText()+"%")).collect(Collectors.toList());
         Predicate[] predicates=new Predicate[predicateList.size()];
         predicateList.toArray(predicates);
-        cq.where(cb.or(predicates));
+        cq.where(
+                cb.and(
+                        cb.or(predicates),
+                        cb.greaterThanOrEqualTo(messageRoot.get(Message_.deletionTimestamp),new Date())
+                )
+        );
         cq.select(messageRoot);
         TypedQuery<Message> query=entityManager.createQuery(cq);
         return query.getResultList();
