@@ -23,8 +23,6 @@ public abstract class JpaDAO<T,ID extends Serializable> implements DAO<T,ID> {
         entityManager.persist(persisted);
         return persisted;
     }
-    public EntityManager getEntityManager(){
-        return entityManager;
-    }
+
 
 }
