@@ -122,6 +122,9 @@ public class NotifyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response changeNotifyPeriod(@QueryParam("sessionId") String sessionId,@QueryParam("notifyperiod") Integer notifyPeriod,@Context SecurityContext context) throws SchedulerException {
         User user=(User)context.getUserPrincipal();
+        if(notifyPeriod<0){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
         userService.changeNotifyPeriod(user,notifyPeriod);
         NotificationResponse notificationResponse =new NotificationResponse(sessionId,user.getUsername(),notifyPeriod);
         return Response.status(Response.Status.OK).entity(notificationResponse).build();
