@@ -13,6 +13,4 @@ public interface DAO<T,ID extends Serializable> extends Serializable  {
 
     T save(T persisted);
 
-    EntityManager getEntityManager();
-
 }
