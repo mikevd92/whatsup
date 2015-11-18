@@ -27,13 +27,11 @@ import java.util.stream.Collectors;
 public class NotifyResource {
     private final UserService userService;
     private final KeywordService keywordService;
-    private final UserSessionService userSessionService;
 
     @Autowired
-    public NotifyResource(UserService userService,KeywordService keywordService,UserSessionService userSessionService) {
+    public NotifyResource(UserService userService,KeywordService keywordService) {
         this.userService = userService;
         this.keywordService = keywordService;
-        this.userSessionService=userSessionService;
     }
 
     @PUT
