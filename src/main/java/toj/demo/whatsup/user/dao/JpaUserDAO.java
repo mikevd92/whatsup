@@ -19,7 +19,7 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
     public boolean checkUser(String name, String password) {
         try {
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-            CriteriaQuery<User> cq = cb.createQuery(this.entityClass);
+            CriteriaQuery<Boolean> cq = cb.createQuery(Boolean.class);
             Root<User> userRoot = cq.from(this.entityClass);
             cq.where(
                     cb.and(
@@ -27,9 +27,9 @@ public class JpaUserDAO extends JpaDAO<User, Long> implements UserDAO {
                             cb.equal(userRoot.get(User_.password), password)
                     )
             );
-            cq.select(userRoot);
-            TypedQuery<User> query = entityManager.createQuery(cq);
-            return query.getSingleResult() != null;
+            cq.select(userRoot.isNotNull());
+            TypedQuery<Boolean> query = entityManager.createQuery(cq);
+            return query.getSingleResult();
         } catch (NoResultException ex) {
             return false;
         }
